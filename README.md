@@ -2,4 +2,4 @@
 
 ## _Introduction_
 
-A veterinary clinic management system that handles staff, clients, pets, appointments (including notifications) and payments.
+This is a veterinary clinic management system that handles staff, clients, pets, appointments (including notifications) and payments.
