@@ -10,12 +10,14 @@
   "author": "Heba",
   "license": "MIT",
   "dependencies": {
+    "@prisma/client": "^5.11.0",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "express": "^4.19.1",
     "joi": "^17.12.2",
     "jsonwebtoken": "^9.0.2",
-    "nodemailer": "^6.9.13"
+    "nodemailer": "^6.9.13",
+    "prisma": "^5.11.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
