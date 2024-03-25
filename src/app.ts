@@ -1,7 +1,7 @@
-import express, { Request, Response, NextFunction } from "express";
+import express from "express";
 
 
-const app = express();
+export const app = express();
 const PORT = process.env.PORT || 5002;
 
 app.listen(PORT, () => {
