@@ -13,15 +13,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Permission {
+  Staff
+  Admin
+}
+
+enum Title {
+  Receptionist
+  HR
+  Manager
+  Veterinarian
+  Asistant
+  Technician
+}
+
 model Staff {
   id              String      @id @default(uuid())
-  employer_id     String      @unique
   name            String
   job_title       String
   job             Jobs        @relation(fields: [job_title], references: [title])
-  permission_type String
+  permission_type Permission  @default(Staff)
   permission      Permissions @relation(fields: [permission_type], references: [type])
-  email           String
+  email           String      @unique
   password        String
   phone_number    String
   verified        Boolean     @default(false)
@@ -29,14 +42,13 @@ model Staff {
 
 model Veterinarians {
   id              String         @id @default(uuid())
-  employer_id     String         @unique
   name            String
   job_title       String
   job             Jobs           @relation(fields: [job_title], references: [title])
-  permission_type String
+  permission_type Permission     @default(Staff)
   permission      Permissions    @relation(fields: [permission_type], references: [type])
   appointments    Appointments[]
-  email           String
+  email           String         @unique
   password        String
   phone_number    String
   verified        Boolean        @default(false)
@@ -61,7 +73,7 @@ model Pets {
 }
 
 model Jobs {
-  id            String          @id @default(uuid())
+  id            Int             @id @default(autoincrement())
   title         String          @unique
   staff         Staff[]
   veterinarians Veterinarians[]
@@ -69,7 +81,7 @@ model Jobs {
 
 model Permissions {
   id            Int             @id @default(autoincrement())
-  type          String          @unique
+  type          Permission      @unique
   staff         Staff[]
   veterinarians Veterinarians[]
 }
@@ -108,4 +120,16 @@ model Notifications {
   appointment_id String
   message        String
   date           DateTime
+}
+
+// Archieve tables
+
+model FormerStaff {
+  id           String   @id
+  name         String
+  email        String
+  phone_number String
+  job_title    String
+  exit_date    DateTime
+  exit_reason  String
 }
