@@ -8,6 +8,7 @@ import { staffVerify } from "../controllers/verify.staff";
 import { staffUpdate } from "../controllers/update.staff";
 import { staffLogin } from "../controllers/login.staff";
 import { getAllStaff } from "../controllers/get-all.staff";
+import { getAllFormerStaff } from "../controllers/get-all-former.staff";
 // Input validation schemas
 import { staffRegistrationValidation } from "../input-validation/registration.staff.schema";
 import { staffLoginValidation } from "../input-validation/login.staff.schema";
@@ -19,7 +20,9 @@ import { staffUpdateValidation } from "../input-validation/update.staff.schema";
 
 const staffRouter = Router();
 
-staffRouter.route("/").get(verifyToken, getAllStaff);
+staffRouter.route("/current").get(verifyToken, getAllStaff);
+
+staffRouter.route("/former").get(verifyToken, getAllFormerStaff);
 
 staffRouter.route("/register").post(staffRegistrationValidation, staffRegistration);
 
