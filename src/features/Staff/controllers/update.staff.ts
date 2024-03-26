@@ -1,6 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import { compare } from "bcrypt";
-import { generateJwt } from "../../../utils/generateJWT";
 import { statusCode } from "../../../utils/httpStatusCode";
 import { prisma } from "../../../config/prisma";
 import { wrapper } from "../../../middlewares/asyncWrapper";
