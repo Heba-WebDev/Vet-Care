@@ -31,7 +31,7 @@ vetsRouter.route("/login").post(verifyToken, vetsLoginValidation, vetsLogin);
 
 vetsRouter.route("/verify").put(verifyToken, vetsVerifyValidation, vetsVerify);
 
-vetsRouter.route("/update").patch(verifyToken, vetsUpdateValidation, vetsUpdate);
+vetsRouter.route("/update").put(verifyToken, vetsUpdateValidation, vetsUpdate);
 
 vetsRouter.route("/delete").delete(verifyToken, vetsDeleteValidation, vetsDelete);
 
