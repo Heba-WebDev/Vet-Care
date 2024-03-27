@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "VetCare",
-    "description": "A vet clinic management API",
+    "title": "My API",
+    "description": "Description",
     "version": "1.0.0"
   },
   "basePath": "/",
@@ -22,7 +22,7 @@
   "paths": {
     "/api/v1/staff/current": {
       "get": {
-        "tags": ["Staff"],
+        "tags": ["Staff"], 
         "description": "",
         "parameters": [
           {
@@ -160,7 +160,7 @@
         }
       }
     },
-    "/api/v1/staff/": {
+    "/api/v1/staff/delete": {
       "delete": {
         "tags": ["Staff"],
         "description": "",
@@ -199,7 +199,47 @@
             "description": "Bad Request"
           }
         }
-      },
+      }
+    },
+    "/api/v1/staff/verify": {
+      "put": {
+        "tags": ["Staff"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/v1/staff/update": {
       "patch": {
         "tags": ["Staff"],
         "description": "",
@@ -233,44 +273,6 @@
                   "example": "any"
                 },
                 "job_title": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/api/v1/staff/verify": {
-      "put": {
-        "tags": ["Staff"],
-        "description": "",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
                   "example": "any"
                 }
               }
@@ -322,7 +324,7 @@
     },
     "/api/v1/vets/former": {
       "get": {
-        "tags": ["Vets"],
+         "tags": ["Vets"],
         "description": "",
         "parameters": [
           {
@@ -437,8 +439,46 @@
         }
       }
     },
-    "/api/v1/vets/": {
+    "/api/v1/vets/verify": {
       "put": {
+        "tags": ["Vets"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/v1/vets/update": {
+      "patch": {
         "tags": ["Vets"],
         "description": "",
         "parameters": [
@@ -485,7 +525,9 @@
             "description": "Bad Request"
           }
         }
-      },
+      }
+    },
+    "/api/v1/vets/delete": {
       "delete": {
         "tags": ["Vets"],
         "description": "",
