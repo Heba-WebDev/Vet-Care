@@ -240,7 +240,7 @@
       }
     },
     "/api/v1/staff/update": {
-      "patch": {
+      "put": {
         "tags": ["Staff"],
         "description": "",
         "parameters": [
@@ -478,7 +478,7 @@
       }
     },
     "/api/v1/vets/update": {
-      "patch": {
+      "put": {
         "tags": ["Vets"],
         "description": "",
         "parameters": [
