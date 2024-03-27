@@ -6,28 +6,28 @@ import { wrapper } from "../../../middlewares/asyncWrapper";
 import { globalError } from "../../../utils/globalError";
 const { SUCCESS, FAIL } = statusCode;
 
-const staffRegistration = wrapper(async (req: Request, res: Response, next: NextFunction) => {
+const vetsRegistration = wrapper(async (req: Request, res: Response, next: NextFunction) => {
     const {name, email, password, phone_number, job_title } = req.body;
     const job = await prisma.jobs.findFirst({where: {title: job_title}});
     if (!job) {
-        const err = new globalError("Please provide a valid job title [Receptionist, HR, or Manager].", 400
+        const err = new globalError("Please provide a valid job title [Veterinarian, Asistant or Technician].", 400
         ,FAIL)
         return next(err);
     }
-    const emailFound = await prisma.staff.findUnique({where: {email}});
+    const emailFound = await prisma.veterinarians.findUnique({where: {email}});
     if (emailFound) {
         const err = new globalError("Email already exists.", 400
         ,FAIL)
         return next(err);
     }
     const hashedPassword = await hash(password, 10);
-    await prisma.staff.create({
+    await prisma.veterinarians.create({
         data: {
             name,
             job_title,
             email,
             password: hashedPassword,
-            phone_number
+            phone_number,
         }
     })
     return res.status(201).send({
@@ -37,4 +37,4 @@ const staffRegistration = wrapper(async (req: Request, res: Response, next: Next
     });
 });
 
-export { staffRegistration }
+export { vetsRegistration }

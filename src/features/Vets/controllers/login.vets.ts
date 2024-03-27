@@ -7,10 +7,10 @@ import { wrapper } from "../../../middlewares/asyncWrapper";
 import { globalError } from "../../../utils/globalError";
 const { SUCCESS, FAIL } = statusCode;
 
-const staffLogin = wrapper(async (req: Request, res: Response, next: NextFunction) => {
+const vetsLogin = wrapper(async (req: Request, res: Response, next: NextFunction) => {
     const {email, password } = req.body;
 
-    const user = await prisma.staff.findUnique({where: {email}});
+    const user = await prisma.veterinarians.findUnique({where: {email}});
     if (!user) {
         const err = new globalError("Invalid credentials.", 401
         ,FAIL)
@@ -44,4 +44,4 @@ const staffLogin = wrapper(async (req: Request, res: Response, next: NextFunctio
     });
 });
 
-export { staffLogin }
+export { vetsLogin }

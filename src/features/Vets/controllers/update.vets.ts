@@ -5,7 +5,7 @@ import { wrapper } from "../../../middlewares/asyncWrapper";
 import { globalError } from "../../../utils/globalError";
 const { SUCCESS, FAIL } = statusCode;
 
-const staffUpdate = wrapper(async (req: Request, res: Response, next: NextFunction) => {
+const vetsUpdate = wrapper(async (req: Request, res: Response, next: NextFunction) => {
     const {id, email, password, phone_number, job_title } = req.body;
     if(!email && !password && !phone_number && !job_title) {
         const err = new globalError("An email, a password or a phone number is required to update an account.", 404
@@ -18,26 +18,26 @@ const staffUpdate = wrapper(async (req: Request, res: Response, next: NextFuncti
         ,FAIL)
         return next(err);
     }
-    const user = await prisma.staff.findUnique({where: {id}});
+    const user = await prisma.veterinarians.findUnique({where: {id}});
     if (!user) {
         const err = new globalError("Invalid credentials.", 401
         ,FAIL)
         return next(err);
     }
     if (password) {
-        await prisma.staff.update({
+        await prisma.veterinarians.update({
             where: {id},
             data: {password}
         })
     }
     if (email) {
-        await prisma.staff.update({
+        await prisma.veterinarians.update({
             where: {id},
             data: {email}
         })
     }
     if (phone_number) {
-        await prisma.staff.update({
+        await prisma.veterinarians.update({
             where: {id},
             data: {phone_number}
         })
@@ -45,11 +45,11 @@ const staffUpdate = wrapper(async (req: Request, res: Response, next: NextFuncti
     if(token?.permission_type === "Admin" && job_title) {
         const job = await prisma.jobs.findFirst({where: {title: job_title}});
         if (!job) {
-        const err = new globalError("Please provide a valid job title [Receptionist, HR, or Manager].", 400
+        const err = new globalError("Please provide a valid job title [Veterinarian, Asistant or Technician].", 400
         ,FAIL)
         return next(err);
         } else {
-            await prisma.staff.update({
+            await prisma.veterinarians.update({
                 where: {id},
                 data:{job_title}
             })
@@ -69,4 +69,4 @@ const staffUpdate = wrapper(async (req: Request, res: Response, next: NextFuncti
     });
 });
 
-export { staffUpdate }
+export { vetsUpdate }
