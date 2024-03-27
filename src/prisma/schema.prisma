@@ -133,3 +133,13 @@ model FormerStaff {
   exit_date    DateTime
   exit_reason  String
 }
+
+model FormerVets {
+  id           String   @id
+  name         String
+  email        String
+  phone_number String
+  job_title    String
+  exit_date    DateTime
+  exit_reason  String
+}
