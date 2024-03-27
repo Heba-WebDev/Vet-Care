@@ -8,7 +8,7 @@ const { SUCCESS, FAIL } = statusCode;
 const staffUpdate = wrapper(async (req: Request, res: Response, next: NextFunction) => {
     const {id, email, password, phone_number, job_title } = req.body;
     if(!email && !password && !phone_number && !job_title) {
-        const err = new globalError("An email, a password or a phone number is required to update.", 404
+        const err = new globalError("An email, a password or a phone number is required to update an account.", 404
         ,FAIL)
         return next(err);
     }
@@ -45,7 +45,7 @@ const staffUpdate = wrapper(async (req: Request, res: Response, next: NextFuncti
     if(token?.permission_type === "Admin" && job_title) {
         const job = await prisma.jobs.findFirst({where: {title: job_title}});
         if (!job) {
-        const err = new globalError("Please provide a valid job title [Receptionist, HR, Manager, Veterinarian, Asistant or Technician].", 400
+        const err = new globalError("Please provide a valid job title [Receptionist, HR, or Manager].", 400
         ,FAIL)
         return next(err);
         } else {
