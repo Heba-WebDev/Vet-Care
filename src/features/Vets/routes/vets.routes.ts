@@ -9,12 +9,14 @@ import { vetsRegistration } from "../controllers/registration.vets";
 import { vetsLogin } from "../controllers/login.vets";
 import { vetsUpdate } from "../controllers/update.vets";
 import { vetsDelete } from "../controllers/delete.vets";
+import { vetsVerify } from "../controllers/verify.vets";
 
 // Input validation schemas
 import { vetsRegistrationValidation } from "../input-validation/registration.vets.schema";
 import { vetsLoginValidation } from "../input-validation/login.vets.schema";
 import { vetsUpdateValidation } from "../input-validation/update.vets.schema";
 import { vetsDeleteValidation } from "../input-validation/delete.vets.schema";
+import { vetsVerifyValidation } from "../input-validation/verify.vets.schema";
 
 
 const vetsRouter = Router();
@@ -27,8 +29,10 @@ vetsRouter.route("/register").post(vetsRegistrationValidation, vetsRegistration)
 
 vetsRouter.route("/login").post(verifyToken, vetsLoginValidation, vetsLogin);
 
-vetsRouter.route("/").put(verifyToken, vetsUpdateValidation, vetsUpdate);
+vetsRouter.route("/verify").put(verifyToken, vetsVerifyValidation, vetsVerify);
 
-vetsRouter.route("/").delete(verifyToken, vetsDeleteValidation, vetsDelete);
+vetsRouter.route("/update").patch(verifyToken, vetsUpdateValidation, vetsUpdate);
+
+vetsRouter.route("/delete").delete(verifyToken, vetsDeleteValidation, vetsDelete);
 
 export { vetsRouter }
