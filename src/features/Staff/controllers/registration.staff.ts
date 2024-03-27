@@ -10,13 +10,13 @@ const staffRegistration = wrapper(async (req: Request, res: Response, next: Next
     const {name, email, password, phone_number, job_title } = req.body;
     const job = await prisma.jobs.findFirst({where: {title: job_title}});
     if (!job) {
-        const err = new globalError("Please provide a valid job title [Receptionist, HR, Manager, Veterinarian, Asistant or Technician].", 400
+        const err = new globalError("Please provide a valid job title [Receptionist, HR, or Manager].", 400
         ,FAIL)
         return next(err);
     }
     const emailFound = await prisma.staff.findUnique({where: {email}});
     if (emailFound) {
-        const err = new globalError("Email already exist.", 400
+        const err = new globalError("Email already exists.", 400
         ,FAIL)
         return next(err);
     }
