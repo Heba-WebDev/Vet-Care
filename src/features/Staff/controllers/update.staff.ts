@@ -13,7 +13,7 @@ const staffUpdate = wrapper(async (req: Request, res: Response, next: NextFuncti
         return next(err);
     }
     const token = req.decodedToken;
-    if(token?.id !== id && token?.permission_type !== "Admin") {
+    if((token?.id !== id && token?.permission_type !== "Admin") || (token?.id !== id && token?.job_title !== "HR")) {
         const err = new globalError("Unauthorized to perform this action.", 401
         ,FAIL)
         return next(err);
@@ -42,7 +42,7 @@ const staffUpdate = wrapper(async (req: Request, res: Response, next: NextFuncti
             data: {phone_number}
         })
     }
-    if(token?.permission_type === "Admin" && job_title) {
+    if((token?.permission_type === "Admin" || token?.job_title === "HR") && job_title) {
         const job = await prisma.jobs.findFirst({where: {title: job_title}});
         if (!job) {
         const err = new globalError("Please provide a valid job title [Receptionist, HR, or Manager].", 400

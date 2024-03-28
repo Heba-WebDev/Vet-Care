@@ -5,6 +5,7 @@ import { statusCode } from "../utils/httpStatusCode";
 interface token {
   id: string,
   permission_type: string,
+  job_title: string,
   iat: number,
   exp: number
 }

@@ -29,7 +29,7 @@ const staffLogin = wrapper(async (req: Request, res: Response, next: NextFunctio
         data: null
     });
     }
-    const token = await generateJwt({id: user.id, permission_type: user.permission_type});
+    const token = await generateJwt({id: user.id, permission_type: user.permission_type, job_title: user.job_title});
     return res.status(200).send({
         status: SUCCESS,
         message: "User sucessfully logged in.",
