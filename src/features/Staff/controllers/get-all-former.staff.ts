@@ -7,7 +7,7 @@ const { SUCCESS, FAIL } = statusCode;
 
 const getAllFormerStaff = wrapper(async (req: Request, res: Response, next: NextFunction) => {
     const token = req.decodedToken;
-    if(token?.permission_type !== "Admin") {
+    if(token?.permission_type !== "Admin" || token?.job_title !== "HR") {
         const err = new globalError("Unauthorized to perform this action.", 401
         ,FAIL)
         return next(err);
