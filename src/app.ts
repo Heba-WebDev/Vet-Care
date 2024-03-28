@@ -5,6 +5,7 @@ import { notFound } from "./middlewares/notFound";
 import { errorHandler } from "./middlewares/errorHandler";
 import { staffRouter } from "./features/Staff/routes/staff.routes";
 import { vetsRouter } from "./features/Vets/routes/vets.routes";
+import { ownersRouter } from "./features/Owners/routes/owners.routes";
 import config from "./docs/swagger-output.json";
 
 const app = express();
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(config));
 app.use("/api/v1/staff", staffRouter);
 app.use("/api/v1/vets", vetsRouter);
+app.use("/api/v1/owners", ownersRouter);
 
 app.use(errorHandler);
 app.all("*", notFound)
