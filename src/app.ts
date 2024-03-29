@@ -8,7 +8,7 @@ import { staffRouter } from "./features/Staff/routes/staff.routes";
 import { vetsRouter } from "./features/Vets/routes/vets.routes";
 import { ownersRouter } from "./features/Owners/routes/owners.routes";
 import { petsRouter } from "./features/Pets/routes/pets.routes";
-import { servicesRouter } from "./features/services/routes/services.routes";
+import { servicesRouter } from "./features/Services/routes/services.routes";
 
 const app = express();
 const PORT = process.env.PORT || 5002;
