@@ -3,8 +3,11 @@ import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import { notFound } from "./middlewares/notFound";
 import { errorHandler } from "./middlewares/errorHandler";
-import { routes } from "./routes";
 import config from "./docs/swagger-output.json";
+import { staffRouter } from "./features/Staff/routes/staff.routes";
+import { vetsRouter } from "./features/Vets/routes/vets.routes";
+import { ownersRouter } from "./features/Owners/routes/owners.routes";
+import { petsRouter } from "./features/Pets/routes/pets.routes";
 
 const app = express();
 const PORT = process.env.PORT || 5002;
@@ -13,10 +16,10 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(config));
-app.use("/api/v1/staff", routes.staffRouter);
-app.use("/api/v1/vets", routes.vetsRouter);
-app.use("/api/v1/owners", routes.ownersRouter);
-app.use("/api/v1/pets", routes.petsRouter);
+app.use("/api/v1/staff", staffRouter);
+app.use("/api/v1/vets", vetsRouter);
+app.use("/api/v1/owners", ownersRouter);
+app.use("/api/v1/pets", petsRouter);
 
 app.use(errorHandler);
 app.all("*", notFound)

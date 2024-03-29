@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "My API",
-    "description": "Description",
+    "title": "VetCare",
+    "description": "A vet clinic management API",
     "version": "1.0.0"
   },
   "basePath": "/",
@@ -17,12 +17,20 @@
     {
       "name": "Vets",
       "description": "Endpoints related to veterinarians"
+    },
+    {
+      "name": "Owners",
+      "description": "Endpoints related to pets' owners"
+    },
+    {
+      "name": "Pets",
+      "description": "Endpoints related to pets"
     }
   ],
   "paths": {
     "/api/v1/staff/current": {
       "get": {
-        "tags": ["Staff"], 
+        "tag": ["Staff"],
         "description": "",
         "parameters": [
           {
@@ -55,7 +63,7 @@
     },
     "/api/v1/staff/former": {
       "get": {
-        "tags": ["Staff"],
+        "Tag": ["Staff"],
         "description": "",
         "parameters": [
           {
@@ -88,7 +96,7 @@
     },
     "/api/v1/staff/register": {
       "post": {
-        "tags": ["Staff"],
+        "Tag": ["Staff"],
         "description": "",
         "parameters": [
           {
@@ -128,7 +136,7 @@
     },
     "/api/v1/staff/login": {
       "post": {
-        "tags": ["Staff"],
+        "Tag": ["Staff"],
         "description": "",
         "parameters": [
           {
@@ -162,7 +170,7 @@
     },
     "/api/v1/staff/delete": {
       "delete": {
-        "tags": ["Staff"],
+        "Tag": ["Staff"],
         "description": "",
         "parameters": [
           {
@@ -203,7 +211,7 @@
     },
     "/api/v1/staff/verify": {
       "put": {
-        "tags": ["Staff"],
+        "Tag": ["Staff"],
         "description": "",
         "parameters": [
           {
@@ -241,7 +249,7 @@
     },
     "/api/v1/staff/update": {
       "put": {
-        "tags": ["Staff"],
+        "Tag": ["Staff"],
         "description": "",
         "parameters": [
           {
@@ -291,7 +299,7 @@
     },
     "/api/v1/vets/current": {
       "get": {
-        "tags": ["Vets"],
+        "Tag": ["Vets"],
         "description": "",
         "parameters": [
           {
@@ -324,7 +332,7 @@
     },
     "/api/v1/vets/former": {
       "get": {
-         "tags": ["Vets"],
+        "Tag": ["Vets"],
         "description": "",
         "parameters": [
           {
@@ -357,7 +365,7 @@
     },
     "/api/v1/vets/register": {
       "post": {
-        "tags": ["Vets"],
+        "Tag": ["Vets"],
         "description": "",
         "parameters": [
           {
@@ -397,7 +405,7 @@
     },
     "/api/v1/vets/login": {
       "post": {
-        "tags": ["Vets"],
+        "Tag": ["Vets"],
         "description": "",
         "parameters": [
           {
@@ -441,7 +449,7 @@
     },
     "/api/v1/vets/verify": {
       "put": {
-        "tags": ["Vets"],
+        "Tag": ["Vets"],
         "description": "",
         "parameters": [
           {
@@ -479,7 +487,7 @@
     },
     "/api/v1/vets/update": {
       "put": {
-        "tags": ["Vets"],
+        "Tag": ["Vets"],
         "description": "",
         "parameters": [
           {
@@ -529,7 +537,7 @@
     },
     "/api/v1/vets/delete": {
       "delete": {
-        "tags": ["Vets"],
+        "Tag": ["Vets"],
         "description": "",
         "parameters": [
           {
@@ -561,6 +569,232 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/v1/owners/name/{name}": {
+      "get": {
+        "Tag": ["Owners"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/v1/owners/number/{phone_number}": {
+      "get": {
+        "Tag": ["Owners"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "phone_number",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/v1/owners/register": {
+      "post": {
+        "Tag": ["Owners"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/v1/owners/": {
+      "get": {
+        "Tag": ["Owners"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/pets/{id}": {
+      "get": {
+        "Tag": ["Pets"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/v1/pets/": {
+      "get": {
+        "Tag": ["Pets"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/pets/register": {
+      "post": {
+        "Tag": ["Pets"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "owner_id": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
           },
           "400": {
             "description": "Bad Request"
