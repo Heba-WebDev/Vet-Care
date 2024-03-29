@@ -8,6 +8,7 @@ import { staffRouter } from "./features/Staff/routes/staff.routes";
 import { vetsRouter } from "./features/Vets/routes/vets.routes";
 import { ownersRouter } from "./features/Owners/routes/owners.routes";
 import { petsRouter } from "./features/Pets/routes/pets.routes";
+import { servicesRouter } from "./features/services/routes/services.routes";
 
 const app = express();
 const PORT = process.env.PORT || 5002;
@@ -20,6 +21,7 @@ app.use("/api/v1/staff", staffRouter);
 app.use("/api/v1/vets", vetsRouter);
 app.use("/api/v1/owners", ownersRouter);
 app.use("/api/v1/pets", petsRouter);
+app.use("/api/v1/services", servicesRouter);
 
 app.use(errorHandler);
 app.all("*", notFound)
