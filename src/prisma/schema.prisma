@@ -103,6 +103,7 @@ model Services {
   id           String         @id @default(uuid())
   type         String         @unique
   price        Decimal
+  active       Boolean        @default(true)
   appointments Appointments[]
 }
 
@@ -120,6 +121,12 @@ model Notifications {
   appointment_id String
   message        String
   date           DateTime
+}
+
+model PublicHolidays {
+  id   Int      @id @default(autoincrement())
+  name String
+  date DateTime
 }
 
 // Archieve tables
