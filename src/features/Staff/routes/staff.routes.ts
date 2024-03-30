@@ -30,8 +30,8 @@ staffRouter.route("/login").post(staffLoginValidation, staffLogin);
 
 staffRouter.route("/delete").delete(verifyToken, staffDeleteValidation, staffDelete);
 
-staffRouter.route("/verify").put(verifyToken, staffVerifyValidation, staffVerify);
+staffRouter.route("/verify").patch(verifyToken, staffVerifyValidation, staffVerify);
 
-staffRouter.route("/update").put(verifyToken, staffUpdateValidation, staffUpdate);
+staffRouter.route("/update").patch(verifyToken, staffUpdateValidation, staffUpdate);
 
 export { staffRouter}
