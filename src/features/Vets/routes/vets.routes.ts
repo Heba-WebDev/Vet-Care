@@ -17,17 +17,17 @@ import { vetsLoginValidation } from "../input-validation/login.vets.schema";
 import { vetsUpdateValidation } from "../input-validation/update.vets.schema";
 import { vetsDeleteValidation } from "../input-validation/delete.vets.schema";
 import { vetsVerifyValidation } from "../input-validation/verify.vets.schema";
-
+import { getAllVetsValidation } from "../input-validation/get-all.vets.schema";
 
 const vetsRouter = Router();
 
-vetsRouter.route("/current").get(verifyToken, getAllVets);
+vetsRouter.route("/current").get(verifyToken,getAllVetsValidation, getAllVets);
 
 vetsRouter.route("/former").get(verifyToken, getAllFormerVets);
 
 vetsRouter.route("/register").post(vetsRegistrationValidation, vetsRegistration);
 
-vetsRouter.route("/login").post(verifyToken, vetsLoginValidation, vetsLogin);
+vetsRouter.route("/login").post(vetsLoginValidation, vetsLogin);
 
 vetsRouter.route("/verify").patch(verifyToken, vetsVerifyValidation, vetsVerify);
 
