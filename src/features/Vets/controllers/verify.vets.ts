@@ -8,14 +8,14 @@ const { SUCCESS, FAIL } = statusCode;
 const vetsVerify = wrapper(async (req: Request, res: Response, next: NextFunction) => {
     const {email} = req.body;
     const token = req.decodedToken;
-    if(token?.permission_type !== "Admin" || token?.job_title !== "HR") {
+    if(token?.permission_type !== "Admin" || (token?.job_title !== "HR" && token?.job_title !== "Manager")) {
         const err = new globalError("Unauthorized to perform this action.", 401
         ,FAIL)
         return next(err);
     }
     const user = await prisma.veterinarians.findUnique({where: {email}});
     if (!user) {
-        const err = new globalError("Invalid user id.", 400
+        const err = new globalError("No vet found.", 404
         ,FAIL)
         return next(err);
     }
