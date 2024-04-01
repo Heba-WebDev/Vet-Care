@@ -27,6 +27,23 @@ enum Title {
   Technician
 }
 
+enum Animal {
+  Cat
+  Dog
+  Horse
+  Bird
+  Snake
+  Lizard
+  Hamster
+  Rat
+  Rabbit
+}
+
+enum Gender {
+  Male
+  Female
+}
+
 model Staff {
   id              String      @id @default(uuid())
   name            String
@@ -67,9 +84,16 @@ model Owners {
 model Pets {
   id           String         @id @default(uuid())
   name         String
+  type         Animal
+  gender       Gender
   owner        Owners         @relation(fields: [owner_id], references: [id])
   owner_id     String
   appointments Appointments[]
+}
+
+model Animals {
+  id   Int    @id @default(autoincrement())
+  type Animal @unique
 }
 
 model Jobs {
