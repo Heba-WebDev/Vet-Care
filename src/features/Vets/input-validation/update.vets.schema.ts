@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { statusCode } from "../../../utils/httpStatusCode";
 import joi from "joi";
+import { globalError } from "../../../utils/globalError";
 const {FAIL} = statusCode
 
 
@@ -40,9 +41,18 @@ const vetsUpdateSchema = joi.object({
       "string.pattern": "A phone number can only contain digits, - or white space.",
       "string.optional": "A valid phone number is required.",
     }),
+    job_title: joi.string().optional().messages({
+      "string.empty": "A valid job title is required.",
+      "string.optional": "A valid job title is required."
+    })
 });
 
 const vetsUpdateValidation = async (req: Request, res: Response, next: NextFunction) => {
+  const {email, password, phone_number, job_title} = req.body;
+  if(!email && !password && !phone_number && !job_title) {
+    const err = new globalError("Please provide an email, a password or a phone number to update.", 400, FAIL);
+    return next(err);
+  }
 
   try {
     await vetsUpdateSchema.validateAsync(req.body);

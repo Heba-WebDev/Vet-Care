@@ -2,20 +2,20 @@ import { Router } from "express";
 // Token verification
 import { verifyToken } from "../../../middlewares/verifyToken";
 // Controllers
-import { petsRegistration } from "../controllers/reigster.pets";
+import { petsRegistration } from "../controllers/register.pets";
 import { getAllPets } from "../controllers/get-all.pets";
-import { allPetsOfAnOwner } from "../controllers/get-by-owner.pets";
+import { updatePet } from "../controllers/update.pets";
 
 // Input validation schemas
-import { petsRegistrationValidation } from "../input-validation/reigster.pets.schema";
-import { ownerPetsValidation } from "../input-validation/get-by-owner.pets.schema";
-
+import { petsRegistrationValidation } from "../input-validation/register.pets.schema";
+import { getAllPetsValidation } from "../input-validation/get-all.pets.schema";
+import { petsUpdateValidation } from "../input-validation/update.pets.schema";
 
 const petsRouter = Router();
 
-petsRouter.route("/:id").get(verifyToken, ownerPetsValidation, allPetsOfAnOwner);
+petsRouter.route("/").get(verifyToken,getAllPetsValidation, getAllPets);
 
-petsRouter.route("/").get(verifyToken, getAllPets);
+petsRouter.route("/").patch(verifyToken, petsUpdateValidation, updatePet);
 
 petsRouter.route("/register").post(verifyToken, petsRegistrationValidation, petsRegistration);
 

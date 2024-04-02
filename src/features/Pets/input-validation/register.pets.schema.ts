@@ -17,6 +17,14 @@ const PetsRegistrationSchema = joi.object({
       "string.empty": "A valid owner id is required.",
       "string.id": "A valid owner id is required.",
     }),
+  type: joi.string().required().messages({
+    "string.empty": "An animal type is required.",
+    "string.required": "An animal type is required.",
+  }),
+  gender: joi.string().required().messages({
+    "string.empty": "An animal gender is required.",
+    "string.required": "An animal gender is required.",
+  }),
 });
 
 const petsRegistrationValidation = async (req: Request, res: Response, next: NextFunction) => {

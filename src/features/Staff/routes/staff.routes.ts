@@ -15,12 +15,12 @@ import { staffLoginValidation } from "../input-validation/login.staff.schema";
 import { staffDeleteValidation } from "../input-validation/delete.staff.schema";
 import { staffVerifyValidation } from "../input-validation/verify.staff.schema";
 import { staffUpdateValidation } from "../input-validation/update.staff.schema";
-
+import { getAllStaffValidation } from "../input-validation/get-all.staff.schema";
 
 
 const staffRouter = Router();
 
-staffRouter.route("/current").get(verifyToken, getAllStaff);
+staffRouter.route("/current").get(verifyToken, getAllStaffValidation, getAllStaff);
 
 staffRouter.route("/former").get(verifyToken, getAllFormerStaff);
 

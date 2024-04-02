@@ -2,8 +2,8 @@ import swaggerAutogen from "swagger-autogen";
 
 const doc = {
   info: {
-    title: "My API",
-    description: "Description",
+    title: "VetCare",
+    description: "A vet clinic management API",
   },
   host: process.env.HOST,
 };

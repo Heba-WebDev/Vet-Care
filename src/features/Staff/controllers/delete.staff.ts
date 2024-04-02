@@ -8,7 +8,7 @@ const { SUCCESS, FAIL } = statusCode;
 const staffDelete = wrapper(async (req: Request, res: Response, next: NextFunction) => {
     const {id, exit_reason } = req.body;
     const token = req.decodedToken;
-    if(token?.permission_type !== "Admin" || token?.job_title !== "HR") {
+    if(token?.permission_type !== "Admin" || (token?.job_title !== "HR" && token?.job_title !== "Manager")) {
         const err = new globalError("Unauthorized to perform this action.", 401
         ,FAIL)
         return next(err);
