@@ -13,7 +13,7 @@ import { cancelAppointmentsValidation } from "../input-validation/cancel.appoint
 
 const appointmentsRouter = Router();
 
-appointmentsRouter.route("/:vet_id").get(verifyToken, getAllAppointmentsValidation, getAllAppointments);
+appointmentsRouter.route("/").get(verifyToken, getAllAppointmentsValidation, getAllAppointments);
 
 appointmentsRouter.route("/").post(verifyToken, bookAppointmentsValidation, bookAppointments);
 
