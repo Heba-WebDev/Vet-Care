@@ -111,20 +111,20 @@ model Permissions {
 }
 
 model Appointments {
-  id         String        @id @default(uuid())
-  date       DateTime
-  vet        Veterinarians @relation(fields: [vet_id], references: [id])
-  vet_id     String
-  owner      Owners        @relation(fields: [owner_id], references: [id])
-  owner_id   String
-  pet        Pets          @relation(fields: [pet_id], references: [id])
-  pet_id     String
-  service    Services      @relation(fields: [service_id], references: [id])
-  service_id String
+  id           String        @id @default(uuid())
+  date         DateTime
+  vet          Veterinarians @relation(fields: [vet_id], references: [id])
+  vet_id       String
+  owner        Owners        @relation(fields: [owner_id], references: [id])
+  owner_id     String
+  pet          Pets          @relation(fields: [pet_id], references: [id])
+  pet_id       String
+  service      Services      @relation(fields: [service_type], references: [type])
+  service_type String
 }
 
 model Services {
-  id           String         @id @default(uuid())
+  id           Int            @id @default(autoincrement())
   type         String         @unique
   price        Decimal
   active       Boolean        @default(true)
