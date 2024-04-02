@@ -6,8 +6,8 @@ import { statusCode } from "../../../utils/httpStatusCode";
 const { SUCCESS, FAIL } = statusCode;
 
 const cancelAppointment = wrapper(async(req: Request, res: Response, next: NextFunction) => {
-    const { id } = req.params;
-    const appointment = await prisma.appointments.findUnique({where: {id}});
+    const { id } = req.body;
+    const appointment = await prisma.appointments.findFirst({where: {id}});
     if (!appointment) {
         const err = new globalError("No appointment found.", 404
         ,FAIL)

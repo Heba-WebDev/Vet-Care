@@ -8,8 +8,14 @@ const { SUCCESS, FAIL } = statusCode;
 const addService = wrapper(async(req: Request, res: Response, next: NextFunction) => {
     const { type, price } = req.body;
     const token = req.decodedToken;
-    if(token?.permission_type !== "Admin") {
-         const err = new globalError("Unauthorized to perform this action.", 401
+    if(token?.permission_type !== "Admin" || token?.job_title !== "Manager") {
+        const err = new globalError("Unauthorized to perform this action.", 401
+        ,FAIL)
+        return next(err);
+    }
+    const s = await prisma.services.findFirst({where: {type}});
+    if (s) {
+        const err = new globalError("Service already exists.", 400
         ,FAIL)
         return next(err);
     }

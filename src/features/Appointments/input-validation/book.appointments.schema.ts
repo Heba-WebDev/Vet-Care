@@ -33,13 +33,12 @@ const bookAppointmentsSchema = joi.object({
       "string.empty": "A valid pet id is required.",
       "string.id": "A valid pet id is required.",
     }),
-    service_id: joi
+    service_type: joi
     .string()
-    .id()
     .required()
     .messages({
-      "string.empty": "A valid service id is required.",
-      "string.id": "A valid service id is required.",
+      "string.empty": "A valid service type is required.",
+      "string.id": "A valid service type is required.",
     }),
 });
 
