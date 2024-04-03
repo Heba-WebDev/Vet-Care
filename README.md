@@ -10,19 +10,6 @@ This is a veterinary clinic management system that handles staff, clients, pets 
 
 ExpressJs - TypeScript - Postgres - Prisma - Joi - Jsonwebtoken - Swagger
 
-## _Folder Structure_
-
-|
-├── src
-│ ├── config
-│ ├── docs # api documenation with swagger
-| ├── features # every feature has its controllers, input-validation, routes and helper functions (if needed)
-│ ├── interfaces
-| ├── middlewares
-| ├── prisma # prisma schema
-| ├── routes # holds all routes from all the features
-| ├── utils
-| └──
 
 ## _How to Use_
 
