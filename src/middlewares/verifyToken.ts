@@ -26,7 +26,7 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
         req.decodedToken = decodedToken as token;
         next();
     }catch(error) {
-        const err = new globalError("Something went wrong!", 500
+        const err = new globalError("Invalid token!", 401
         ,FAIL)
         return next(err);
     }
