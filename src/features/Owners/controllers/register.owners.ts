@@ -19,7 +19,7 @@ const registerOwner = wrapper(async(req: Request, res: Response, next: NextFunct
         ,FAIL)
         return next(err);
     }
-    const result = await prisma.owners.create({
+    const created_owner = await prisma.owners.create({
         data: {
             name,
             email,
@@ -29,7 +29,7 @@ const registerOwner = wrapper(async(req: Request, res: Response, next: NextFunct
     return res.status(201).send({
             status: SUCCESS,
             message: "Owner successfully created.",
-            data: result
+            data: created_owner
         })
 });
 
