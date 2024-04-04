@@ -13,15 +13,14 @@ const cancelAppointment = wrapper(async(req: Request, res: Response, next: NextF
         ,FAIL)
         return next(err);
     }
-    await prisma.appointments.delete({
+     await prisma.appointments.delete({
         where: {id}
-    }).then((result) => {
-        res.status(204).send({
+    });
+    res.status(204).send({
             status: SUCCESS,
             message: "Appointment succesfully cancelled.",
             data: null
         })
-    });
 
 });
 

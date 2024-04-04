@@ -62,7 +62,7 @@ const bookAppointments = wrapper(async(req: Request, res: Response, next: NextFu
     const err = new globalError("Appointments are only available between 8:00 AM and 5:00 PM.", 400, FAIL);
     return next(err);
     }
-    await prisma.appointments.create({
+    const app = await prisma.appointments.create({
         data:{
             vet_id,
             owner_id,
@@ -70,13 +70,14 @@ const bookAppointments = wrapper(async(req: Request, res: Response, next: NextFu
             date: d,
             service_type: service.type
         }
-    }).then((result) => {
-        res.status(201).send({
+    });
+    return res.status(201).send({
             status: SUCCESS,
             message: "Appointment succesfully created.",
-            data: result
+            data: {
+
+            }
         })
-    })
 
 });
 

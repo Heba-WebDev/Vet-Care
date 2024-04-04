@@ -17,28 +17,27 @@ const getAllAppointments = wrapper(async (req: Request, res: Response, next: Nex
         ,FAIL)
         return next(err);
         }
-        await prisma.appointments.findMany({
+        const app = await prisma.appointments.findMany({
         skip: offset,
         take: limit,
         where:{ vet_id: vet_id as string}
-        }).then((result) => {
+        });
         return res.status(200).send({
         status: SUCCESS,
         message: null,
-        data: result
-        });
+        data: app
         });
     }
-    await prisma.appointments.findMany({
+    const app = await prisma.appointments.findMany({
         skip: offset,
         take: limit,
-    }).then((result) => {
-        return res.status(200).send({
+    });
+    return res.status(200).send({
         status: SUCCESS,
         message: null,
-        data: result
+        data: app
+        });
     });
-    });
-});
+
 
 export { getAllAppointments }

@@ -17,28 +17,26 @@ const getAllVets = wrapper(async (req: Request, res: Response, next: NextFunctio
         ,FAIL)
         return next(err);
         } else {
-        await prisma.staff.findMany({
+        const result = await prisma.staff.findMany({
         skip: offset,
         take: limit,
         where:{ id: id as string}
-        }).then((result) => {
+        });
         return res.status(200).send({
         status: SUCCESS,
         message: null,
         data: result
-        });
         });
         }
     }
-    await prisma.veterinarians.findMany({
+    const result = await prisma.veterinarians.findMany({
         skip: offset,
         take: limit,
-    }).then((result) => {
-        return res.status(200).send({
+    });
+     return res.status(200).send({
         status: SUCCESS,
         message: null,
         data: result
-    });
     });
 });
 

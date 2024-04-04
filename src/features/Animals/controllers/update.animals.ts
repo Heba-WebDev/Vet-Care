@@ -18,16 +18,16 @@ const updateAnimal = wrapper(async( req: Request, res: Response, next: NextFunct
         const err = new globalError("No animal found.", 404, FAIL);
         return next(err);
     }
-    await prisma.animals.update({
+    const upd = await prisma.animals.update({
         where: {id},
         data: {type}
-    }).then((result) => {
-        return res.status(200).send({
+    });
+    return res.status(200).send({
             status: SUCCESS,
             message: "Animal's type succesfully updated.",
-            data: result
+            data: upd
         });
-    });
+
 });
 
 export { updateAnimal }

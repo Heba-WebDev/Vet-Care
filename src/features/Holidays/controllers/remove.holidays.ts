@@ -13,15 +13,14 @@ const removeHoliday = wrapper(async(req: Request, res: Response, next: NextFunct
         ,FAIL)
         return next(err);
     }
-    await prisma.publicHolidays.delete({
+    const del = await prisma.publicHolidays.delete({
         where: {id}
-    }).then((result) => {
-        res.status(204).send({
+    });
+    return res.status(204).send({
             status: SUCCESS,
             message: "Holiday succesfully deleted.",
-            data: null
+            data: del
         })
-    })
 });
 
 export { removeHoliday }

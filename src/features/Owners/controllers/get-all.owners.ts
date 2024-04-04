@@ -64,15 +64,14 @@ const getAllOwners = wrapper(async (req: Request, res: Response, next: NextFunct
         data: owner
         });
     }
-    await prisma.owners.findMany({
+    const result = await prisma.owners.findMany({
         skip: offset,
         take: limit,
-    }).then((result) => {
-        return res.status(200).send({
+    });
+    return res.status(200).send({
         status: SUCCESS,
         message: null,
         data: result
-    });
     });
 });
 

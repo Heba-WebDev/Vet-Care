@@ -13,18 +13,17 @@ const addHoliday = wrapper(async(req: Request, res: Response, next: NextFunction
         ,FAIL)
         return next(err);
     }
-    await prisma.publicHolidays.create({
+    const res1 = await prisma.publicHolidays.create({
         data: {
             name,
             date
         }
-    }).then((result) => {
-        res.status(201).send({
+    });
+    res.status(201).send({
             status: SUCCESS,
             message: "Holiday succesfully added.",
-            data: result
+            data: res1
         })
-    })
 });
 
 export { addHoliday }

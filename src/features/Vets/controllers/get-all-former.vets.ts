@@ -4,7 +4,15 @@ import { prisma } from "../../../config/prisma";
 import { wrapper } from "../../../middlewares/asyncWrapper";
 import { globalError } from "../../../utils/globalError";
 const { SUCCESS, FAIL } = statusCode;
-
+interface res {
+    id: string;
+    name: string;
+    email: string;
+    phone_number: string;
+    job_title: string;
+    exit_date: Date;
+    exit_reason: string;
+}
 const getAllFormerVets = wrapper(async (req: Request, res: Response, next: NextFunction) => {
     const token = req.decodedToken;
     if(token?.permission_type !== "Admin" || (token?.job_title !== "HR" && token?.job_title !== "Manager")) {
@@ -15,16 +23,15 @@ const getAllFormerVets = wrapper(async (req: Request, res: Response, next: NextF
     const page = parseInt(req.query.page as string) || 1; // Default page 1
     const limit = parseInt(req.query.limit as string) || 15; // Default 15 results per page
     const offset = (page - 1) * limit;
-    await prisma.formerVets.findMany({
+    const all = await prisma.formerVets.findMany({
         skip: offset,
         take: limit,
-    }).then((result) => {
-        return res.status(200).send({
+    })
+    return res.status(200).send({
         status: SUCCESS,
         message: null,
-        data: result
-    });
-    });
+        data: all
+    })
 });
 
 export { getAllFormerVets }

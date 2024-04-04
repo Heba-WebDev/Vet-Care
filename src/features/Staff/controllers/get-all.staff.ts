@@ -17,28 +17,26 @@ const getAllStaff = wrapper(async (req: Request, res: Response, next: NextFuncti
         ,FAIL)
         return next(err);
         } else {
-        await prisma.staff.findMany({
+        const result = await prisma.staff.findMany({
         skip: offset,
         take: limit,
         where:{ email: email as string}
-        }).then((result) => {
+        });
         return res.status(200).send({
         status: SUCCESS,
         message: null,
         data: result
-        });
         });
         }
     }
-    await prisma.staff.findMany({
+    const result = await prisma.staff.findMany({
         skip: offset,
         take: limit,
-    }).then((result) => {
-        return res.status(200).send({
+    });
+    return res.status(200).send({
         status: SUCCESS,
         message: null,
         data: result
-    });
     });
 });
 
