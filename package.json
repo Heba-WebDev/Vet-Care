@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js && ls dist",
+    "start": "node app.js && ls src",
     "dev": "nodemon -e ts --watch 'src/**/*.ts' --exec 'tsc && node --env-file .env dist/app.js'",
     "swagger": "node ./src/docs/index.mjs"
   },
