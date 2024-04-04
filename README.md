@@ -6,6 +6,13 @@ This is a veterinary clinic management system that handles staff, clients, pets 
 
 ## _Video Demo 🎥_
 
+
+<a href="https://www.youtube.com/watch?v=yJj5HEvEo5M" target="_blank">
+  <img src="https://img.youtube.com/vi/yJj5HEvEo5M/0.jpg" alt="VetCare">
+</a>
+
+
+
 ## _Technologies_
 
 ExpressJs - TypeScript - Postgres - Prisma - Joi - Jsonwebtoken - Swagger
