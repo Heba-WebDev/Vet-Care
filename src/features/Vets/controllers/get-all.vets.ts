@@ -17,7 +17,7 @@ const getAllVets = wrapper(async (req: Request, res: Response, next: NextFunctio
         ,FAIL)
         return next(err);
         } else {
-        const result = await prisma.staff.findMany({
+        const vet_by_id = await prisma.staff.findMany({
         skip: offset,
         take: limit,
         where:{ id: id as string}
@@ -25,18 +25,18 @@ const getAllVets = wrapper(async (req: Request, res: Response, next: NextFunctio
         return res.status(200).send({
         status: SUCCESS,
         message: null,
-        data: result
+        data: vet_by_id
         });
         }
     }
-    const result = await prisma.veterinarians.findMany({
+    const all_current_vets = await prisma.veterinarians.findMany({
         skip: offset,
         take: limit,
     });
      return res.status(200).send({
         status: SUCCESS,
         message: null,
-        data: result
+        data: all_current_vets
     });
 });
 
