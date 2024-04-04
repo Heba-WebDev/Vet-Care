@@ -28,14 +28,14 @@ const getAllAppointments = wrapper(async (req: Request, res: Response, next: Nex
         data: app
         });
     }
-    const app = await prisma.appointments.findMany({
+    const appointment = await prisma.appointments.findMany({
         skip: offset,
         take: limit,
     });
     return res.status(200).send({
         status: SUCCESS,
         message: null,
-        data: app
+        data: appointment
         });
     });
 
