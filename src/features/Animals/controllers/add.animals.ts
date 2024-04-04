@@ -19,7 +19,7 @@ const addAnimals = wrapper(async(req: Request, res: Response, next: NextFunction
         ,FAIL)
         return next(err);
     }
-    const cre = await prisma.animals.create({
+    const create_animal = await prisma.animals.create({
         data: {
             type
         }
@@ -27,7 +27,7 @@ const addAnimals = wrapper(async(req: Request, res: Response, next: NextFunction
     return res.status(201).send({
             status: SUCCESS,
             message: "Animal type sucesffully added.",
-            data: cre
+            data: create_animal
         });
 });
 
