@@ -29,14 +29,14 @@ const getAllStaff = wrapper(async (req: Request, res: Response, next: NextFuncti
         });
         }
     }
-    const result = await prisma.staff.findMany({
+    const all_current_staff = await prisma.staff.findMany({
         skip: offset,
         take: limit,
     });
     return res.status(200).send({
         status: SUCCESS,
         message: null,
-        data: result
+        data: all_current_staff
     });
 });
 
