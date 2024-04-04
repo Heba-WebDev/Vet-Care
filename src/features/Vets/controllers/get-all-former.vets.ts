@@ -23,14 +23,14 @@ const getAllFormerVets = wrapper(async (req: Request, res: Response, next: NextF
     const page = parseInt(req.query.page as string) || 1; // Default page 1
     const limit = parseInt(req.query.limit as string) || 15; // Default 15 results per page
     const offset = (page - 1) * limit;
-    const all = await prisma.formerVets.findMany({
+    const all_former_vets = await prisma.formerVets.findMany({
         skip: offset,
         take: limit,
     })
     return res.status(200).send({
         status: SUCCESS,
         message: null,
-        data: all
+        data: all_former_vets
     })
 });
 
