@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { statusCode } from "../../../utils/httpStatusCode";
 import joi from "joi";
+import { globalError } from "../../../utils/globalError";
 const {FAIL} = statusCode
 
 
@@ -19,7 +20,11 @@ const addHolidaysSchema = joi.object({
 });
 
 const addHolidaysValidation = async (req: Request, res: Response, next: NextFunction) => {
-
+  const dateStr = new Date(req.body.date).getTime();
+  if(isNaN(dateStr)) {
+    const err = new globalError("A valid date is required.", 400, FAIL);
+    return next(err);
+  }
   try {
     await addHolidaysSchema.validateAsync(req.body);
     next();
