@@ -112,7 +112,8 @@ model Permissions {
 
 model Appointments {
   id           String        @id @default(uuid())
-  date         DateTime
+  date         String
+  time         String
   vet          Veterinarians @relation(fields: [vet_id], references: [id])
   vet_id       String
   owner        Owners        @relation(fields: [owner_id], references: [id])
@@ -148,9 +149,9 @@ model Notifications {
 }
 
 model PublicHolidays {
-  id   Int      @id @default(autoincrement())
+  id   Int    @id @default(autoincrement())
   name String
-  date DateTime
+  date String
 }
 
 // Archieve tables
