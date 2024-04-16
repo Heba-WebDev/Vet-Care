@@ -1,25 +1,21 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../../../config/prisma";
+import { bookingNotification } from "../../Notifications/helper-funcs";
 import { wrapper } from "../../../middlewares/asyncWrapper";
 import { globalError } from "../../../utils/globalError";
 import { statusCode } from "../../../utils/httpStatusCode";
+import { time } from "console";
 const { SUCCESS, FAIL } = statusCode;
 
 const bookAppointments = wrapper(async(req: Request, res: Response, next: NextFunction) => {
-    const { date, vet_id, owner_id, pet_id, service_type } = req.body;
-    const d = new Date(date);
-    d.setMinutes(0);
-    d.setSeconds(0);
-    // const d_holiday = new Date(date);
-    // d_holiday.setHours(0);
-    // d_holiday.setMinutes(0);
-    // d_holiday.setSeconds(0);
+    const { date, time, vet_id, owner_id, pet_id, service_type } = req.body;
+    const _date = new Date(date);
     const vet = await prisma.veterinarians.findUnique({where: {id: vet_id}});
-    const vet_booked = await prisma.appointments.findFirst({where: {vet_id, date: d}})
+    const vet_booked = await prisma.appointments.findFirst({where: {vet_id, date, time}});
     const owner = await prisma.owners.findUnique({where: {id: owner_id}});
     const pet = await prisma.pets.findUnique({where: {id: pet_id}});
     const service = await prisma.services.findUnique({where: {type: service_type}});
-    const holiday = await prisma.publicHolidays.findFirst({where: {date: d}});
+    const holiday = await prisma.publicHolidays.findFirst({where: {date}});
     if(!vet) {
         const err = new globalError("No vet found.", 404
         ,FAIL)
@@ -53,29 +49,33 @@ const bookAppointments = wrapper(async(req: Request, res: Response, next: NextFu
         ,FAIL)
         return next(err);
     }
-    if(d.getDay() === 0 || d.getDay() === 6) {
+    if(_date.getDay() === 0 || _date.getDay() === 6) {
         const err = new globalError("Can not book an appointment on a weekend.", 400
         ,FAIL)
         return next(err);
     }
-    if (d.getHours() < 8 || d.getHours() > 16) {
-    const err = new globalError("Appointments are only available between 8:00 AM and 5:00 PM.", 400, FAIL);
-    return next(err);
+    if(_date < new Date()) {
+        const err = new globalError("Appointments can be booked in the past.", 400
+        ,FAIL)
+        return next(err);
     }
     const appointment = await prisma.appointments.create({
         data:{
             vet_id,
             owner_id,
             pet_id,
-            date: d,
+            date: date,
+            time,
             service_type: service.type
         }
     });
+    // await bookingNotification(next, {email: owner.email, owner_name: owner.name, vet_name: vet.name, pet_name: pet.name, time: time, day: date
+    // });
     return res.status(201).send({
             status: SUCCESS,
             message: "Appointment succesfully created.",
             data: appointment
-        })
+        });
 
 });
 
