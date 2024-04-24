@@ -2,16 +2,13 @@
 
 ## _Introduction_
 
-This is a veterinary clinic management system that handles staff, clients, pets and appointments.
+This is a veterinary clinic management system that handles staff, clients, pets, appointments, appointments notifications and payments.
 
 ## _Video Demo 🎥_
-
 
 <a href="https://www.youtube.com/watch?v=yJj5HEvEo5M" target="_blank">
   <img src="https://img.youtube.com/vi/yJj5HEvEo5M/0.jpg" alt="VetCare">
 </a>
-
-
 
 ## _Technologies_
 
@@ -19,7 +16,7 @@ ExpressJs - TypeScript - Postgres - Prisma - Joi - Jsonwebtoken - Swagger
 
 ## _End points_
 
-<img src="https://i.ibb.co/mCrq4D5/screencapture-localhost-5002-api-docs-2024-04-04-03-20-13.png">
+<img src="https://i.ibb.co/pK9Gzwm/screencapture-localhost-5002-api-docs-2024-04-24-19-06-28.png">
 
 ## _How to Use_
 
