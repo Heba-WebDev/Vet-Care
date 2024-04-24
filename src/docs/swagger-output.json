@@ -7,7 +7,8 @@
   },
   "basePath": "/",
   "schemes": [
-    "http"
+    "http",
+    "https"
   ],
   "tags": [
     {
@@ -41,6 +42,10 @@
     {
       "name": "Appointments",
       "description": "Endpoints related to appointments"
+    },
+    {
+      "name": "Transactions",
+      "description": "Endpoints related to payments"
     }
   ],
   "paths": {
@@ -784,7 +789,7 @@
         }
       },
       "patch": {
-        "tags": ["Pets"],
+         "tags": ["Pets"],
         "description": "",
         "parameters": [
           {
@@ -831,7 +836,7 @@
     },
     "/api/v1/pets/register": {
       "post": {
-        "tags": ["Pets"],
+         "tags": ["Pets"],
         "description": "",
         "parameters": [
           {
@@ -1102,6 +1107,18 @@
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -1111,7 +1128,7 @@
         }
       },
       "delete": {
-        "tags": ["Holidays"],
+        "tags": ["Appointments"],
         "description": "",
         "parameters": [
           {
@@ -1172,6 +1189,126 @@
         "responses": {
           "400": {
             "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/v1/transactions/card": {
+      "post": {
+        "tags": ["Transactions"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "service_id": {
+                  "example": "any"
+                },
+                "owner_id": {
+                  "example": "any"
+                },
+                "pet_id": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/v1/transactions/cash": {
+      "post": {
+        "tags": ["Transactions"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "service_id": {
+                  "example": "any"
+                },
+                "owner_id": {
+                  "example": "any"
+                },
+                "pet_id": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Transactions"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/v1/transactions/webhook": {
+      "post": {
+        "tags": ["Transactions"],
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
           }
         }
       }
