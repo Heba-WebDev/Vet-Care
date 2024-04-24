@@ -12,6 +12,7 @@ import { servicesRouter } from "./features/Services/routes/services.routes";
 import { appointmentsRouter } from "./features/Appointments/routes/appointments.routes";
 import { holidaysRouter } from "./features/Holidays/routes/holidays.routes";
 import { animalsRouter } from "./features/Animals/routes/animals.routes";
+import { transactionsRouter } from "./features/Transactions/routes/transactions.routes";
 
 const app = express();
 const PORT = process.env.PORT || 5002;
@@ -28,6 +29,7 @@ app.use("/api/v1/services", servicesRouter);
 app.use("/api/v1/appointments", appointmentsRouter);
 app.use("/api/v1/holidays", holidaysRouter);
 app.use("/api/v1/animals", animalsRouter);
+app.use("/api/v1/transactions", transactionsRouter);
 
 app.use(errorHandler);
 app.all("*", notFound)
