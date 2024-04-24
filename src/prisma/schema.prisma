@@ -27,6 +27,16 @@ enum Title {
   Technician
 }
 
+enum Status {
+  Paid
+  Unpaid
+}
+
+enum Method {
+  Cash
+  Online
+}
+
 enum Animal {
   Cat
   Dog
@@ -89,6 +99,7 @@ model Pets {
   owner        Owners         @relation(fields: [owner_id], references: [id])
   owner_id     String
   appointments Appointments[]
+  transactions Transactions[]
 }
 
 model Animals {
@@ -127,18 +138,27 @@ model Appointments {
 model Services {
   id           Int            @id @default(autoincrement())
   type         String         @unique
-  price        Decimal
+  price        Decimal        @db.Decimal(10, 2)
   active       Boolean        @default(true)
   appointments Appointments[]
+  transactions Transactions[]
 }
 
 model Transactions {
   id             String   @id @default(uuid())
   client_id      String
   client         Owners   @relation(fields: [client_id], references: [id])
+  pet_id         String
+  pet            Pets     @relation(fields: [pet_id], references: [id])
+  service_name   String
+  service        Services @relation(fields: [service_name], references: [type])
   amount         Decimal
-  date           DateTime
-  payment_method String
+  date           String
+  time           String
+  payment_method Method
+  payment_id     String
+  status         Status   @default(Unpaid)
+  cancelled      Boolean  @default(false)
 }
 
 model Notifications {
