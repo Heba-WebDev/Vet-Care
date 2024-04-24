@@ -12,7 +12,7 @@ This is a veterinary clinic management system that handles staff, clients, pets,
 
 ## _Technologies_
 
-ExpressJs - TypeScript - Postgres - Prisma - Joi - Jsonwebtoken - Swagger
+Expressjs - TypeScript - Postgres - Prisma - Joi - Jsonwebtoken - Swagger
 
 ## _End points_
 
