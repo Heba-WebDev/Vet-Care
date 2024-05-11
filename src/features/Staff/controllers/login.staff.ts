@@ -3,6 +3,7 @@ import { compare } from "bcrypt";
 import { generateJwt } from "../../../utils/generateJWT";
 import { statusCode } from "../../../utils/httpStatusCode";
 import { prisma } from "../../../config/prisma";
+import { expirationDate } from "../../../utils/generateExpirationDate";
 import { wrapper } from "../../../middlewares/asyncWrapper";
 import { globalError } from "../../../utils/globalError";
 const { SUCCESS, FAIL } = statusCode;
@@ -30,6 +31,7 @@ const staffLogin = wrapper(async (req: Request, res: Response, next: NextFunctio
     });
     }
     const token = await generateJwt({id: user.id, permission_type: user.permission_type, job_title: user.job_title});
+    res.cookie('user', token, {expires:expirationDate, httpOnly: false});
     return res.status(200).send({
         status: SUCCESS,
         message: "User sucessfully logged in.",
@@ -39,8 +41,7 @@ const staffLogin = wrapper(async (req: Request, res: Response, next: NextFunctio
             job_title: user.job_title,
             permission_type: user.permission_type,
             verified: user.verified
-        },
-        token
+        }
     });
 });
 

@@ -1,5 +1,6 @@
 import express from "express";
 import cors from 'cors';
+import cookieParser from "cookie-parser";
 import swaggerUi from 'swagger-ui-express';
 import { notFound } from "./middlewares/notFound";
 import { errorHandler } from "./middlewares/errorHandler";
@@ -19,6 +20,7 @@ const PORT = process.env.PORT || 5002;
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(config));
 app.use("/api/v1/staff", staffRouter);

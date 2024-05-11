@@ -1,10 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import { compare } from "bcrypt";
 import { generateJwt } from "../../../utils/generateJWT";
-import { statusCode } from "../../../utils/httpStatusCode";
 import { prisma } from "../../../config/prisma";
 import { wrapper } from "../../../middlewares/asyncWrapper";
 import { globalError } from "../../../utils/globalError";
+import { expirationDate } from "../../../utils/generateExpirationDate";
+import { statusCode } from "../../../utils/httpStatusCode";
 const { SUCCESS, FAIL } = statusCode;
 
 const vetsLogin = wrapper(async (req: Request, res: Response, next: NextFunction) => {
@@ -30,6 +31,7 @@ const vetsLogin = wrapper(async (req: Request, res: Response, next: NextFunction
     });
     }
     const token = await generateJwt({id: user.id, permission_type: user.permission_type});
+    res.cookie('user', token, {expires: expirationDate, httpOnly: false});
     return res.status(200).send({
         status: SUCCESS,
         message: "User sucessfully logged in.",
@@ -39,8 +41,7 @@ const vetsLogin = wrapper(async (req: Request, res: Response, next: NextFunction
             job_title: user.job_title,
             permission_type: user.permission_type,
             verified: user.verified
-        },
-        token
+        }
     });
 });
 

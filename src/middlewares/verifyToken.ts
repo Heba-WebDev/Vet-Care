@@ -14,7 +14,7 @@ const { FAIL } = statusCode;
 
 
 const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
-    const authHeader = req.headers["Authorization"] || req.headers["authorization"];
+    const authHeader = req.cookies['user'];
     if (!authHeader) {
         const err = new globalError("Token is required.", 401
         ,FAIL)

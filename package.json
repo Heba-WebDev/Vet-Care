@@ -14,6 +14,7 @@
   "dependencies": {
     "@stripe/stripe-js": "^3.3.0",
     "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.19.1",
     "joi": "^17.12.2",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@prisma/client": "^5.12.0",
     "@types/bcrypt": "^5.0.2",
+    "@types/cookie-parser": "^1.4.7",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
