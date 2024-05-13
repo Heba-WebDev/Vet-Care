@@ -18,7 +18,16 @@ import { transactionsRouter } from "./features/Transactions/routes/transactions.
 const app = express();
 const PORT = process.env.PORT || 5002;
 
-app.use(cors());
+const allowedOrigins = [
+  'http://localhost:3000'
+];
+
+const corsOptions = {
+  origin: allowedOrigins,
+  credentials: true
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
