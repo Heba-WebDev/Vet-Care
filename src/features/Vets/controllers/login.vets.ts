@@ -31,7 +31,7 @@ const vetsLogin = wrapper(async (req: Request, res: Response, next: NextFunction
     });
     }
     const token = await generateJwt({id: user.id, permission_type: user.permission_type});
-    res.cookie('user', token, {expires: expirationDate, httpOnly: false});
+    res.cookie('user', token, {expires: expirationDate, httpOnly: false, secure: true, sameSite: "none"});
     return res.status(200).send({
         status: SUCCESS,
         message: "User sucessfully logged in.",
