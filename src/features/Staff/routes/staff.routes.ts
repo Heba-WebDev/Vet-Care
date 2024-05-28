@@ -9,6 +9,7 @@ import { staffUpdate } from "../controllers/update.staff";
 import { staffLogin } from "../controllers/login.staff";
 import { getAllStaff } from "../controllers/get-all.staff";
 import { getAllFormerStaff } from "../controllers/get-all-former.staff";
+import { staffLogout } from "../controllers/logout.staff";
 // Input validation schemas
 import { staffRegistrationValidation } from "../input-validation/registration.staff.schema";
 import { staffLoginValidation } from "../input-validation/login.staff.schema";
@@ -27,6 +28,8 @@ staffRouter.route("/former").get(verifyToken, getAllFormerStaff);
 staffRouter.route("/register").post(staffRegistrationValidation, staffRegistration);
 
 staffRouter.route("/login").post(staffLoginValidation, staffLogin);
+
+staffRouter.route("/logout").post(staffLogout);
 
 staffRouter.route("/delete").delete(verifyToken, staffDeleteValidation, staffDelete);
 
