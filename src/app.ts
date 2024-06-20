@@ -16,7 +16,7 @@ import { animalsRouter } from "./features/Animals/routes/animals.routes";
 import { transactionsRouter } from "./features/Transactions/routes/transactions.routes";
 
 const app = express();
-const PORT = process.env.PORT || 5002;
+export const PORT = process.env.PORT || 5002;
 
 const allowedOrigins = [
   'http://localhost:3000'
@@ -43,8 +43,7 @@ app.use("/api/v1/animals", animalsRouter);
 app.use("/api/v1/transactions", transactionsRouter);
 
 app.use(errorHandler);
-app.all("*", notFound)
+app.all("*", notFound);
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+
+export { app }
