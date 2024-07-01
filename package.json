@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "npx prisma generate --schema=./src/prisma/schema.prisma && nodemon -e ts --watch 'src/**/*.ts' --exec 'tsc && node dist/bostrap.js '",
-    "dev": "nodemon -e ts --watch 'src/**/*.ts' --exec 'tsc && node --env-file .env dist/bostrap.js'",
+    "dev": "nodemon -e ts --watch 'src/**/*.ts' --exec 'tsc && node dist/app.js'",
     "swagger": "node ./src/docs/index.mjs",
     "test": "jest"
   },
@@ -18,6 +18,8 @@
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "env-var": "^7.5.0",
     "express": "^4.19.1",
     "joi": "^17.12.2",
     "jsonwebtoken": "^9.0.2",
