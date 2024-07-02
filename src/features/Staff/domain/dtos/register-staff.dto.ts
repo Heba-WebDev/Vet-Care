@@ -13,7 +13,7 @@ export class RegisterStaffDto {
     {
     }
 
-    static create(object: {[key: string]: any}): [string?, RegisterStaffDto?] {
+    static register(object: {[key: string]: any}): [string?, RegisterStaffDto?] {
         const { name, job_title, email, password, phone_number } = object;
         const staffDto = new RegisterStaffDto(name, job_title, email, password, phone_number);
         const err = new StaffInputValidation().register(staffDto);
