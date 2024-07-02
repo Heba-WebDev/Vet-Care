@@ -1,16 +1,10 @@
 import { JwtAdapter } from "../../../../config";
 import { CustomError } from "../../../../domain";
 import { RegisterStaffDto } from "../dtos";
+import { RegisterStaffUseCase, SignToken } from "../interfaces";
 import { StaffRepository } from "../repositories";
 
 
-interface RegisterStaffUseCase {
-    execute( registerStaff: RegisterStaffDto): Promise<any>;
-}
-type payload = {
-    id: string;
-}
-type SignToken = (payload: payload, duration?: string) => Promise<string | null>
 
 export class RegisterStaff implements RegisterStaffUseCase {
     constructor(
@@ -19,7 +13,11 @@ export class RegisterStaff implements RegisterStaffUseCase {
     ) {}
     public async execute(registerStaff: RegisterStaffDto): Promise<any> {
         const staff = await this.repo.register(registerStaff);
-        const token = await this.signToken({id: staff!.id}, '2h');
+        const token = await this.signToken({
+            id: staff!.id,
+            permission_type: staff?.permission_type!,
+            job_title: staff?.job_title!
+        }, '2h');
         if (!token) throw CustomError.internalServerError('Internal server error');
         return {
             token,
