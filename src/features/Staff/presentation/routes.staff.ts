@@ -11,8 +11,8 @@ export class StaffRoutes {
         const controller = new StaffController(repository);
 
         router.post('/register', controller.registerStaff)
-        router.post('/login')
-        router.patch('/verify')
+        router.post('/login', controller.loginStaff)
+        router.patch('/verify', controller.verifyStaff)
         router.get('/current')
         router.get('/former')
         return router;
