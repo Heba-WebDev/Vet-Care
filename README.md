@@ -14,7 +14,7 @@ Vet-Care is a veterinary clinic management system designed to handle staff, clie
 
 Expressjs - TypeScript - Postgres - Prisma - Joi - Jsonwebtoken - Swagger
 
-## _Architecture Overview
+## _Architecture Overview_
 
 The second version of the API adheres to clean architecture principles. The application is structured into three distinct layers:
 
