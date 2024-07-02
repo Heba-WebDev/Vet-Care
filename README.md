@@ -4,11 +4,6 @@
 
 Vet-Care is a veterinary clinic management system designed to handle staff, clients, pets, appointments, appointment notifications, and payments. The system follows clean architecture principles, ensuring clear separation of concerns and maintainability.
 
-## _Video Demo 🎥_
-
-<a href="https://www.youtube.com/watch?v=yJj5HEvEo5M" target="_blank">
-  <img src="https://img.youtube.com/vi/yJj5HEvEo5M/0.jpg" alt="VetCare">
-</a>
 
 ## _Technologies_
 
@@ -50,6 +45,11 @@ This architecture promotes maintainability, scalability, and clear separation of
   Postman
 </a>
 
+## _Video Demo 🎥_
+
+<a href="https://www.youtube.com/watch?v=yJj5HEvEo5M" target="_blank">
+  <img src="https://img.youtube.com/vi/yJj5HEvEo5M/0.jpg" alt="VetCare">
+</a>
 
 ## _How to Use_
 
