@@ -1,11 +1,6 @@
-import { RegisterStaffDto, LoginStaffDto, VerifyStaffDto } from "../dtos";
+import { payload } from "../../../../interfaces";
+import { RegisterStaffDto, LoginStaffDto, VerifyStaffDto, DeleteStaffDto, GetAllStaffDto } from "../dtos";
 
-// Jwt token
-export type payload = {
-    id: string;
-    permission_type: string;
-    job_title: string;
-}
 export type SignToken = (payload: payload, duration?: string) => Promise<string | null>;
 
 
@@ -19,4 +14,16 @@ export interface LoginStaffUseCase {
 
 export interface VerifyStaffUseCase {
     execute( verifyStaff: VerifyStaffDto): Promise<any>;
+}
+
+export interface DeleteStaffUseCase {
+    execute( deleteStaff: DeleteStaffDto): Promise<any>;
+}
+
+export interface GetAllStaffUseCase {
+    execute(getAllStaff: GetAllStaffDto): Promise<any>;
+}
+
+export interface GetAllFormerStaffUseCase {
+    execute(getAllStaff: GetAllStaffDto): Promise<any>;
 }
