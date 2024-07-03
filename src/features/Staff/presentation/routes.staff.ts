@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { StaffController } from './controller.staff';
 import { StaffDatasourceImpl, StaffRepositoryImpl } from '../infrastructure';
+import { AuthMiddlewear } from '../../../presentation';
 
 export class StaffRoutes {
 
@@ -12,9 +13,10 @@ export class StaffRoutes {
 
         router.post('/register', controller.registerStaff)
         router.post('/login', controller.loginStaff)
-        router.patch('/verify', controller.verifyStaff)
-        router.get('/current')
-        router.get('/former')
+        router.patch('/verify', [AuthMiddlewear.validateJwt, AuthMiddlewear.authorized], controller.verifyStaff)
+        router.delete('/delete', [AuthMiddlewear.validateJwt, AuthMiddlewear.authorized], controller.deleteStaff)
+        router.get('/current', [AuthMiddlewear.validateJwt], controller.getAllStaff)
+        router.get('/former', [AuthMiddlewear.validateJwt, AuthMiddlewear.authorized], controller.getAllFormerStaff)
         return router;
     }
 }
