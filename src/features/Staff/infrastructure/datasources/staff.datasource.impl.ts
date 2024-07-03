@@ -1,8 +1,9 @@
 import { bcryptAdapter } from "../../../../config";
 import { prisma } from "../../../../data";
 import { CustomError } from "../../../../domain";
-import { LoginStaffDto, RegisterStaffDto, StaffDatasource, VerifyStaffDto } from "../../domain";
+import { LoginStaffDto, RegisterStaffDto, StaffDatasource, VerifyStaffDto, DeleteStaffDto, GetAllStaffDto } from "../../domain";
 import { StaffEntity } from "../../domain/entities";
+import { FormerStaffEntity } from "../../domain/entities/former-staff.entity";
 import { StaffMapper } from "../mapper";
 
 
@@ -27,7 +28,7 @@ export class StaffDatasourceImpl implements StaffDatasource {
 
         }catch(error) {
             if (error instanceof CustomError) throw error;
-            throw CustomError.internalServerError()
+            throw CustomError.internalServerError();
         }
     }
 
@@ -48,7 +49,7 @@ export class StaffDatasourceImpl implements StaffDatasource {
 
         }catch(error) {
             if (error instanceof CustomError) throw error;
-            throw CustomError.internalServerError()
+            throw CustomError.internalServerError();
         }
     }
 
@@ -66,8 +67,60 @@ export class StaffDatasourceImpl implements StaffDatasource {
 
         }catch(error) {
             if (error instanceof CustomError) throw error;
-            throw CustomError.internalServerError()
+            throw CustomError.internalServerError();
         }
     }
 
+    async delete(staffDto: DeleteStaffDto): Promise<StaffEntity | null> {
+        const { id, exit_reason } = staffDto;
+        try {
+            const staff = await prisma.staff.findFirst({ where: { id }});
+            if (!staff) throw CustomError.badRequest('Invalid credentionals');
+
+            const formerStaff = new FormerStaffEntity (staff.id, staff.name, staff.email,
+            staff.phone_number, staff.job_title, new Date(), exit_reason);
+
+            await prisma.formerStaff.create({
+                data: formerStaff
+            });
+
+            await prisma.staff.delete({where: { id }});
+
+            return StaffMapper.staffEntityFromObject(staff!);
+        } catch(error) {
+            console.log(error)
+            if (error instanceof CustomError) throw error;
+            throw CustomError.internalServerError();
+        }
+    }
+
+    async getAll(staffDto: GetAllStaffDto): Promise<StaffEntity[] | null> {
+        try {
+            const offset = (staffDto.page! - 1) * staffDto.limit!;
+            const staff = await prisma.staff.findMany({
+            skip: offset,
+            take: staffDto.limit,
+            });
+            return staff;
+        } catch(error) {
+            console.log(error)
+            if (error instanceof CustomError) throw error;
+            throw CustomError.internalServerError();
+        }
+    }
+
+    async getAllFormer(staffDto: GetAllStaffDto): Promise<FormerStaffEntity[] | null> {
+        try {
+            const offset = (staffDto.page! - 1) * staffDto.limit!;
+            const staff = await prisma.formerStaff.findMany({
+            skip: offset,
+            take: staffDto.limit,
+            });
+            return staff;
+        } catch(error) {
+            console.log(error)
+            if (error instanceof CustomError) throw error;
+            throw CustomError.internalServerError();
+        }
+    }
 }
