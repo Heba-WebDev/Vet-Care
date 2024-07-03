@@ -1,9 +1,20 @@
 import { Request, Response } from 'express';
-import { LoginStaff, RegisterStaff, RegisterStaffDto, StaffRepository } from '../domain';
+import {
+LoginStaff,
+RegisterStaff,
+DeleteStaff,
+VerifyStaff,
+GetAllStaff,
+LoginStaffDto,
+RegisterStaffDto,
+VerifyStaffDto,
+DeleteStaffDto,
+StaffRepository
+} from '../domain';
 import { CustomError } from '../../../domain';
-import { LoginStaffDto } from '../domain/dtos/login-staff.dto';
-import { VerifyStaffDto } from '../domain/dtos/verify-staff.dto';
-import { VerifyStaff } from '../domain/use-cases/verify-staff.use-case';
+import { GetAllStaffDto } from '../domain/dtos/get-staff.dto';
+import { GetAllFormerStaff } from '../domain/use-cases/get-former-staff.use-case';
+
 
 
 export class StaffController {
@@ -42,6 +53,30 @@ export class StaffController {
                 const [error, staffDto] = VerifyStaffDto.verify(req.body);
                 if (error) return res.status(400).send({ error });
                 new VerifyStaff(this.staffRepo).execute(staffDto!)
+                .then((data) => res.json(data))
+                .catch((err) => this.handleError(err, res));
+        }
+
+        deleteStaff = (req: Request, res: Response) => {
+                const [error, staffDto] = DeleteStaffDto.delete(req.body);
+                if (error) return res.status(400).send({ error });
+                new DeleteStaff(this.staffRepo).execute(staffDto!)
+                .then((data) => res.json(data))
+                .catch((err) => this.handleError(err, res));
+        }
+
+        getAllStaff = (req: Request, res: Response) => {
+                const [error, staffDto] = GetAllStaffDto.get(req.query);
+                if (error) return res.status(400).send({ error });
+                new GetAllStaff(this.staffRepo).execute(staffDto!)
+                .then((data) => res.json(data))
+                .catch((err) => this.handleError(err, res));
+        }
+
+        getAllFormerStaff = (req: Request, res: Response) => {
+                const [error, staffDto] = GetAllStaffDto.get(req.query);
+                if (error) return res.status(400).send({ error });
+                new GetAllFormerStaff(this.staffRepo).execute(staffDto!)
                 .then((data) => res.json(data))
                 .catch((err) => this.handleError(err, res));
         }
