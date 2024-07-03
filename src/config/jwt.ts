@@ -1,14 +1,10 @@
 import jwt from 'jsonwebtoken';
 import { envs } from './envs';
+import { payload } from '../interfaces';
 
 
 const JWT_SECRET_KEY = envs.JWT_SECRET_KEY;
 
-type payload = {
-    id: string;
-    permission_type: string;
-    job_title: string;
-}
 
 export class JwtAdapter {
     static async generateToken(
