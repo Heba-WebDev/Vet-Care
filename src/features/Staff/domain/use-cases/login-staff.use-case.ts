@@ -14,10 +14,7 @@ export class LoginStaff implements LoginStaffUseCase {
 
     async execute(loginStaff: LoginStaffDto): Promise<any> {
         const staff = await this.repo.login(loginStaff);
-        const token = await this.signToken({
-            id: staff?.id!,
-            permission_type: staff?.permission_type!,
-            job_title: staff?.job_title! });
+        const token = await this.signToken({id: staff?.id!, job_title: staff?.job_title!, permission_type: staff?.permission_type!});
         if (!token) throw CustomError.internalServerError('Internal server error');
         return {
             token,

@@ -13,11 +13,7 @@ export class RegisterStaff implements RegisterStaffUseCase {
     ) {}
     public async execute(registerStaff: RegisterStaffDto): Promise<any> {
         const staff = await this.repo.register(registerStaff);
-        const token = await this.signToken({
-            id: staff!.id,
-            permission_type: staff?.permission_type!,
-            job_title: staff?.job_title!
-        }, '2h');
+        const token = await this.signToken({ id: staff!.id, job_title: staff?.job_title!, permission_type: staff?.permission_type! });
         if (!token) throw CustomError.internalServerError('Internal server error');
         return {
             token,
