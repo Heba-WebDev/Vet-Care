@@ -1,5 +1,6 @@
 import {Request, Response, NextFunction } from 'express';
 import { JwtAdapter } from '../../config';
+import { payload } from '../../interfaces';
 
 export class AuthMiddlewear {
     static async validateJwt(req: Request, res: Response, next: NextFunction) {
@@ -10,11 +11,20 @@ export class AuthMiddlewear {
         const token = authorization.split(' ').at(1) || '';
 
         try {
-            const payload = await JwtAdapter.validateToken<{id: string}>(token);
+            const payload = await JwtAdapter.validateToken<payload>(token);
             if (!payload) return res.status(401).json({ error: 'Invalid token'});
-            
+            req.body.payload = payload;
         }catch(error) {
+            console.log(error);
+            return res.status(500).json({error: 'Internal server error'});
+        }
+        next();
+    }
 
+    static async authorized(req: Request, res: Response, next: NextFunction) {
+        const payload: payload = req.body.payload;
+         if(payload.permission_type !== 'Admin' || (payload?.job_title !== "HR" && payload?.job_title !== "Manager")) {
+            return res.status(401).json({ error: 'Unauthorized to perform this action'});
         }
         next();
     }
