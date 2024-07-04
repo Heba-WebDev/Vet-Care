@@ -9,15 +9,12 @@ import { StaffRepository } from "../repositories";
 export class RegisterStaff implements RegisterStaffUseCase {
     constructor(
         private readonly repo: StaffRepository,
-        private readonly signToken: SignToken = JwtAdapter.generateToken,
     ) {}
     public async execute(registerStaff: RegisterStaffDto): Promise<any> {
         const staff = await this.repo.register(registerStaff);
-        const token = await this.signToken({ id: staff!.id, job_title: staff?.job_title!, permission_type: staff?.permission_type! });
-        if (!token) throw CustomError.internalServerError('Internal server error');
         return {
-            token,
-            user: staff
+            message: 'Successfully registered',
+            data: staff
         }
     }
 
