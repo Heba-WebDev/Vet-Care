@@ -1,5 +1,6 @@
 import { payload } from "../../../../interfaces";
 import { RegisterStaffDto, LoginStaffDto, VerifyStaffDto, DeleteStaffDto, GetAllStaffDto } from "../dtos";
+import { UpdateStaffDto } from "../dtos/update-staff.dto";
 
 export type SignToken = (payload: payload, duration?: string) => Promise<string | null>;
 
@@ -26,4 +27,8 @@ export interface GetAllStaffUseCase {
 
 export interface GetAllFormerStaffUseCase {
     execute(getAllStaff: GetAllStaffDto): Promise<any>;
+}
+
+export interface UpdateStaffUseCase {
+    execute(updateStaff: UpdateStaffDto): Promise<any>;
 }
