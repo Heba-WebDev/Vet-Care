@@ -17,8 +17,9 @@ export class LoginStaff implements LoginStaffUseCase {
         const token = await this.signToken({id: staff?.id!, job_title: staff?.job_title!, permission_type: staff?.permission_type!});
         if (!token) throw CustomError.internalServerError('Internal server error');
         return {
+            message: 'Successfully logged in',
             token,
-            user: staff
+            data: staff
         }
     }
 }
