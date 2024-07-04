@@ -1,4 +1,13 @@
-import { DeleteStaffDto, LoginStaffDto, RegisterStaffDto, GetAllStaffDto, StaffDatasource, StaffRepository, VerifyStaffDto } from "../../domain";
+import {
+    DeleteStaffDto,
+    UpdateStaffDto,
+    LoginStaffDto,
+    RegisterStaffDto,
+    GetAllStaffDto,
+    StaffDatasource,
+    StaffRepository,
+    VerifyStaffDto
+} from "../../domain";
 import { StaffEntity } from "../../domain/entities";
 import { FormerStaffEntity } from "../../domain/entities/former-staff.entity";
 
@@ -36,4 +45,9 @@ export class StaffRepositoryImpl extends StaffRepository {
     getAllFormer(staffDto: GetAllStaffDto): Promise<FormerStaffEntity[] | null> {
         return this.datasource.getAllFormer(staffDto);
     }
+
+    update(staffDto: UpdateStaffDto): Promise<StaffEntity | null> {
+        return this.datasource.update(staffDto);
+    }
+
 }
