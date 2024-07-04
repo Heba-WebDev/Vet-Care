@@ -3,7 +3,7 @@ import { JwtAdapter } from '../../config';
 import { payload } from '../../interfaces';
 
 export class AuthMiddlewear {
-    static async validateJwt(req: Request, res: Response, next: NextFunction) {
+    static async authenticated(req: Request, res: Response, next: NextFunction) {
         const authorization = req.header('Authorization') || req.header('authorization');
         if (!authorization) return res.status(400).json({ error: 'No token provided'});
         if (!authorization.startsWith('Bearer '))
@@ -28,4 +28,12 @@ export class AuthMiddlewear {
         }
         next();
     }
+    static async updateAuthorized(req: Request, res: Response, next: NextFunction) {
+        const payload: payload = req.body.payload;
+         if(payload.id !== req.body.id) {
+            return res.status(401).json({ error: 'Unauthorized to perform this action'});
+        }
+        next();
+    }
+
 }
