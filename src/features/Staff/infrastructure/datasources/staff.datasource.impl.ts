@@ -1,7 +1,15 @@
 import { bcryptAdapter } from "../../../../config";
 import { prisma } from "../../../../data";
 import { CustomError } from "../../../../domain";
-import { LoginStaffDto, RegisterStaffDto, StaffDatasource, VerifyStaffDto, DeleteStaffDto, GetAllStaffDto } from "../../domain";
+import {
+    LoginStaffDto,
+    RegisterStaffDto,
+    StaffDatasource,
+    VerifyStaffDto,
+    DeleteStaffDto,
+    GetAllStaffDto,
+    UpdateStaffDto
+} from "../../domain";
 import { StaffEntity } from "../../domain/entities";
 import { FormerStaffEntity } from "../../domain/entities/former-staff.entity";
 import { StaffMapper } from "../mapper";
@@ -36,8 +44,8 @@ export class StaffDatasourceImpl implements StaffDatasource {
         const { email, password } = staffDto;
         try {
             const exists = await prisma.staff.findFirst({where: { email }});
-
             if (!exists) throw CustomError.badRequest('Invalid credentionals');
+            if (!exists.verified) throw CustomError.unauthorized('Account has to be verified');
             const passwordMatch = bcryptAdapter.compare(password, exists.password!);
             if (!passwordMatch) throw CustomError.badRequest('Invalid credentionals');
             const staff = await prisma.staff.findFirst({
@@ -118,6 +126,29 @@ export class StaffDatasourceImpl implements StaffDatasource {
             });
             return staff;
         } catch(error) {
+            console.log(error)
+            if (error instanceof CustomError) throw error;
+            throw CustomError.internalServerError();
+        }
+    }
+
+    async update(staffDto: UpdateStaffDto): Promise<StaffEntity | null> {
+        const { id, name, email, password, phone_number } = staffDto;
+        try {
+            const exists = await prisma.staff.findFirst({where: { id }});
+            if (!exists) throw CustomError.badRequest('Invalid credentionals');
+            if (!exists.verified) throw CustomError.unauthorized('Account has to be verified');
+            if (email) await prisma.staff.update({ data: {email}, where: {id} });
+            if (phone_number) await prisma.staff.update({ data: {phone_number}, where: {email} });
+            if (name) await prisma.staff.update({ data: {name}, where: {email} });
+            if(password) {
+                const hashedPassword = bcryptAdapter.hash(password);
+                await prisma.staff.update({ data: {password: hashedPassword}, where: {email} });
+            }
+            const staff = await prisma.staff.findFirst({ where: { id }});
+            return StaffMapper.staffEntityFromObject(staff!);
+
+        }catch(error) {
             console.log(error)
             if (error instanceof CustomError) throw error;
             throw CustomError.internalServerError();
