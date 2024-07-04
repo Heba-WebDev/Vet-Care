@@ -14,6 +14,8 @@ StaffRepository
 import { CustomError } from '../../../domain';
 import { GetAllStaffDto } from '../domain/dtos/get-staff.dto';
 import { GetAllFormerStaff } from '../domain/use-cases/get-former-staff.use-case';
+import { UpdateStaffDto } from '../domain/dtos/update-staff.dto';
+import { UpdateStaff } from '../domain/use-cases/update-staff.use-case';
 
 
 
@@ -77,6 +79,14 @@ export class StaffController {
                 const [error, staffDto] = GetAllStaffDto.get(req.query);
                 if (error) return res.status(400).send({ error });
                 new GetAllFormerStaff(this.staffRepo).execute(staffDto!)
+                .then((data) => res.json(data))
+                .catch((err) => this.handleError(err, res));
+        }
+
+        updateStaff = (req: Request, res: Response) => {
+                const [error, staffDto] = UpdateStaffDto.upate(req.body);
+                if (error) return res.status(400).send({ error });
+                new UpdateStaff(this.staffRepo).execute(staffDto!)
                 .then((data) => res.json(data))
                 .catch((err) => this.handleError(err, res));
         }
