@@ -9,6 +9,10 @@ export const updateSchema = joi.object({
       "string.empty": "A valid id is required.",
       "string.id": "A valid id is required.",
     }),
+    name: joi.string().optional().messages({
+     "string.empty": "Full name is required.",
+    "string.required": "Full name is required.",
+    }),
     email: joi
     .string()
     .email()
