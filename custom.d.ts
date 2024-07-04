@@ -1,6 +1,6 @@
 declare namespace Express {
     interface Request {
-        decodedToken?: {
+        payload?: {
             id: string,
             permission_type: string,
             job_title: string,
