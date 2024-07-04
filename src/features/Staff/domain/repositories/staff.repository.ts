@@ -1,4 +1,4 @@
-import { LoginStaffDto, RegisterStaffDto, VerifyStaffDto, DeleteStaffDto, GetAllStaffDto } from "../dtos";
+import { LoginStaffDto, RegisterStaffDto, VerifyStaffDto, DeleteStaffDto, GetAllStaffDto, UpdateStaffDto } from "../dtos";
 import { FormerStaffEntity } from "../entities/former-staff.entity";
 import { StaffEntity } from "../entities/staff.entity";
 
@@ -10,4 +10,6 @@ export abstract class StaffRepository {
     abstract delete(staffDto: DeleteStaffDto):Promise<StaffEntity | null>;
     abstract getAll(staffDto: GetAllStaffDto):Promise<StaffEntity[] | null>;
     abstract getAllFormer(staffDto: GetAllStaffDto):Promise<FormerStaffEntity[] | null>;
+    abstract update(staffDto: UpdateStaffDto): Promise<StaffEntity | null>;
+
 }
