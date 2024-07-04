@@ -13,10 +13,11 @@ export class StaffRoutes {
 
         router.post('/register', controller.registerStaff)
         router.post('/login', controller.loginStaff)
-        router.patch('/verify', [AuthMiddlewear.validateJwt, AuthMiddlewear.authorized], controller.verifyStaff)
-        router.delete('/delete', [AuthMiddlewear.validateJwt, AuthMiddlewear.authorized], controller.deleteStaff)
-        router.get('/current', [AuthMiddlewear.validateJwt], controller.getAllStaff)
-        router.get('/former', [AuthMiddlewear.validateJwt, AuthMiddlewear.authorized], controller.getAllFormerStaff)
+        router.patch('/verify', [AuthMiddlewear.authenticated, AuthMiddlewear.authorized], controller.verifyStaff)
+        router.delete('/delete', [AuthMiddlewear.authenticated, AuthMiddlewear.authorized], controller.deleteStaff)
+        router.get('/current', [AuthMiddlewear.authenticated], controller.getAllStaff)
+        router.get('/former', [AuthMiddlewear.authenticated, AuthMiddlewear.authorized], controller.getAllFormerStaff)
+        router.patch('/update', [AuthMiddlewear.authenticated, AuthMiddlewear.updateAuthorized], controller.updateStaff)
         return router;
     }
 }
