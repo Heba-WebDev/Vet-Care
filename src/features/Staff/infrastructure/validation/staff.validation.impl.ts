@@ -1,11 +1,19 @@
-import { RegisterStaffDto } from "../../domain";
-import { DeleteStaffDto } from "../../domain/dtos/delete-staff.dto";
-import { GetAllStaffDto } from "../../domain/dtos/get-staff.dto";
-import { LoginStaffDto } from "../../domain/dtos/login-staff.dto";
-import { UpdateStaffDto } from "../../domain/dtos/update-staff.dto";
-import { VerifyStaffDto } from "../../domain/dtos/verify-staff.dto";
+import {
+    RegisterStaffDto,
+    DeleteStaffDto,
+    GetAllStaffDto,
+    LoginStaffDto,
+    UpdateStaffDto,
+    VerifyStaffDto
+} from "../../domain";
 
-import { registerSchema, loginSchema, deleteSchema, verifySchema, getAllSchema, updateSchema } from "./joi-schemas";
+import {
+    registerSchema,
+    loginSchema,
+    deleteSchema,
+    verifySchema,
+    getAllSchema,
+    updateSchema } from "./joi-schemas";
 
 
 export class StaffInputValidation {

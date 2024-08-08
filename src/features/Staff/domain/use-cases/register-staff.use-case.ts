@@ -1,7 +1,5 @@
-import { JwtAdapter } from "../../../../config";
-import { CustomError } from "../../../../domain";
 import { RegisterStaffDto } from "../dtos";
-import { RegisterStaffUseCase, SignToken } from "../interfaces";
+import { RegisterStaffUseCase } from "../interfaces";
 import { StaffRepository } from "../repositories";
 
 
