@@ -1,4 +1,5 @@
 # Vet-Care
+🚧 version 2 of the API is currently under development. Kindly check v1 branch to check the full features 🚧
 
 ## _Introduction_
 
