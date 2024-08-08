@@ -11,13 +11,13 @@ export class StaffRoutes {
         const repository = new StaffRepositoryImpl(datasource);
         const controller = new StaffController(repository);
 
-        router.post('/register', controller.registerStaff)
-        router.post('/login', controller.loginStaff)
-        router.patch('/verify', [AuthMiddlewear.authenticated, AuthMiddlewear.authorized], controller.verifyStaff)
-        router.delete('/delete', [AuthMiddlewear.authenticated, AuthMiddlewear.authorized], controller.deleteStaff)
-        router.get('/current', [AuthMiddlewear.authenticated], controller.getAllStaff)
-        router.get('/former', [AuthMiddlewear.authenticated, AuthMiddlewear.authorized], controller.getAllFormerStaff)
-        router.patch('/update', [AuthMiddlewear.authenticated, AuthMiddlewear.updateAuthorized], controller.updateStaff)
+        router.post('/register', controller.register)
+        router.post('/login', controller.login)
+        router.patch('/verify', [AuthMiddlewear.authenticated, AuthMiddlewear.authorized], controller.verify)
+        router.delete('/delete', [AuthMiddlewear.authenticated, AuthMiddlewear.authorized], controller.delete)
+        router.get('/current', [AuthMiddlewear.authenticated], controller.getAll)
+        router.get('/former', [AuthMiddlewear.authenticated, AuthMiddlewear.authorized], controller.getAllFormer)
+        router.patch('/update', [AuthMiddlewear.authenticated, AuthMiddlewear.updateAuthorized], controller.update)
         return router;
     }
 }
