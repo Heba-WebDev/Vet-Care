@@ -1,3 +1,4 @@
+import { PrismaClient } from "@prisma/client";
 import { bcryptAdapter } from "../../../../config";
 import { prisma } from "../../../../data";
 import { CustomError } from "../../../../domain";
@@ -16,7 +17,7 @@ import { StaffMapper } from "../mapper";
 
 
 export class StaffDatasourceImpl implements StaffDatasource {
-    private readonly _prisma;
+    private readonly _prisma: PrismaClient;
     constructor(orm: any = prisma) {
         this._prisma = orm;
     }
