@@ -12,7 +12,10 @@ export const prismaMock = {
     jobs: {
         findFirst: vi.fn()
     },
-    veterinarians: {},
+    veterinarians: {
+        findFirst: vi.fn(),
+        create: vi.fn(),
+    },
     owners: {},
     pets: {},
     animals: {},
