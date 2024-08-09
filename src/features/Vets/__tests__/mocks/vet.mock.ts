@@ -15,7 +15,7 @@ export const vetEntityVerifiedMock = new VetEntity(
     '1',
     vetRegisterDtoMock.name,
     vetRegisterDtoMock.job_title,
-    'Veterinarian',
+    'Staff',
     vetRegisterDtoMock.email,
     vetRegisterDtoMock.phone_number,
     true
@@ -25,7 +25,7 @@ export const vetEntityUnveriviedMock = new VetEntity(
     '1',
     vetRegisterDtoMock.name,
     vetRegisterDtoMock.job_title,
-    'Veterinarian',
+    'Staff',
     vetRegisterDtoMock.email,
     vetRegisterDtoMock.phone_number,
     false
