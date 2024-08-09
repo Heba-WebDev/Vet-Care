@@ -15,6 +15,7 @@ export const prismaMock = {
     veterinarians: {
         findFirst: vi.fn(),
         create: vi.fn(),
+        update: vi.fn(),
     },
     owners: {},
     pets: {},
