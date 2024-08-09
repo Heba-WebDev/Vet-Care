@@ -19,10 +19,10 @@ export class VetsDatasourceImpl implements VetsDatasource {
         try {
             const exists = await this._prisma.veterinarians.findFirst({ where: { email }});
             if (exists) throw CustomError.badRequest('Provide a different email');
-            const job = await this._prisma.jobs.findFirst({where: {title: job_title}});
-            if (!job) throw CustomError.badRequest('Provide a valid job title [Veterinarian, Asistant or Technician]');
             const phoneExists = await this._prisma.veterinarians.findFirst({where: {phone_number}});
             if (phoneExists) throw CustomError.badRequest('Provide a different phone number');
+            const job = await this._prisma.jobs.findFirst({where: {title: job_title}});
+            if (!job) throw CustomError.badRequest('Provide a valid job title [Veterinarian, Asistant or Technician]');
             const hashedPassword = bcryptAdapter.hash(password);
             const vet = await this._prisma.veterinarians.create({
                 data: {
