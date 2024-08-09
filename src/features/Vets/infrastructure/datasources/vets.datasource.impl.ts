@@ -6,6 +6,7 @@ import { prisma } from "../../../../data";
 import { CustomError } from "../../../../domain";
 import { bcryptAdapter } from "../../../../config";
 import { VetMapper } from "../mappers/vet.mapper";
+import { VerifyVetDto } from "../../domain/dtos/verify-vets.dto";
 
 
 export class VetsDatasourceImpl implements VetsDatasource {
@@ -31,6 +32,23 @@ export class VetsDatasourceImpl implements VetsDatasource {
             });
             return VetMapper.vetEntityFromObject(vet);
         } catch(error) {
+            if (error instanceof CustomError) throw error;
+            throw CustomError.internalServerError();
+        }
+    }
+
+    async verify(vetsDto: VerifyVetDto): Promise<VetEntity | null> {
+        const { email } = vetsDto;
+        try {
+            const exists = await this._prisma.veterinarians.findFirst({ where: { email }});
+            if (!exists) throw CustomError.badRequest('No vet found');
+            if (exists.verified) throw CustomError.badRequest('Vet member already verified');
+            const vet = await this._prisma.veterinarians.update({
+                where: { email },
+                data: { verified: true }
+            });
+            return VetMapper.vetEntityFromObject(vet!);
+        }catch(error) {
             if (error instanceof CustomError) throw error;
             throw CustomError.internalServerError();
         }
