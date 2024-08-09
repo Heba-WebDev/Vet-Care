@@ -1,6 +1,5 @@
-import { RegisterVetsDto } from "../../domain";
+import { RegisterVetsDto, VerifyVetDto } from "../../domain";
 import { VetsDatasource } from "../../domain/datasources/vets.datasource";
-import { VerifyVetDto } from "../../domain/dtos/verify-vets.dto";
 import { VetEntity } from "../../domain/entities";
 import { VetsRepository } from "../../domain/repositories";
 

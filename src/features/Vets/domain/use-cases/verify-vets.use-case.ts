@@ -1,4 +1,4 @@
-import { VerifyVetDto } from "../dtos/verify-vets.dto";
+import { VerifyVetDto } from "../dtos";
 import { VerifyVetsUseCase } from "../interfaces";
 import { VetsRepository } from "../repositories";
 

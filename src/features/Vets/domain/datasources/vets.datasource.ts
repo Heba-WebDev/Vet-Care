@@ -1,5 +1,4 @@
-import { RegisterVetsDto } from "../dtos";
-import { VerifyVetDto } from "../dtos/verify-vets.dto";
+import { RegisterVetsDto, VerifyVetDto } from "../dtos";
 import { VetEntity } from "../entities";
 
 export abstract class VetsDatasource {

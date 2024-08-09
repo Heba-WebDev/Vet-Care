@@ -1,6 +1,5 @@
 import { payload } from "../../../../interfaces";
-import { RegisterVetsDto } from "../dtos";
-import { VerifyVetDto } from "../dtos/verify-vets.dto";
+import { RegisterVetsDto, VerifyVetDto } from "../dtos";
 export type SignToken = (payload: payload, duration?: string) => Promise<string | null>;
 
 

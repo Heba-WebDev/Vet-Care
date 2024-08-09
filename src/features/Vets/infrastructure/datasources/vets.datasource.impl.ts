@@ -1,12 +1,11 @@
 import { VetEntity } from "../../domain/entities";
-import { RegisterVetsDto } from "../../domain";
+import { RegisterVetsDto, VerifyVetDto } from "../../domain";
 import { VetsDatasource } from "../../domain/datasources/vets.datasource";
 import { PrismaClient } from "@prisma/client";
 import { prisma } from "../../../../data";
 import { CustomError } from "../../../../domain";
 import { bcryptAdapter } from "../../../../config";
 import { VetMapper } from "../mappers/vet.mapper";
-import { VerifyVetDto } from "../../domain/dtos/verify-vets.dto";
 
 
 export class VetsDatasourceImpl implements VetsDatasource {
