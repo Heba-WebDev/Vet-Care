@@ -3,6 +3,8 @@ import { BaseController } from "../../../presentation/base.controller";
 import { RegisterVetsDto } from "../domain/dtos/register-vets.dto";
 import { RegisterVets } from "../domain/use-cases";
 import { VetsRepository } from "../domain/repositories";
+import { VerifyVetDto } from "../domain/dtos/verify-vets.dto";
+import { VerifyVets } from "../domain/use-cases/verify-vets.use-case";
 
 
 export class VetsController extends BaseController {
@@ -20,7 +22,13 @@ export class VetsController extends BaseController {
         .catch((error) => this.handleError(error, res))
     }
 
-    verify = (req: Request, res: Response) => {}
+    verify = (req: Request, res: Response) => {
+        const [error, vetsDto] = VerifyVetDto.verify(req.body);
+        if (error) return res.status(400).send({ error });
+        new VerifyVets(this.vetsRepo).execute(vetsDto!)
+        .then((data) => res.json(data))
+        .catch((error) => this.handleError(error, res))
+    }
 
     login = (req: Request, res: Response) => {}
 

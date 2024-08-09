@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { VetsDatasourceImpl } from '../infrastructure';
 import { VetsRepositoryImpl } from '../infrastructure/repositories';
 import { VetsController } from './controller.vets';
+import { AuthMiddlewear } from '../../../presentation';
 
 
 export class VetsRoutes {
@@ -13,6 +14,7 @@ export class VetsRoutes {
         const controller = new VetsController(repository);
 
         router.post('/register', controller.register)
+        router.patch('/verify', [AuthMiddlewear.authenticated, AuthMiddlewear.authorized], controller.verify)
 
         return router;
     }
