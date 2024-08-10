@@ -1,5 +1,6 @@
 import { LoginVetsDto, RegisterVetsDto } from "../../domain";
 import { VetEntity } from "../../domain/entities";
+import { FormerVetEntity } from "../../domain/entities/former-vet.entity";
 
 
 export const vetRegisterDtoMock: RegisterVetsDto = {
@@ -35,3 +36,13 @@ export const vetEntityUnveriviedMock = new VetEntity(
     vetRegisterDtoMock.phone_number,
     false
 );
+
+export const formerVetMock = new FormerVetEntity(
+    vetEntityVerifiedMock.id,
+    vetEntityVerifiedMock.name,
+    vetEntityVerifiedMock.email,
+    vetEntityVerifiedMock.phone_number,
+    vetEntityVerifiedMock.job_title,
+    new Date(),
+    'Contract ended'
+)

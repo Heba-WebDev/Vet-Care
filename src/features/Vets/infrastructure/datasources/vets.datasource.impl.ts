@@ -1,11 +1,12 @@
 import { VetEntity } from "../../domain/entities";
-import { LoginVetsDto, RegisterVetsDto, VerifyVetDto } from "../../domain";
+import { DeleteVetsDto, LoginVetsDto, RegisterVetsDto, VerifyVetDto } from "../../domain";
 import { VetsDatasource } from "../../domain/datasources/vets.datasource";
 import { PrismaClient } from "@prisma/client";
 import { prisma } from "../../../../data";
 import { CustomError } from "../../../../domain";
 import { bcryptAdapter, JwtAdapter } from "../../../../config";
 import { VetMapper } from "../mappers/vet.mapper";
+import { FormerVetEntity } from "../../domain/entities/former-vet.entity";
 
 
 export class VetsDatasourceImpl implements VetsDatasource {
@@ -66,5 +67,34 @@ export class VetsDatasourceImpl implements VetsDatasource {
             if (error instanceof CustomError) throw error;
             throw CustomError.internalServerError();
         }
+    }
+
+    async delete(vetsDto: DeleteVetsDto): Promise<VetEntity | null> {
+        const { id, exit_reason } = vetsDto;
+        return this._prisma.$transaction(async (prisma) => {
+        const vet = await prisma.veterinarians.findFirst({ where: { id } });
+        if (!vet) throw CustomError.badRequest('Invalid credentials');
+        // Only verified vets are moved to the formerVets table
+        if (vet.verified) {
+            const formerVet = new FormerVetEntity(
+            vet.id,
+            vet.name,
+            vet.email,
+            vet.phone_number,
+            vet.job_title,
+            new Date(),
+            exit_reason
+        );
+        await prisma.formerVets.create({ data: formerVet });
+        }
+        // verified and unverified accounts can be safely deleted
+        await prisma.veterinarians.delete({ where: { id } });
+
+        return VetMapper.vetEntityFromObject(vet);
+        }).catch(error => {
+        console.log(error);
+        if (error instanceof CustomError) throw error;
+        throw CustomError.internalServerError();
+        });
     }
 }

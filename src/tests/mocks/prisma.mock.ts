@@ -16,6 +16,7 @@ export const prismaMock = {
         findFirst: vi.fn(),
         create: vi.fn(),
         update: vi.fn(),
+        delete: vi.fn(),
     },
     owners: {},
     pets: {},
@@ -30,7 +31,10 @@ export const prismaMock = {
         create: vi.fn(),
         findMany: vi.fn(),
     },
-    formerVets: {},
+    formerVets: {
+        create: vi.fn(),
+        findMany: vi.fn(),
+    },
     // $on: vi.fn(),
     // $connect: vi.fn(),
     // $disconnect: vi.fn(),
@@ -39,6 +43,6 @@ export const prismaMock = {
     // $executeRawUnsafe: vi.fn(),
     // $queryRaw: vi.fn(),
     // $queryRawUnsafe: vi.fn(),
-    // $transaction: vi.fn(),
+    $transaction: vi.fn(),
     // $extends: vi.fn(),
 }

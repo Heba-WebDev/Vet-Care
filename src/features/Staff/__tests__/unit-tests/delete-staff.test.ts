@@ -25,6 +25,9 @@ describe('Staff account deletion', () => {
       prismaMock.staff.findFirst.mockResolvedValue(staffEntityMock);
       prismaMock.formerStaff.create.mockResolvedValue(formerStaffMock);
       prismaMock.staff.delete.mockResolvedValue(formerStaffMock);
+      prismaMock.$transaction.mockImplementation(async (callback) => {
+            return callback(prismaMock);
+        });
       StaffMapper.staffEntityFromObject(staffEntityMock);
       const result = await staffDatasource.delete(member);
       expect(typeof result).toEqual('object');
@@ -34,7 +37,10 @@ describe('Staff account deletion', () => {
 
    it('should throw an error if staff id is invalid', async() => {
     prismaMock.staff.findFirst.mockResolvedValue(null);
+    prismaMock.$transaction.mockImplementation(async (callback) => {
+      return callback(prismaMock);
+    });
     await expect(staffDatasource.delete({ id: 'fake-id', exit_reason: ''})).rejects
-    .toThrow(CustomError.badRequest('Invalid credentionals'));
+    .toThrow(CustomError.badRequest('Invalid credentials'));
    });
 });
