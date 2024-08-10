@@ -1,5 +1,5 @@
 import { payload } from "../../../../interfaces";
-import { RegisterVetsDto, VerifyVetDto, LoginVetsDto } from "../dtos";
+import { RegisterVetsDto, VerifyVetDto, LoginVetsDto, DeleteVetsDto } from "../dtos";
 export type SignToken = (payload: payload, duration?: string) => Promise<string | null>;
 
 
@@ -14,4 +14,8 @@ export interface VerifyVetsUseCase {
 
 export interface LoginVetsUseCase {
     execute( verifyVets: LoginVetsDto): Promise<any>;
+}
+
+export interface DeleteVetsUseCase {
+    execuse( deleteVets: DeleteVetsDto): Promise<any>
 }
