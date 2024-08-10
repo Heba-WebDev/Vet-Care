@@ -1,10 +1,10 @@
 import { VetEntity } from "../../domain/entities";
-import { RegisterVetsDto, VerifyVetDto } from "../../domain";
+import { LoginVetsDto, RegisterVetsDto, VerifyVetDto } from "../../domain";
 import { VetsDatasource } from "../../domain/datasources/vets.datasource";
 import { PrismaClient } from "@prisma/client";
 import { prisma } from "../../../../data";
 import { CustomError } from "../../../../domain";
-import { bcryptAdapter } from "../../../../config";
+import { bcryptAdapter, JwtAdapter } from "../../../../config";
 import { VetMapper } from "../mappers/vet.mapper";
 
 
@@ -47,6 +47,21 @@ export class VetsDatasourceImpl implements VetsDatasource {
                 data: { verified: true }
             });
             return VetMapper.vetEntityFromObject(vet!);
+        }catch(error) {
+            if (error instanceof CustomError) throw error;
+            throw CustomError.internalServerError();
+        }
+    }
+
+    async login(vetsDto: LoginVetsDto): Promise<VetEntity | null> {
+        const { email, password } = vetsDto;
+        try {
+            const exists = await this._prisma.veterinarians.findFirst({ where: { email } });
+            if (!exists) throw CustomError.badRequest('Invalid credentials');
+            if (!exists.verified) throw CustomError.unauthorized('Account has to be verified');
+            const passwordMatch = await bcryptAdapter.compare(password, exists.password);
+            if (!passwordMatch) throw CustomError.badRequest('Invalid credentials');
+            return VetMapper.vetEntityFromObject(exists);
         }catch(error) {
             if (error instanceof CustomError) throw error;
             throw CustomError.internalServerError();
