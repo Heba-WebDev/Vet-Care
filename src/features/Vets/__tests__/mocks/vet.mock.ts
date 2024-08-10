@@ -1,4 +1,4 @@
-import { RegisterVetsDto } from "../../domain";
+import { LoginVetsDto, RegisterVetsDto } from "../../domain";
 import { VetEntity } from "../../domain/entities";
 
 
@@ -8,6 +8,11 @@ export const vetRegisterDtoMock: RegisterVetsDto = {
     password: 'password123',
     phone_number: '1234567890',
     job_title: 'Veterinarian'
+}
+
+export const vetLoginDtoMock: LoginVetsDto = {
+    email: 'john.doe@example.com',
+    password: 'password123'
 }
 
 
