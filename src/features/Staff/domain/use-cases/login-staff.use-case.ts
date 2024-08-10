@@ -18,7 +18,7 @@ export class LoginStaff implements LoginStaffUseCase {
         if (!token) throw CustomError.internalServerError('Internal server error');
         return {
             message: 'Successfully logged in',
-            token,
+            access_token: token,
             data: staff
         }
     }
