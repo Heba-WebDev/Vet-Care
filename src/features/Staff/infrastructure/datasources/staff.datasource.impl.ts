@@ -86,25 +86,26 @@ export class StaffDatasourceImpl implements StaffDatasource {
 
     async delete(staffDto: DeleteStaffDto): Promise<StaffEntity | null> {
         const { id, exit_reason } = staffDto;
-        try {
-            const staff = await this._prisma.staff.findFirst({ where: { id }});
-            if (!staff) throw CustomError.badRequest('Invalid credentionals');
+        return this._prisma.$transaction(async (prisma) => {
+            const staff = await prisma.staff.findFirst({ where: { id }});
+            if (!staff) throw CustomError.badRequest('Invalid credentials');
+            // Only verified staff are moved to the formerStaff table
+            if (staff.verified) {
+                const formerStaff = new FormerStaffEntity (staff.id, staff.name, staff.email,
+                staff.phone_number, staff.job_title, new Date(), exit_reason);
 
-            const formerStaff = new FormerStaffEntity (staff.id, staff.name, staff.email,
-            staff.phone_number, staff.job_title, new Date(), exit_reason);
-
-            await this._prisma.formerStaff.create({
+                await prisma.formerStaff.create({
                 data: formerStaff
             });
-
-            await this._prisma.staff.delete({where: { id }});
+            }
+            // verified and unverified accounts can be safely deleted
+            await prisma.staff.delete({where: { id }});
 
             return StaffMapper.staffEntityFromObject(staff!);
-        } catch(error) {
-            console.log(error)
+        }).catch((error) => {
             if (error instanceof CustomError) throw error;
             throw CustomError.internalServerError();
-        }
+        })
     }
 
     async getAll(staffDto: GetAllStaffDto): Promise<StaffEntity[] | null> {
