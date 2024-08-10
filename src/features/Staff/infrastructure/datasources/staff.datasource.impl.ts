@@ -49,10 +49,10 @@ export class StaffDatasourceImpl implements StaffDatasource {
         const { email, password } = staffDto;
         try {
             const exists = await this._prisma.staff.findFirst({where: { email }});
-            if (!exists) throw CustomError.badRequest('Invalid credentionals');
+            if (!exists) throw CustomError.badRequest('Invalid credentials');
             if (!exists.verified) throw CustomError.unauthorized('Account has to be verified');
             const passwordMatch = bcryptAdapter.compare(password, exists.password!);
-            if (!passwordMatch) throw CustomError.badRequest('Invalid credentionals');
+            if (!passwordMatch) throw CustomError.badRequest('Invalid credentials');
             const staff = await this._prisma.staff.findFirst({
                 where: {
                     email

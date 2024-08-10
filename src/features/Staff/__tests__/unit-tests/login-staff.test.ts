@@ -7,8 +7,6 @@ import {
 } from '../../../../tests/mocks';
 import { bcryptAdapter } from '../../../../config';
 
-vi.mock('../../../../config')
-
 describe('Staff loggin in', () => {
     let staffDatasource: StaffDatasourceImpl;
 

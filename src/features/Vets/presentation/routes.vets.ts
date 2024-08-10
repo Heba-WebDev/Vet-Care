@@ -15,6 +15,7 @@ export class VetsRoutes {
 
         router.post('/register', controller.register)
         router.patch('/verify', [AuthMiddlewear.authenticated, AuthMiddlewear.authorized], controller.verify)
+        router.post('/login', controller.login)
 
         return router;
     }

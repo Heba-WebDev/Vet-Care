@@ -1,9 +1,5 @@
-
-import { RegisterVetsDto } from "../../domain/dtos/register-vets.dto";
-import { VerifyVetDto } from "../../domain/dtos/verify-vets.dto";
+import { RegisterVetsDto, VerifyVetDto } from "../../domain";
 import { registerSchema,verifySchema } from "./joi-schemas";
-
-
 
 export class StaffInputValidation {
     register(vetsDto: RegisterVetsDto): string | null {
