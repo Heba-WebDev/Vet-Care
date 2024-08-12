@@ -9,6 +9,9 @@ export class UpdateStaff implements UpdateStaffUseCase {
     ) {}
     async execute(updateStaff: UpdateStaffDto): Promise<any> {
         const staff = await this.repo.update(updateStaff);
-        return staff;
+        return {
+            message: "Account successfully updated",
+            data: staff
+        };
     }
 }
