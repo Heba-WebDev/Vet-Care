@@ -1,5 +1,4 @@
-import { DeleteSchema } from "../../infrastructure";
-
+import { VetsInputValidation } from "../../infrastructure";
 
 export class DeleteVetsDto {
     private constructor(
@@ -10,8 +9,8 @@ export class DeleteVetsDto {
     static delete(object: {[key: string]: any}): [string?, DeleteVetsDto?] {
         const { id, exit_reason } = object;
         const deleteDto = new DeleteVetsDto(id, exit_reason);
-        const { error } = DeleteSchema.validate(deleteDto);
-        if (error) return [error.message, undefined]
+        const error = new VetsInputValidation().delete(deleteDto);
+        if (error) return [error, undefined]
         return [undefined, deleteDto]
     }
 }

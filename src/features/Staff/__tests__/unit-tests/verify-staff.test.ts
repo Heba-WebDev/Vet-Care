@@ -38,7 +38,7 @@ describe('Staff verification', () => {
     });
 
     it('should throw an error if the staff member is already verified', async() => {
-        prismaMock.staff.findFirst.mockResolvedValueOnce(staffEntityUnveriviedMock); // account not verified
+        prismaMock.staff.findFirst.mockResolvedValueOnce(staffEntityMock); // account not verified
         await expect(staffDatasource.verify({ email: staffEntityMock.email })).rejects
         .toThrow(CustomError.badRequest('Staff member already verified'));
     })

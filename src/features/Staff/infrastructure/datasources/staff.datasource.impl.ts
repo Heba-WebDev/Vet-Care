@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { bcryptAdapter } from "../../../../config";
 import { prisma } from "../../../../data";
 import { CustomError } from "../../../../domain";
@@ -139,25 +139,40 @@ export class StaffDatasourceImpl implements StaffDatasource {
     }
 
     async update(staffDto: UpdateStaffDto): Promise<StaffEntity | null> {
-        const { id, name, email, password, phone_number } = staffDto;
+        const { id, email, password, phone_number } = staffDto;
         try {
-            const exists = await this._prisma.staff.findFirst({where: { id }});
-            if (!exists) throw CustomError.badRequest('Invalid credentionals');
+            const exists = await this._prisma.staff.findFirst({ where: { id } });
+            if (!exists) throw CustomError.badRequest('Invalid credentials');
             if (!exists.verified) throw CustomError.unauthorized('Account has to be verified');
-            if (email) await this._prisma.staff.update({ data: {email}, where: {id} });
-            if (phone_number) await this._prisma.staff.update({ data: {phone_number}, where: {email} });
-            if (name) await this._prisma.staff.update({ data: {name}, where: {email} });
-            if(password) {
-                const hashedPassword = bcryptAdapter.hash(password);
-                await this._prisma.staff.update({ data: {password: hashedPassword}, where: {email} });
-            }
-            const staff = await this._prisma.staff.findFirst({ where: { id }});
-            return StaffMapper.staffEntityFromObject(staff!);
 
-        }catch(error) {
-            console.log(error)
-            if (error instanceof CustomError) throw error;
-            throw CustomError.internalServerError();
-        }
+            /*
+            StaffUpdateInput ensures that you only update fields that exist in
+            the Staff model and that the values you provide are of the correct type.
+            Rerelated records can be updated as well.
+            */
+            const data: Prisma.StaffUpdateInput = {};
+
+            if (email) data.email = email;
+            if (phone_number) data.phone_number = phone_number;
+            if (password) {
+                data.password = await bcryptAdapter.hash(password);
+            }
+
+            // Only update if there's something to update
+            if (Object.keys(data).length > 0) {
+                await this._prisma.staff.update({
+                    data,
+                    where: { id },
+                });
+            }
+
+            const staff = await this._prisma.staff.findFirst({ where: { id } });
+                return StaffMapper.staffEntityFromObject(staff!);
+        } catch (error) {
+                console.log(error);
+                if (error instanceof CustomError) throw error;
+                    throw CustomError.internalServerError();
+            }
     }
+
 }

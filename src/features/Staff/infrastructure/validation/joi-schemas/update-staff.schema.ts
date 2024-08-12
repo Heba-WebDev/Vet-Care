@@ -23,17 +23,16 @@ export const updateSchema = joi.object({
       "string.optional": "A valid email is required.",
     }),
   password: joi
-    .string()
-    .min(6)
-    .pattern(new RegExp("^[a-zA-Z0-9]{6,30}$"))
-    .optional()
-    .messages({
-      "string.empty": "A valid password is required.",
-      "string.required": "A valid password is required.",
-      "string.min": "Password must have at least 6 characters.",
-      "string.pattern": "A password must be of 6 characters or more.",
-      "string.optional": "A valid password is required.",
-    }),
+        .string()
+        .min(6)
+        .pattern(new RegExp("^[a-zA-Z0-9]{6,30}$"))
+        .optional()
+        .messages({
+            "string.empty": "A valid password is required.",
+            "string.required": "A valid password is required.",
+            "string.min": "Password must have at least 6 characters.",
+            "string.pattern": "A password must be of 6 characters or more.",
+        }),
     phone_number: joi.string().pattern(new RegExp("^[\\d\\s-]*$")).min(6).optional().messages({
       "string.empty": "A valid phone number is required.",
       "string.required": "A valid phone number is required.",

@@ -1,4 +1,5 @@
-import { loginSchema } from "../../infrastructure";
+import { VetsInputValidation } from "../../infrastructure";
+
 
 export class LoginVetsDto {
     private constructor(
@@ -9,8 +10,8 @@ export class LoginVetsDto {
     static login(object: {[key: string]: any}): [string?, LoginVetsDto?] {
         const { email, password } = object;
         const loginDto = new LoginVetsDto(email, password);
-        const { error } = loginSchema.validate(loginDto);
-        if (error) return [error.message, undefined]
+        const error = new VetsInputValidation().login(loginDto);
+        if (error) return [error, undefined]
         return [undefined, loginDto]
     }
 }

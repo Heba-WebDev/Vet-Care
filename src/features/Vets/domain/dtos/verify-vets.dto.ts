@@ -1,3 +1,4 @@
+import { VetsInputValidation } from "../../infrastructure";
 
 export class VerifyVetDto {
     private constructor(
@@ -7,6 +8,8 @@ export class VerifyVetDto {
     static verify(object: {[key: string]: any}): [string?, VerifyVetDto?] {
        const { email } = object;
        const vetDto = new VerifyVetDto(email);
+       const error = new VetsInputValidation().verify(vetDto);
+        if (error) return [error, undefined];
        return [undefined, vetDto];
     }
 }

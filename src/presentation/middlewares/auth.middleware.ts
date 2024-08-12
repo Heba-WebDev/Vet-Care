@@ -30,10 +30,11 @@ export class AuthMiddlewear {
     }
     static async updateAuthorized(req: Request, res: Response, next: NextFunction) {
         const payload: payload = req.body.payload;
-         if(payload.id !== req.body.id) {
+        if (payload.id === req.body.id || payload.permission_type === 'Admin') {
+            next();
+        } else {
             return res.status(401).json({ error: 'Unauthorized to perform this action'});
         }
-        next();
     }
 
 }

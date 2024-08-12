@@ -1,7 +1,20 @@
-import { RegisterVetsDto, VerifyVetDto } from "../../domain";
-import { registerSchema,verifySchema } from "./joi-schemas";
+import { DeleteStaffDto } from "../../../Staff";
+import {
+    RegisterVetsDto,
+    VerifyVetDto,
+    UpdateVetsDto,
+    LoginVetsDto,
+    DeleteVetsDto
+} from "../../domain";
+import { 
+    registerSchema,
+    verifySchema,
+    DeleteSchema,
+    loginSchema,
+    updateSchema
+} from "./joi-schemas";
 
-export class StaffInputValidation {
+export class VetsInputValidation {
     register(vetsDto: RegisterVetsDto): string | null {
     const { error } = registerSchema.validate(vetsDto);
     if (error) return error.message;
@@ -10,6 +23,23 @@ export class StaffInputValidation {
 
    verify(vetsDto: VerifyVetDto): string | null {
     const { error } = verifySchema.validate(vetsDto);
+    if (error) return error.message;
+    return null;
+   }
+   login(vetsDto: LoginVetsDto): string | null {
+        const { error } = loginSchema.validate(vetsDto);
+        if (error) return error.message;
+        return null;
+    }
+
+    update(vetsDto: UpdateVetsDto): string | null {
+        const { error } = updateSchema.validate(vetsDto);
+        if (error) return error.message;
+        return null;
+    }
+
+   delete(vetsDto: DeleteVetsDto): string | null {
+    const { error } = DeleteSchema.validate(vetsDto);
     if (error) return error.message;
     return null;
    }

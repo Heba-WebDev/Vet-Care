@@ -1,5 +1,5 @@
-import { RegisterStaffDto, LoginStaffDto } from "../../features/Staff";
-import { StaffEntity } from "../../features/Staff/domain/entities";
+import { RegisterStaffDto, LoginStaffDto } from "../..";
+import { StaffEntity } from "../../domain/entities";
 
 export const staffRegisterDtoMock: RegisterStaffDto = {
     name: 'John Doe',
@@ -31,7 +31,7 @@ export const staffEntityUnveriviedMock = new StaffEntity(
     'Staff',
     staffRegisterDtoMock.email,
     staffRegisterDtoMock.phone_number,
-    true
+    false
 );
 
 export const formerStaffMock = {

@@ -1,7 +1,7 @@
-import { StaffInputValidation } from "../../infrastructure/validation";
+import { VetsInputValidation } from "../../infrastructure";
 
 
-export class UpdateStaffDto {
+export class UpdateVetsDto {
 
     private constructor(
         public id: string,
@@ -10,13 +10,13 @@ export class UpdateStaffDto {
         public phone_number: string,
     ) {}
 
-    static upate(object: {[key: string]: any}): [string?, UpdateStaffDto?] {
+    static upate(object: {[key: string]: any}): [string?, UpdateVetsDto?] {
         const { id, email, password, phone_number } = object;
         if (!email && !password && !phone_number ) return ['Provide an email, a password or a phone number to update', undefined]
-        const staffDto = new UpdateStaffDto(id, email, password, phone_number);
-        const err = new StaffInputValidation().update(staffDto);
+        const vetsDto = new UpdateVetsDto(id, email, password, phone_number);
+        const err = new VetsInputValidation().update(vetsDto);
         if (err) return [err, undefined]
-        return [undefined, staffDto]
+        return [undefined, vetsDto]
     }
 
 }

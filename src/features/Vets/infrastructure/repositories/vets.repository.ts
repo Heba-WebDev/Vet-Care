@@ -1,4 +1,4 @@
-import { DeleteVetsDto, LoginVetsDto, RegisterVetsDto, VerifyVetDto } from "../../domain";
+import { DeleteVetsDto, LoginVetsDto, RegisterVetsDto, UpdateVetsDto, VerifyVetDto } from "../../domain";
 import { VetsDatasource } from "../../domain/datasources/vets.datasource";
 import { VetEntity } from "../../domain/entities";
 import { VetsRepository } from "../../domain/repositories";
@@ -25,5 +25,9 @@ export class VetsRepositoryImpl extends VetsRepository {
 
     delete(vetsDto: DeleteVetsDto): Promise<VetEntity | null> {
         return this.datasource.delete(vetsDto);
+    }
+
+    update(vetsDto: UpdateVetsDto): Promise<VetEntity | null> {
+        return this.datasource.update(vetsDto);
     }
 }

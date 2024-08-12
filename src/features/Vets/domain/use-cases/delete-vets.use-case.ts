@@ -7,7 +7,7 @@ export class DeleteVets implements DeleteVetsUseCase {
     constructor(
         private readonly repo: VetsRepository,
     ) {}
-    async execuse(dto: DeleteVetsDto): Promise<any> {
+    async execute(dto: DeleteVetsDto): Promise<any> {
         await this.repo.delete(dto);
        return {
             message: 'Vet succssfully deleted',
