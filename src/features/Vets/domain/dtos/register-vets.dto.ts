@@ -1,4 +1,5 @@
-import { registerSchema } from '../../infrastructure/validation/joi-schemas/register.schema'
+import { VetsInputValidation } from "../../infrastructure";
+
 
 export class RegisterVetsDto {
     private constructor(
@@ -12,8 +13,8 @@ export class RegisterVetsDto {
     static register(object: { [key: string]: any }): [string?, RegisterVetsDto?] {
         const { name, email, password, phone_number, job_title } = object;
         const vetsDto = new RegisterVetsDto(name, email, password, job_title, phone_number);
-        const { error } = registerSchema.validate(vetsDto);
-        if (error) return [error.message, undefined];
+        const error = new VetsInputValidation().register(vetsDto);
+        if (error) return [error, undefined];
         return [undefined, vetsDto];
     }
 }
