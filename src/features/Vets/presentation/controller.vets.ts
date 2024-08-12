@@ -1,11 +1,9 @@
 import { Request, Response } from "express";
 import { BaseController } from "../../../presentation/base.controller";
-import { LoginVets, RegisterVets } from "../domain/use-cases";
+import { LoginVets, RegisterVets, DeleteVets, VerifyVets } from "../domain/use-cases";
 import { VetsRepository } from "../domain/repositories";
-import { VerifyVets } from "../domain/use-cases/verify-vets.use-case";
-import { RegisterVetsDto, VerifyVetDto, LoginVetsDto, DeleteVetsDto } from "../domain";
-import { DeleteVets } from "../domain/use-cases/delete-vets.use-case";
-
+import { RegisterVetsDto, VerifyVetDto, LoginVetsDto, DeleteVetsDto, UpdateVetsDto } from "../domain";
+import { UpdateVets } from "../domain/use-cases/update-vets.use-case";
 
 export class VetsController extends BaseController {
     constructor(
@@ -38,12 +36,18 @@ export class VetsController extends BaseController {
         .catch((error) => this.handleError(error, res))
     }
 
-    update = (req: Request, res: Response) => {}
+    update = (req: Request, res: Response) => {
+        const [error, updateDto] = UpdateVetsDto.upate(req.body);
+        if (error) return res.status(400).send({ error });
+        new UpdateVets(this.vetsRepo).execute(updateDto!)
+        .then((data) => res.json(data))
+        .catch((error) => this.handleError(error, res))
+    }
 
     delete = (req: Request, res: Response) => {
         const [error, deleteDto] = DeleteVetsDto.delete(req.body);
         if (error) return res.status(400).send({ error });
-        new DeleteVets(this.vetsRepo).execuse(deleteDto!)
+        new DeleteVets(this.vetsRepo).execute(deleteDto!)
         .then((data) => res.json(data))
         .catch((error) => this.handleError(error, res))
     }
