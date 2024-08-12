@@ -1,4 +1,4 @@
-import { LoginVetsDto, RegisterVetsDto } from "../../domain";
+import { LoginVetsDto, RegisterVetsDto, UpdateVetsDto } from "../../domain";
 import { VetEntity } from "../../domain/entities";
 import { FormerVetEntity } from "../../domain/entities/former-vet.entity";
 
@@ -36,6 +36,13 @@ export const vetEntityUnveriviedMock = new VetEntity(
     vetRegisterDtoMock.phone_number,
     false
 );
+
+export const vetUpdateDto = {
+    id: vetEntityVerifiedMock.id,
+    email : vetEntityVerifiedMock.email,
+    password: vetRegisterDtoMock.password,
+    phone_number: vetEntityVerifiedMock.phone_number
+}
 
 export const formerVetMock = new FormerVetEntity(
     vetEntityVerifiedMock.id,
