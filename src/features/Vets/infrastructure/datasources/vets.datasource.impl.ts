@@ -1,7 +1,7 @@
 import { VetEntity } from "../../domain/entities";
-import { DeleteVetsDto, LoginVetsDto, RegisterVetsDto, VerifyVetDto } from "../../domain";
+import { DeleteVetsDto, LoginVetsDto, RegisterVetsDto, UpdateVetsDto, VerifyVetDto } from "../../domain";
 import { VetsDatasource } from "../../domain/datasources/vets.datasource";
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { prisma } from "../../../../data";
 import { CustomError } from "../../../../domain";
 import { bcryptAdapter, JwtAdapter } from "../../../../config";
@@ -96,5 +96,42 @@ export class VetsDatasourceImpl implements VetsDatasource {
         if (error instanceof CustomError) throw error;
         throw CustomError.internalServerError();
         });
+    }
+
+    async update(vetsDto: UpdateVetsDto): Promise<VetEntity | null> {
+        const { id, email, password, phone_number } = vetsDto;
+        try {
+            const exists = await this._prisma.veterinarians.findFirst({ where: { id } });
+            if (!exists) throw CustomError.badRequest('Invalid credentials');
+            if (!exists.verified) throw CustomError.unauthorized('Account has to be verified');
+
+            /*
+            VetsUpdateInput ensures that you only update fields that exist in
+            the Veterinarians model and that the values you provide are of the correct type.
+            Rerelated records can be updated as well.
+            */
+            const data: Prisma.VeterinariansUpdateInput = {};
+
+            if (email) data.email = email;
+            if (phone_number) data.phone_number = phone_number;
+            if (password) {
+                data.password = await bcryptAdapter.hash(password);
+            }
+
+            // Only update if there's something to update
+            if (Object.keys(data).length > 0) {
+                await this._prisma.veterinarians.update({
+                    data,
+                    where: { id },
+                });
+            }
+
+            const vet = await this._prisma.veterinarians.findFirst({ where: { id } });
+                return VetMapper.vetEntityFromObject(vet!);
+        } catch (error) {
+                console.log(error);
+                if (error instanceof CustomError) throw error;
+                    throw CustomError.internalServerError();
+            }
     }
 }
