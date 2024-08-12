@@ -16,6 +16,7 @@ export class VetsRoutes {
         router.post('/register', controller.register)
         router.patch('/verify', [AuthMiddlewear.authenticated, AuthMiddlewear.authorized], controller.verify)
         router.post('/login', controller.login)
+        router.patch('/update', [AuthMiddlewear.authenticated, AuthMiddlewear.updateAuthorized], controller.update)
         router.delete('/delete',[AuthMiddlewear.authenticated, AuthMiddlewear.authorized], controller.delete)
 
         return router;
