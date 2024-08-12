@@ -37,7 +37,7 @@ export const vetEntityUnveriviedMock = new VetEntity(
     false
 );
 
-export const vetUpdateDto = {
+export const vetUpdateDtoMock = {
     id: vetEntityVerifiedMock.id,
     email : vetEntityVerifiedMock.email,
     password: vetRegisterDtoMock.password,
