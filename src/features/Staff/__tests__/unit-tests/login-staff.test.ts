@@ -1,11 +1,8 @@
 import { vi, it, describe, beforeEach, expect } from 'vitest';
 import { StaffDatasourceImpl, StaffMapper } from '../../infrastructure';
-import {
-    prismaMock,
-    staffEntityMock,
-    staffLoginDtoMock
-} from '../../../../tests/mocks';
+import { prismaMock } from '../../../../tests/mocks';
 import { bcryptAdapter } from '../../../../config';
+import { staffEntityMock, staffLoginDtoMock } from '../mocks/staff.mock';
 
 describe('Staff loggin in', () => {
     let staffDatasource: StaffDatasourceImpl;

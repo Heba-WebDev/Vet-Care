@@ -1,13 +1,9 @@
 import { vi, it, describe, beforeEach, expect } from 'vitest';
 import { StaffDatasourceImpl, StaffMapper } from '../../infrastructure';
-import {
-    prismaMock,
-    staffEntityMock,
-    staffEntityUnveriviedMock,
-    updateStaffMock,
-} from '../../../../tests/mocks';
+import { prismaMock } from '../../../../tests/mocks';
 import { bcryptAdapter } from '../../../../config';
 import { CustomError } from '../../../../domain';
+import { staffEntityMock, staffEntityUnveriviedMock, updateStaffMock } from '../mocks/staff.mock';
 
 vi.mock('../../../../config') // mock bcrypt
 

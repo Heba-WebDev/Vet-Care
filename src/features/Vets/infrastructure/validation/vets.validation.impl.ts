@@ -1,17 +1,18 @@
-import { DeleteStaffDto } from "../../../Staff";
 import {
     RegisterVetsDto,
     VerifyVetDto,
     UpdateVetsDto,
     LoginVetsDto,
-    DeleteVetsDto
+    DeleteVetsDto,
+    GetAllVetsDto
 } from "../../domain";
 import { 
     registerSchema,
     verifySchema,
     DeleteSchema,
     loginSchema,
-    updateSchema
+    updateSchema,
+    getAllSchema
 } from "./joi-schemas";
 
 export class VetsInputValidation {
@@ -40,6 +41,12 @@ export class VetsInputValidation {
 
    delete(vetsDto: DeleteVetsDto): string | null {
     const { error } = DeleteSchema.validate(vetsDto);
+    if (error) return error.message;
+    return null;
+   }
+
+   getAll(vetsDto: GetAllVetsDto): string | null {
+    const { error } = getAllSchema.validate(vetsDto);
     if (error) return error.message;
     return null;
    }

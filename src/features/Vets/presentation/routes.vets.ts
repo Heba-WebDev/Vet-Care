@@ -18,7 +18,7 @@ export class VetsRoutes {
         router.post('/login', controller.login)
         router.patch('/update', [AuthMiddlewear.authenticated, AuthMiddlewear.updateAuthorized], controller.update)
         router.delete('/delete',[AuthMiddlewear.authenticated, AuthMiddlewear.authorized], controller.delete)
-
+        router.get('/current', [AuthMiddlewear.authenticated], controller.getAll)
         return router;
     }
 }

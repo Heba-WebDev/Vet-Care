@@ -1,11 +1,10 @@
 import { vi, it, describe, beforeEach, expect } from 'vitest';
 import { StaffDatasourceImpl, StaffMapper } from '../../infrastructure';
 import {
-    formerStaffMock,
-    prismaMock,
-    staffEntityMock,
+    prismaMock
 } from '../../../../tests/mocks';
 import { CustomError } from '../../../../domain';
+import { formerStaffMock, staffEntityMock } from '../mocks/staff.mock';
 
 vi.mock('../../../../config')
 
