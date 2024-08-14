@@ -3,7 +3,8 @@ import {
     VerifyVetDto,
     LoginVetsDto,
     DeleteVetsDto,
-    UpdateVetsDto
+    UpdateVetsDto,
+    GetAllVetsDto
 } from "../dtos";
 import { VetEntity } from "../entities";
 
@@ -13,4 +14,5 @@ export abstract class VetsRepository {
     abstract login(vetsDto: LoginVetsDto): Promise<VetEntity | null>
     abstract delete(vetsDto: DeleteVetsDto): Promise<VetEntity | null>
     abstract update(vetsDto: UpdateVetsDto): Promise<VetEntity | null>
+    abstract getAll(vetsDto: GetAllVetsDto):Promise<VetEntity[] | null>
 }

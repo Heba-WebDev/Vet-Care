@@ -4,7 +4,8 @@ import {
     VerifyVetDto,
     LoginVetsDto,
     DeleteVetsDto,
-    UpdateVetsDto
+    UpdateVetsDto,
+    GetAllVetsDto
 } from "../dtos";
 export type SignToken = (payload: payload, duration?: string) => Promise<string | null>;
 
@@ -28,4 +29,8 @@ export interface DeleteVetsUseCase {
 
 export interface UpdateVetsUseCase {
     execute( updateVets: UpdateVetsDto): Promise<any>
+}
+
+export interface GetAllVetsUseCase {
+    execute(getAllVets: GetAllVetsDto): Promise<any>;
 }
