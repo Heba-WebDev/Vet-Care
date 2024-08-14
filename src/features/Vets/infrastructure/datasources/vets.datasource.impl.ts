@@ -1,5 +1,5 @@
 import { VetEntity } from "../../domain/entities";
-import { DeleteVetsDto, LoginVetsDto, RegisterVetsDto, UpdateVetsDto, VerifyVetDto } from "../../domain";
+import { DeleteVetsDto, GetAllVetsDto, LoginVetsDto, RegisterVetsDto, UpdateVetsDto, VerifyVetDto } from "../../domain";
 import { VetsDatasource } from "../../domain/datasources/vets.datasource";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { prisma } from "../../../../data";
@@ -133,5 +133,30 @@ export class VetsDatasourceImpl implements VetsDatasource {
                 if (error instanceof CustomError) throw error;
                     throw CustomError.internalServerError();
             }
+    }
+
+    async getAll(vetsDto: GetAllVetsDto): Promise<VetEntity[] | null> {
+        const { page, limit } = vetsDto;
+        try {
+           const offset = (page! - 1) * limit!;
+            const vets = await this._prisma.veterinarians.findMany({
+            skip: offset,
+            take: limit,
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                job_title: true,
+                permission_type: true,
+                phone_number: true,
+                verified: true,
+            }
+            });
+            return vets;
+        } catch (error) {
+            console.log(error);
+                if (error instanceof CustomError) throw error;
+                throw CustomError.internalServerError();
+        }
     }
 }
