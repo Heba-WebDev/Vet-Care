@@ -1,12 +1,9 @@
 import { vi, it, describe, beforeEach, expect } from 'vitest';
 import { StaffDatasourceImpl } from '../../infrastructure';
-import {
-    prismaMock,
-    staffEntityMock,
-    staffRegisterDtoMock
-} from '../../../../tests/mocks';
+import { prismaMock } from '../../../../tests/mocks';
 import { StaffMapper } from '../../infrastructure';
 import { CustomError } from '../../../../domain';
+import { staffEntityMock, staffRegisterDtoMock } from '../mocks/staff.mock';
 
 describe('Staff registration', () => {
     let staffDatasource: StaffDatasourceImpl;

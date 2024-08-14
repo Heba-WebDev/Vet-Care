@@ -1,7 +1,8 @@
 import { vi, it, beforeEach, describe, expect } from 'vitest';
 import { StaffDatasourceImpl } from '../../infrastructure';
-import { prismaMock, staffEntityMock } from '../../../../tests/mocks';
+import { prismaMock } from '../../../../tests/mocks';
 import { CustomError } from '../../../../domain';
+import { staffEntityMock } from '../mocks/staff.mock';
 
 
 describe('Staff Get-All-Current', () => {
