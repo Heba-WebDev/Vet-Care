@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
 import { BaseController } from "../../../presentation/base.controller";
-import { LoginVets, RegisterVets, DeleteVets, VerifyVets, GetAllVets } from "../domain/use-cases";
+import {
+    LoginVets, RegisterVets,
+    DeleteVets, VerifyVets,
+    GetAllVets, GetAllFormerVets
+} from "../domain/use-cases";
 import { VetsRepository } from "../domain/repositories";
 import { RegisterVetsDto, VerifyVetDto, LoginVetsDto, DeleteVetsDto, UpdateVetsDto, GetAllVetsDto } from "../domain";
 import { UpdateVets } from "../domain/use-cases/update-vets.use-case";
@@ -58,5 +62,13 @@ export class VetsController extends BaseController {
                 new GetAllVets(this.vetsRepo).execute(vetsDto!)
                 .then((data) => res.json(data))
                 .catch((err) => this.handleError(err, res));
-        }
+    }
+
+    getAllFormer = (req: Request, res: Response) => {
+                const [error, vetsDto] = GetAllVetsDto.get(req.query);
+                if (error) return res.status(400).send({ error });
+                new GetAllFormerVets(this.vetsRepo).execute(vetsDto!)
+                .then((data) => res.json(data))
+                .catch((err) => this.handleError(err, res));
+    }
 }
