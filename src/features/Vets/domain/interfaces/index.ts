@@ -34,3 +34,7 @@ export interface UpdateVetsUseCase {
 export interface GetAllVetsUseCase {
     execute(getAllVets: GetAllVetsDto): Promise<any>;
 }
+
+export interface GetAllFormerVetsUseCase {
+    execute(getAllVets: GetAllVetsDto): Promise<any>;
+}
