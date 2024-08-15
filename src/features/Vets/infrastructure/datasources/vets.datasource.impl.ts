@@ -159,4 +159,20 @@ export class VetsDatasourceImpl implements VetsDatasource {
                 throw CustomError.internalServerError();
         }
     }
+
+    async GetAllFormer(vetsDto: GetAllVetsDto): Promise<FormerVetEntity[] | null> {
+        const { page, limit } = vetsDto;
+        try {
+           const offset = (page! - 1) * limit!;
+            const formerVets = await this._prisma.formerVets.findMany({
+            skip: offset,
+            take: limit
+        });
+            return formerVets;
+        } catch (error) {
+            console.log(error);
+                if (error instanceof CustomError) throw error;
+                throw CustomError.internalServerError();
+        }
+    }
 }
