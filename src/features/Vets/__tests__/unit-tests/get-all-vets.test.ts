@@ -18,13 +18,13 @@ describe('Vets Get-All-Current', () => {
         const result = await vetsDatasource.getAll({ page: 1, limit: 5 });
 
         expect(result).toEqual(vetEntityVerifiedMock);
-        expect(prismaMock.staff.findMany).toHaveBeenCalledWith({
+        expect(prismaMock.veterinarians.findMany).toHaveBeenCalledWith({
             skip: (1 - 1) * 5,
             take: 5
         });
     };
 
-    it('should return an empty array if no staff member was found', async() => {
+    it('should return an empty array if no vet member was found', async() => {
         prismaMock.veterinarians.findMany.mockResolvedValueOnce([]);
         const result = await vetsDatasource.getAll({ page: 1, limit: 5 });
         expect(result).toStrictEqual([]);

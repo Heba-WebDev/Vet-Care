@@ -1,6 +1,6 @@
 import { DeleteVetsDto, GetAllVetsDto, LoginVetsDto, RegisterVetsDto, UpdateVetsDto, VerifyVetDto } from "../../domain";
 import { VetsDatasource } from "../../domain/datasources/vets.datasource";
-import { VetEntity } from "../../domain/entities";
+import { FormerVetEntity, VetEntity } from "../../domain/entities";
 import { VetsRepository } from "../../domain/repositories";
 
 
@@ -33,5 +33,9 @@ export class VetsRepositoryImpl extends VetsRepository {
 
     getAll(vetsDto: GetAllVetsDto): Promise<VetEntity[] | null> {
         return this.datasource.getAll(vetsDto);
+    }
+
+    GetAllFormer(vetsDto: GetAllVetsDto): Promise<FormerVetEntity[] | null> {
+        return this.datasource.GetAllFormer(vetsDto);
     }
 }
