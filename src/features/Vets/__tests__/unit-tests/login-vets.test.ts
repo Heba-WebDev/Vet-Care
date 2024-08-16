@@ -2,7 +2,12 @@ import { vi, it, describe, beforeEach, expect } from 'vitest';
 import { prismaMock } from '../../../../tests/mocks';
 import { bcryptAdapter } from '../../../../config';
 import { VetMapper, VetsDatasourceImpl } from '../../infrastructure';
-import { vetEntityUnveriviedMock, vetEntityVerifiedMock, vetLoginDtoMock, vetRegisterDtoMock } from '../mocks/vet.mock';
+import {
+    vetEntityUnveriviedMock,
+    vetEntityVerifiedMock,
+    vetLoginDtoMock,
+    vetRegisterDtoMock
+} from '../mocks/vet.mock';
 import { CustomError } from '../../../../domain';
 
 describe('Vet logging in', () => {
@@ -47,4 +52,4 @@ describe('Vet logging in', () => {
         .rejects
         .toThrow(CustomError.badRequest('Invalid credentials'))
     });
-})
+});

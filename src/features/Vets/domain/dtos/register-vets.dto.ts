@@ -10,7 +10,7 @@ export class RegisterVetsDto {
         public phone_number: string,
     ) {}
 
-    static register(object: { [key: string]: any }): [string?, RegisterVetsDto?] {
+    static register(object: { [key: string]: string }): [string?, RegisterVetsDto?] {
         const { name, email, password, phone_number, job_title } = object;
         const vetsDto = new RegisterVetsDto(name, email, password, job_title, phone_number);
         const error = new VetsInputValidation().register(vetsDto);

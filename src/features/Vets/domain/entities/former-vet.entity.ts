@@ -1,5 +1,3 @@
-
-
 export class FormerVetEntity {
     constructor(
         public id: string,

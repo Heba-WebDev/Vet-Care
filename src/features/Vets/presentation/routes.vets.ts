@@ -1,9 +1,7 @@
 import { Router } from 'express';
-import { VetsDatasourceImpl } from '../infrastructure';
-import { VetsRepositoryImpl } from '../infrastructure/repositories';
+import { VetsDatasourceImpl, VetsRepositoryImpl } from '../infrastructure';
 import { VetsController } from './controller.vets';
 import { AuthMiddlewear } from '../../../presentation';
-
 
 export class VetsRoutes {
 

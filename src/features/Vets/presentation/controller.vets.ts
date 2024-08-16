@@ -1,13 +1,23 @@
 import { Request, Response } from "express";
 import { BaseController } from "../../../presentation/base.controller";
 import {
-    LoginVets, RegisterVets,
-    DeleteVets, VerifyVets,
-    GetAllVets, GetAllFormerVets
-} from "../domain/use-cases";
-import { VetsRepository } from "../domain/repositories";
-import { RegisterVetsDto, VerifyVetDto, LoginVetsDto, DeleteVetsDto, UpdateVetsDto, GetAllVetsDto } from "../domain";
-import { UpdateVets } from "../domain/use-cases/update-vets.use-case";
+    VetsRepository,
+    // Use cases
+    RegisterVets,
+    LoginVets,
+    VerifyVets,
+    DeleteVets,
+    GetAllVets,
+    GetAllFormerVets,
+    UpdateVets,
+    // DTOs
+    RegisterVetsDto,
+    VerifyVetDto,
+    LoginVetsDto,
+    DeleteVetsDto,
+    UpdateVetsDto,
+    GetAllVetsDto
+} from "../domain";
 
 export class VetsController extends BaseController {
     constructor(

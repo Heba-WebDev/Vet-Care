@@ -2,7 +2,7 @@ import { CustomError } from "../../../../domain";
 import { VetEntity } from "../../domain/entities";
 
 export class VetMapper {
-    static vetEntityFromObject(object: { [key: string]: any}) {
+    static vetEntityFromObject(vetEntity: VetEntity) {
         const {
             id,
             name,
@@ -11,7 +11,7 @@ export class VetMapper {
             email,
             phone_number,
             verified
-        } = object;
+        } = vetEntity;
 
         if (!id) throw CustomError.badRequest('Missing id');
         if (!name) throw CustomError.badRequest('Missing name');

@@ -4,7 +4,6 @@ import { prismaMock } from '../../../../tests/mocks';
 import { formerVetMock, vetEntityVerifiedMock } from '../mocks/vet.mock';
 import { CustomError } from '../../../../domain';
 
-
 describe('Vets account deletion', () => {
     let VetsDatasource: VetsDatasourceImpl;
 
@@ -31,7 +30,7 @@ describe('Vets account deletion', () => {
       expect(prismaMock.formerVets.create).toHaveBeenCalledOnce();
     });
 
-   it('should throw an error if staff id is invalid', async() => {
+   it('should throw an error if vet id is invalid', async() => {
     prismaMock.veterinarians.findFirst.mockResolvedValue(null);
     prismaMock.$transaction.mockImplementation(async (callback) => {
       return callback(prismaMock);

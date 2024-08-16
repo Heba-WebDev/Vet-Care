@@ -26,5 +26,5 @@ describe('Vet verification', () => {
         prismaMock.veterinarians.findFirst.mockResolvedValueOnce(vetEntityVerifiedMock); // account is verified
         await expect(vetDatasource.verify({ email: vetEntityVerifiedMock.email })).rejects
         .toThrow(CustomError.badRequest('Vet member already verified'));
-    })
+    });
 });
