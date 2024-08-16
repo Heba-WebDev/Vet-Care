@@ -1,20 +1,21 @@
 import { Prisma, PrismaClient } from "@prisma/client";
-import { bcryptAdapter } from "../../../../config";
 import { prisma } from "../../../../data";
+import { bcryptAdapter } from "../../../../config";
 import { CustomError } from "../../../../domain";
 import {
+    StaffDatasource,
+    // DTOs
     LoginStaffDto,
     RegisterStaffDto,
-    StaffDatasource,
     VerifyStaffDto,
     DeleteStaffDto,
     GetAllStaffDto,
-    UpdateStaffDto
+    UpdateStaffDto,
+    // Entities
+    StaffEntity,
+    FormerStaffEntity
 } from "../../domain";
-import { StaffEntity } from "../../domain/entities";
-import { FormerStaffEntity } from "../../domain/entities/former-staff.entity";
 import { StaffMapper } from "../mapper";
-
 
 export class StaffDatasourceImpl implements StaffDatasource {
     private readonly _prisma: PrismaClient;
@@ -174,5 +175,4 @@ export class StaffDatasourceImpl implements StaffDatasource {
                     throw CustomError.internalServerError();
             }
     }
-
 }
