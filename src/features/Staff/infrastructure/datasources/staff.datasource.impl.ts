@@ -16,6 +16,7 @@ import {
     FormerStaffEntity
 } from "../../domain";
 import { StaffMapper } from "../mapper";
+import { logger } from "../../../../infrastructure";
 
 export class StaffDatasourceImpl implements StaffDatasource {
     private readonly _prisma: PrismaClient;
@@ -41,6 +42,7 @@ export class StaffDatasourceImpl implements StaffDatasource {
             return StaffMapper.staffEntityFromObject(staff);
 
         }catch(error) {
+            logger.error(error);
             if (error instanceof CustomError) throw error;
             throw CustomError.internalServerError();
         }
@@ -62,6 +64,7 @@ export class StaffDatasourceImpl implements StaffDatasource {
             return StaffMapper.staffEntityFromObject(staff!);
 
         }catch(error) {
+            logger.error(error);
             if (error instanceof CustomError) throw error;
             throw CustomError.internalServerError();
         }
@@ -80,6 +83,7 @@ export class StaffDatasourceImpl implements StaffDatasource {
             return StaffMapper.staffEntityFromObject(staff!);
 
         }catch(error) {
+            logger.error(error);
             if (error instanceof CustomError) throw error;
             throw CustomError.internalServerError();
         }
@@ -104,6 +108,7 @@ export class StaffDatasourceImpl implements StaffDatasource {
 
             return StaffMapper.staffEntityFromObject(staff!);
         }).catch((error) => {
+            logger.error(error);
             if (error instanceof CustomError) throw error;
             throw CustomError.internalServerError();
         })
@@ -118,7 +123,7 @@ export class StaffDatasourceImpl implements StaffDatasource {
             });
             return staff;
         } catch(error) {
-            console.log(error)
+            logger.error(error);
             if (error instanceof CustomError) throw error;
             throw CustomError.internalServerError();
         }
@@ -133,7 +138,7 @@ export class StaffDatasourceImpl implements StaffDatasource {
             });
             return staff;
         } catch(error) {
-            console.log(error)
+            logger.error(error);
             if (error instanceof CustomError) throw error;
             throw CustomError.internalServerError();
         }
@@ -170,7 +175,7 @@ export class StaffDatasourceImpl implements StaffDatasource {
             const staff = await this._prisma.staff.findFirst({ where: { id } });
                 return StaffMapper.staffEntityFromObject(staff!);
         } catch (error) {
-                console.log(error);
+                logger.error(error);
                 if (error instanceof CustomError) throw error;
                     throw CustomError.internalServerError();
             }
