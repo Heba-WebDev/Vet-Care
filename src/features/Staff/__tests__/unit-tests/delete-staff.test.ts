@@ -6,7 +6,6 @@ import {
 import { CustomError } from '../../../../domain';
 import { formerStaffMock, staffEntityMock } from '../mocks/staff.mock';
 
-vi.mock('../../../../config')
 
 describe('Staff account deletion', () => {
     let staffDatasource: StaffDatasourceImpl;

@@ -5,7 +5,6 @@ import { StaffEntity } from '../../domain/entities';
 import { CustomError } from '../../../../domain';
 import { staffEntityMock, staffLoginDtoMock } from '../mocks/staff.mock';
 
-
 describe('Staff verification', () => {
     let staffDatasource: StaffDatasourceImpl;
 

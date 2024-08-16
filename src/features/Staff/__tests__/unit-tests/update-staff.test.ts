@@ -5,8 +5,6 @@ import { bcryptAdapter } from '../../../../config';
 import { CustomError } from '../../../../domain';
 import { staffEntityMock, staffEntityUnveriviedMock, updateStaffMock } from '../mocks/staff.mock';
 
-vi.mock('../../../../config') // mock bcrypt
-
 describe('Staff update account', () => {
     let staffDatasource: StaffDatasourceImpl;
 
