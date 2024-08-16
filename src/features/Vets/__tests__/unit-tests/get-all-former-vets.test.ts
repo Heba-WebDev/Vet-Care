@@ -14,9 +14,7 @@ describe('Vets Get-All-Current', () => {
 
     it('should return all former vets members'), async() => {
         prismaMock.formerVets.findMany.mockResolvedValueOnce(formerVetMock);
-
         const result = await vetsDatasource.getAll({ page: 1, limit: 5 });
-
         expect(result).toEqual(formerVetMock);
         expect(prismaMock.formerVets.findMany).toHaveBeenCalledWith({
             skip: (1 - 1) * 5,
@@ -34,4 +32,4 @@ describe('Vets Get-All-Current', () => {
         prismaMock.formerVets.findMany.mockRejectedValueOnce(new Error('Unexpected Error'));
         await expect(vetsDatasource.GetAllFormer({ page: 1, limit: 5 })).rejects.toThrow(CustomError.internalServerError());
     });
-})
+});

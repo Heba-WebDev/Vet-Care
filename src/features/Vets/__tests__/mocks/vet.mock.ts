@@ -1,7 +1,5 @@
 import { LoginVetsDto, RegisterVetsDto, UpdateVetsDto } from "../../domain";
-import { VetEntity } from "../../domain/entities";
-import { FormerVetEntity } from "../../domain/entities/former-vet.entity";
-
+import { VetEntity, FormerVetEntity } from "../../domain/entities";
 
 export const vetRegisterDtoMock: RegisterVetsDto = {
     name: 'John Doe',
@@ -9,13 +7,12 @@ export const vetRegisterDtoMock: RegisterVetsDto = {
     password: 'password123',
     phone_number: '1234567890',
     job_title: 'Veterinarian'
-}
+};
 
 export const vetLoginDtoMock: LoginVetsDto = {
     email: 'john.doe@example.com',
     password: 'password123'
-}
-
+};
 
 export const vetEntityVerifiedMock = new VetEntity(
     '1',
@@ -52,4 +49,4 @@ export const formerVetMock = new FormerVetEntity(
     vetEntityVerifiedMock.job_title,
     new Date(),
     'Contract ended'
-)
+);
