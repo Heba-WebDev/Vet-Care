@@ -4,7 +4,7 @@ import { StaffEntity } from "../../domain/entities";
 
 export class StaffMapper {
 
-    static staffEntityFromObject(object: { [key: string]: string}) {
+    static staffEntityFromObject(staffEntity: StaffEntity) {
         const {
             id,
             name,
@@ -13,7 +13,7 @@ export class StaffMapper {
             email,
             phone_number,
             verified
-        } = object;
+        } = staffEntity;
 
         if (!id) throw CustomError.badRequest('Missing id');
         if (!name) throw CustomError.badRequest('Missing name');
