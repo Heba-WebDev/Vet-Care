@@ -1,5 +1,5 @@
+import { ParsedQs } from 'qs';
 import { StaffInputValidation } from "../../infrastructure/validation";
-
 
 export class GetAllStaffDto {
 
@@ -8,9 +8,9 @@ export class GetAllStaffDto {
         public readonly limit?: number,
     ) {}
 
-    static get(object: {[key: string]: string}): [string?, GetAllStaffDto?] {
-        const page = parseInt(object.page) || 1;
-        const limit = parseInt(object.limit) || 15;
+    static get(object: ParsedQs): [string?, GetAllStaffDto?] {
+        const page = parseInt(object.page as string) || 1;
+        const limit = parseInt(object.limit as string) || 15;
         const staffDto = new GetAllStaffDto(page, limit);
         const err = new StaffInputValidation().getAll(staffDto);
         if (err) return [err, undefined]
