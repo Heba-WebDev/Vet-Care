@@ -4,7 +4,7 @@ import { StaffEntity } from "../../domain/entities";
 
 export class StaffMapper {
 
-    static staffEntityFromObject(object: { [key: string]: any}) {
+    static staffEntityFromObject(object: { [key: string]: string}) {
         const {
             id,
             name,
