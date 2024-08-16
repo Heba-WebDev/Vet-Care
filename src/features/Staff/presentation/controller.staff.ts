@@ -1,22 +1,23 @@
 import { Request, Response } from 'express';
 import { BaseController } from '../../../presentation/base.controller';
 import {
-LoginStaff,
+StaffRepository,
+// Use cases
 RegisterStaff,
+LoginStaff,
+UpdateStaff,
 DeleteStaff,
 VerifyStaff,
 GetAllStaff,
-LoginStaffDto,
+GetAllFormerStaff,
+// DTOs
 RegisterStaffDto,
+LoginStaffDto,
+UpdateStaffDto,
 VerifyStaffDto,
 DeleteStaffDto,
-StaffRepository,
 GetAllStaffDto,
-GetAllFormerStaff,
-UpdateStaffDto,
-UpdateStaff,
 } from '../domain';
-
 
 export class StaffController extends BaseController{
 
@@ -84,5 +85,4 @@ export class StaffController extends BaseController{
                 .then((data) => res.json(data))
                 .catch((err) => this.handleError(err, res));
         }
-
 }
