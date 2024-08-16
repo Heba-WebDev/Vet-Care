@@ -10,7 +10,7 @@ export class UpdateStaffDto {
         public phone_number: string,
     ) {}
 
-    static upate(object: {[key: string]: any}): [string?, UpdateStaffDto?] {
+    static upate(object: {[key: string]: string}): [string?, UpdateStaffDto?] {
         const { id, email, password, phone_number } = object;
         if (!email && !password && !phone_number ) return ['Provide an email, a password or a phone number to update', undefined]
         const staffDto = new UpdateStaffDto(id, email, password, phone_number);
@@ -18,5 +18,4 @@ export class UpdateStaffDto {
         if (err) return [err, undefined]
         return [undefined, staffDto]
     }
-
 }

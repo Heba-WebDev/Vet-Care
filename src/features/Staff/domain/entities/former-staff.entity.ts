@@ -1,5 +1,3 @@
-
-
 export class FormerStaffEntity {
     constructor(
         public id: string,

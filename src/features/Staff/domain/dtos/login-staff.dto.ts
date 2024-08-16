@@ -7,7 +7,7 @@ export class LoginStaffDto{
         public password: string
     ) {}
 
-    static login(object: {[key: string]: any}): [string?, LoginStaffDto?] {
+    static login(object: {[key: string]: string}): [string?, LoginStaffDto?] {
         const { email, password } = object;
         const staffDto = new LoginStaffDto(email, password);
         const err = new StaffInputValidation().login(staffDto);

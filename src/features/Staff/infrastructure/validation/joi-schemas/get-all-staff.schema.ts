@@ -8,7 +8,8 @@ export const getAllSchema = joi.object({
       "string.empty": "A number for page is required.",
       "string.page": "A number is required.",
     }),
-    limit: joi
+
+  limit: joi
     .number()
     .optional()
     .messages({

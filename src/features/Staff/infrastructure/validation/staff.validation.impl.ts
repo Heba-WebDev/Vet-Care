@@ -6,7 +6,6 @@ import {
     UpdateStaffDto,
     VerifyStaffDto
 } from "../../domain";
-
 import {
     registerSchema,
     loginSchema,
@@ -15,8 +14,8 @@ import {
     getAllSchema,
     updateSchema } from "./joi-schemas";
 
-
 export class StaffInputValidation {
+
     register(staffDto: RegisterStaffDto): string | null {
     const { error } = registerSchema.validate(staffDto);
     if (error) return error.message;

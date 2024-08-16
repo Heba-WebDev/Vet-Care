@@ -7,7 +7,7 @@ export class DeleteStaffDto{
         public exit_reason: string,
     ) {}
 
-    static delete(object: {[key: string]: any}): [string?, DeleteStaffDto?] {
+    static delete(object: {[key: string]: string}): [string?, DeleteStaffDto?] {
         const { id, exit_reason } = object;
         const staffDto = new DeleteStaffDto(id, exit_reason);
         const err = new StaffInputValidation().delete(staffDto);

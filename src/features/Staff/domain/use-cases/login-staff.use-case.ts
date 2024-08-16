@@ -1,9 +1,9 @@
 import { JwtAdapter } from "../../../../config";
 import { CustomError } from "../../../../domain";
 import { LoginStaffDto } from "../dtos/login-staff.dto";
-import { LoginStaffUseCase, SignToken } from "../interfaces";
+import { LoginStaffUseCase } from "../interfaces";
 import { StaffRepository } from "../repositories";
-
+import { SignToken } from "../../../../interfaces";
 
 export class LoginStaff implements LoginStaffUseCase {
 
