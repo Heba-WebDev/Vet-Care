@@ -1,16 +1,17 @@
 import {
+    StaffDatasource,
+    StaffRepository,
+    // DTOs
     DeleteStaffDto,
     UpdateStaffDto,
     LoginStaffDto,
     RegisterStaffDto,
     GetAllStaffDto,
-    StaffDatasource,
-    StaffRepository,
-    VerifyStaffDto
+    VerifyStaffDto,
+    // Entities
+    StaffEntity,
+    FormerStaffEntity
 } from "../../domain";
-import { StaffEntity } from "../../domain/entities";
-import { FormerStaffEntity } from "../../domain/entities/former-staff.entity";
-
 
 export class StaffRepositoryImpl extends StaffRepository {
 
@@ -19,9 +20,11 @@ export class StaffRepositoryImpl extends StaffRepository {
     ) {
         super();
     }
-    // repos can directly interact with datasources, no one else can
-    // this way, if the db changes for example, the repo and every part
-    // depending on it, won't be affected
+    /*
+        Repository is the only part of the app that can directly
+        interact with datasource. This way, if the db changes for example,
+        the repository and every part depending on it, won't be affected
+    */
     register(staffDto: RegisterStaffDto): Promise<StaffEntity | null> {
         return this.datasource.register(staffDto);
     }
@@ -49,5 +52,4 @@ export class StaffRepositoryImpl extends StaffRepository {
     update(staffDto: UpdateStaffDto): Promise<StaffEntity | null> {
         return this.datasource.update(staffDto);
     }
-
 }
