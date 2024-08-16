@@ -1,5 +1,3 @@
-
-
 export class VetEntity {
     constructor(
         public id: string,
