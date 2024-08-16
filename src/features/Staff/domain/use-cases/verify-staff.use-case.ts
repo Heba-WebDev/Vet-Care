@@ -1,5 +1,5 @@
 import { VerifyStaffDto } from "../dtos";
-import { VerifyStaffUseCase } from "../interfaces";
+import { StaffStandardResponse, VerifyStaffUseCase } from "../interfaces";
 import { StaffRepository } from "../repositories";
 
 
@@ -9,12 +9,12 @@ export class VerifyStaff implements VerifyStaffUseCase {
         private readonly repo: StaffRepository,
     ) {}
 
-    async execute(staffDto: VerifyStaffDto): Promise<any> {
+    async execute(staffDto: VerifyStaffDto): Promise<StaffStandardResponse> {
         const staff = await this.repo.verify(staffDto);
         return {
+            status: 'success',
             message: 'Staff member succssfully verified',
             data: null
         }
     }
 }
-
