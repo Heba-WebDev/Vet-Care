@@ -8,7 +8,6 @@ import { bcryptAdapter, JwtAdapter } from "../../../../config";
 import { VetMapper } from "../mappers/vet.mapper";
 import { FormerVetEntity } from "../../domain/entities/former-vet.entity";
 
-
 export class VetsDatasourceImpl implements VetsDatasource {
     private readonly _prisma: PrismaClient;
     constructor(orm: any = prisma) {

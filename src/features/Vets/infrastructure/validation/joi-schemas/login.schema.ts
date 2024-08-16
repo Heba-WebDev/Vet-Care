@@ -1,7 +1,7 @@
 import joi from 'joi';
 
 export const loginSchema = joi.object({
-        email: joi
+    email: joi
         .string()
         .email()
         .required()
@@ -9,7 +9,8 @@ export const loginSchema = joi.object({
         "string.empty": "A valid email is required.",
         "string.email": "A valid email is required.",
         }),
-        password: joi
+
+    password: joi
         .string()
         .min(6)
         .pattern(new RegExp("^[a-zA-Z0-9]{6,30}$"))
@@ -19,5 +20,5 @@ export const loginSchema = joi.object({
         "string.required": "A valid password is required.",
         "string.min": "Password must have at least 6 characters.",
         "string.pattern": "A password must be of 6 characters or more.",
-        })
-    });
+        }),
+});
