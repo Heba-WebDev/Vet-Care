@@ -6,7 +6,7 @@ export class VerifyStaffDto{
         public email: string,
     ) {}
 
-    static verify(object: {[key: string]: any}): [string?, VerifyStaffDto?] {
+    static verify(object: {[key: string]: string}): [string?, VerifyStaffDto?] {
         const { email } = object;
         const staffDto = new VerifyStaffDto(email);
         const err = new StaffInputValidation().verify(staffDto);

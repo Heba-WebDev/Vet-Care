@@ -1,6 +1,5 @@
 import { StaffInputValidation } from "../../infrastructure/validation";
 
-
 export class RegisterStaffDto {
 
     private constructor(
@@ -13,7 +12,7 @@ export class RegisterStaffDto {
     {
     }
 
-    static register(object: {[key: string]: any}): [string?, RegisterStaffDto?] {
+    static register(object: {[key: string]: string}): [string?, RegisterStaffDto?] {
         const { name, job_title, email, password, phone_number } = object;
         const staffDto = new RegisterStaffDto(name, job_title, email, password, phone_number);
         const err = new StaffInputValidation().register(staffDto);

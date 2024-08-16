@@ -8,7 +8,7 @@ export class GetAllStaffDto {
         public readonly limit?: number,
     ) {}
 
-    static get(object: {[key: string]: any}): [string?, GetAllStaffDto?] {
+    static get(object: {[key: string]: string}): [string?, GetAllStaffDto?] {
         const page = parseInt(object.page) || 1;
         const limit = parseInt(object.limit) || 15;
         const staffDto = new GetAllStaffDto(page, limit);
