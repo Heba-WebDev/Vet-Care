@@ -1,14 +1,17 @@
-import { payload } from "../../../../interfaces";
-import { RegisterStaffDto, LoginStaffDto, VerifyStaffDto, DeleteStaffDto, GetAllStaffDto } from "../dtos";
-import { UpdateStaffDto } from "../dtos/update-staff.dto";
-
-export type SignToken = (payload: payload, duration?: string) => Promise<string | null>;
-
+import {
+    RegisterStaffDto,
+    LoginStaffDto,
+    VerifyStaffDto,
+    DeleteStaffDto,
+    GetAllStaffDto,
+    UpdateStaffDto
+} from "../dtos";
 
 // Use cases
 export interface RegisterStaffUseCase {
     execute( registerStaff: RegisterStaffDto): Promise<any>;
 }
+
 export interface LoginStaffUseCase {
     execute( loginStaff: LoginStaffDto): Promise<any>;
 }
