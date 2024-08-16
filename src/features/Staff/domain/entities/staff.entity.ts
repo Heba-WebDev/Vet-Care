@@ -1,5 +1,3 @@
-
-
 export class StaffEntity {
     constructor(
         public id: string,
