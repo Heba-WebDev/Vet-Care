@@ -1,6 +1,7 @@
 import express, { Router } from 'express';
 import { AppRoutes } from './routes';
 import { GlobalErrorMiddleware } from './middlewares';
+import { logger } from '../infrastructure';
 
 interface options {
     port?: number;
@@ -22,8 +23,7 @@ export class Server {
         this.app.use(new GlobalErrorMiddleware().error);
         this.app.use(new GlobalErrorMiddleware().notFound);
         this.app.listen(this.port, () => {
-            console.log(`Server running on ${this.port} 🚀`)
+            logger.info(`Server running on ${this.port} 🚀`);
         })
     }
-
 }

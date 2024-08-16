@@ -1,6 +1,7 @@
 import {Request, Response, NextFunction } from 'express';
 import { JwtAdapter } from '../../config';
 import { payload } from '../../interfaces';
+import { logger } from '../../infrastructure';
 
 export class AuthMiddlewear {
     static async authenticated(req: Request, res: Response, next: NextFunction) {
@@ -15,7 +16,7 @@ export class AuthMiddlewear {
             if (!payload) return res.status(401).json({ error: 'Invalid token'});
             req.body.payload = payload;
         }catch(error) {
-            console.log(error);
+            logger.error(error);
             return res.status(500).json({error: 'Internal server error'});
         }
         next();

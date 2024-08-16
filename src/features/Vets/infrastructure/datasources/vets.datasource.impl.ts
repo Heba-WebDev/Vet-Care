@@ -7,6 +7,7 @@ import { CustomError } from "../../../../domain";
 import { bcryptAdapter, JwtAdapter } from "../../../../config";
 import { VetMapper } from "../mappers/vet.mapper";
 import { FormerVetEntity } from "../../domain/entities/former-vet.entity";
+import { logger } from "../../../../infrastructure";
 
 export class VetsDatasourceImpl implements VetsDatasource {
     private readonly _prisma: PrismaClient;
@@ -31,6 +32,7 @@ export class VetsDatasourceImpl implements VetsDatasource {
             });
             return VetMapper.vetEntityFromObject(vet);
         } catch(error) {
+            logger.error(error);
             if (error instanceof CustomError) throw error;
             throw CustomError.internalServerError();
         }
@@ -48,6 +50,7 @@ export class VetsDatasourceImpl implements VetsDatasource {
             });
             return VetMapper.vetEntityFromObject(vet!);
         }catch(error) {
+            logger.error(error);
             if (error instanceof CustomError) throw error;
             throw CustomError.internalServerError();
         }
@@ -63,6 +66,7 @@ export class VetsDatasourceImpl implements VetsDatasource {
             if (!passwordMatch) throw CustomError.badRequest('Invalid credentials');
             return VetMapper.vetEntityFromObject(exists);
         }catch(error) {
+            logger.error(error);
             if (error instanceof CustomError) throw error;
             throw CustomError.internalServerError();
         }
@@ -91,7 +95,7 @@ export class VetsDatasourceImpl implements VetsDatasource {
 
         return VetMapper.vetEntityFromObject(vet);
         }).catch(error => {
-        console.log(error);
+        logger.error(error);
         if (error instanceof CustomError) throw error;
         throw CustomError.internalServerError();
         });
@@ -128,7 +132,7 @@ export class VetsDatasourceImpl implements VetsDatasource {
             const vet = await this._prisma.veterinarians.findFirst({ where: { id } });
                 return VetMapper.vetEntityFromObject(vet!);
         } catch (error) {
-                console.log(error);
+                logger.error(error);
                 if (error instanceof CustomError) throw error;
                     throw CustomError.internalServerError();
             }
@@ -153,7 +157,7 @@ export class VetsDatasourceImpl implements VetsDatasource {
             });
             return vets;
         } catch (error) {
-            console.log(error);
+                logger.error(error);
                 if (error instanceof CustomError) throw error;
                 throw CustomError.internalServerError();
         }
@@ -169,7 +173,7 @@ export class VetsDatasourceImpl implements VetsDatasource {
         });
             return formerVets;
         } catch (error) {
-            console.log(error);
+                logger.error(error);
                 if (error instanceof CustomError) throw error;
                 throw CustomError.internalServerError();
         }
