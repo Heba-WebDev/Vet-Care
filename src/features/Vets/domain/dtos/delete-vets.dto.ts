@@ -6,7 +6,7 @@ export class DeleteVetsDto {
         public exit_reason: string
     ) {}
 
-    static delete(object: {[key: string]: any}): [string?, DeleteVetsDto?] {
+    static delete(object: {[key: string]: string}): [string?, DeleteVetsDto?] {
         const { id, exit_reason } = object;
         const deleteDto = new DeleteVetsDto(id, exit_reason);
         const error = new VetsInputValidation().delete(deleteDto);

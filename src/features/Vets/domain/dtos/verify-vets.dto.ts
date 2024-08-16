@@ -5,7 +5,7 @@ export class VerifyVetDto {
         public email: string
     ) {}
 
-    static verify(object: {[key: string]: any}): [string?, VerifyVetDto?] {
+    static verify(object: {[key: string]: string}): [string?, VerifyVetDto?] {
        const { email } = object;
        const vetDto = new VerifyVetDto(email);
        const error = new VetsInputValidation().verify(vetDto);

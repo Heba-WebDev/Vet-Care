@@ -7,7 +7,7 @@ export class LoginVetsDto {
         public password: string
     ) {}
 
-    static login(object: {[key: string]: any}): [string?, LoginVetsDto?] {
+    static login(object: {[key: string]: string}): [string?, LoginVetsDto?] {
         const { email, password } = object;
         const loginDto = new LoginVetsDto(email, password);
         const error = new VetsInputValidation().login(loginDto);
