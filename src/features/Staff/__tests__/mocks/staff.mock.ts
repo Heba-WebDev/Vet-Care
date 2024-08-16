@@ -1,4 +1,4 @@
-import { RegisterStaffDto, LoginStaffDto } from "../..";
+import { LoginStaffDto, RegisterStaffDto } from "../../domain";
 import { StaffEntity } from "../../domain/entities";
 
 export const staffRegisterDtoMock: RegisterStaffDto = {
