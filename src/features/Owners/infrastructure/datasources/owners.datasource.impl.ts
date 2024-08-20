@@ -32,15 +32,18 @@ export class OwnersDatasourceImpl implements OwnersDatasource {
     }
 
     async getAll(ownerDto: GetAllOwnersDto): Promise<OwnerEntity[] | null> {
-        const { id, name, email, phone_number } = ownerDto;
+        const { id, name, email, phone_number, page, limit } = ownerDto;
         try {
+            const offset = (page! - 1) * limit!;
             const owners = await this._prisma.owners.findMany({
                 where: {
                     id: id!,
                     name: name!,
                     email: email!,
                     phone_number: phone_number!
-                }
+                },
+                skip: offset,
+                take: limit
             });
             return owners;
         } catch(error) {

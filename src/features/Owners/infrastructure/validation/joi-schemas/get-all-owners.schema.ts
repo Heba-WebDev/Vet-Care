@@ -19,4 +19,14 @@ export const getAllOwnersSchema = joi.object({
     "string.optional": "Provide a valid phone number.",
     "string.pattern": "A phone number can only contain digits, - or white space.",
     }),
+
+  page: joi.number().optional().messages({
+      "string.empty": "A number for page is required.",
+      "string.page": "A number is required.",
+    }),
+
+  limit: joi.number().optional().messages({
+      "string.empty": "A number for page is required.",
+      "string.page": "A number is required.",
+  }),
 });
