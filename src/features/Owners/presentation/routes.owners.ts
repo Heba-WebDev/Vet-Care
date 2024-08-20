@@ -14,7 +14,8 @@ export class OwnersRoutes {
         const repository = new OwnersRepositoryImpl(datasource);
         const controller = new OwnersController(repository);
 
-        router.post('/register', [AuthMiddlewear.authenticated], controller.register)
+        router.post('/register', [AuthMiddlewear.authenticated], controller.register);
+        router.get('/', [AuthMiddlewear.authenticated], controller.getAll);
 
         return router;
     }

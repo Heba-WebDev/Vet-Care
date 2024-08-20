@@ -21,7 +21,9 @@ export const prismaMock = {
     },
     owners: {
         findFirst: vi.fn(),
+        findMany: vi.fn(),
         create: vi.fn(),
+        count: vi.fn()
     },
     pets: {},
     animals: {},
