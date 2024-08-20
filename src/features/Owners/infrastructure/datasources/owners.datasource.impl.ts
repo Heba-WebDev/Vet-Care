@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { prisma } from "../../../../data";
-import { OwnerEntity, OwnersDatasource, RegisterOwnerDto } from "../../domain";
+import { GetAllOwnersDto, OwnerEntity, OwnersDatasource, RegisterOwnerDto } from "../../domain";
 import { CustomError } from "../../../../domain";
 import { OwnerMapper } from "../mapper";
 import { logger } from "../../../../infrastructure";
@@ -24,6 +24,25 @@ export class OwnersDatasourceImpl implements OwnersDatasource {
                 }
             });
             return OwnerMapper.ownerEntityFromObject(owner);
+        } catch(error) {
+            logger.error(error);
+            if (error instanceof CustomError) throw error;
+            throw CustomError.internalServerError();
+        }
+    }
+
+    async getAll(ownerDto: GetAllOwnersDto): Promise<OwnerEntity[] | null> {
+        const { id, name, email, phone_number } = ownerDto;
+        try {
+            const owners = await this._prisma.owners.findMany({
+                where: {
+                    id: id!,
+                    name: name!,
+                    email: email!,
+                    phone_number: phone_number!
+                }
+            });
+            return owners;
         } catch(error) {
             logger.error(error);
             if (error instanceof CustomError) throw error;
