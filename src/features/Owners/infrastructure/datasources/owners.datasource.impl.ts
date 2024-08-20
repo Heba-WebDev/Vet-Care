@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { prisma } from "../../../../data";
-import { GetAllOwnersDto, OwnerEntity, OwnersDatasource, RegisterOwnerDto } from "../../domain";
+import { AllOwnersDatasourceResponse, GetAllOwnersDto, OwnerEntity, OwnersDatasource, RegisterOwnerDto } from "../../domain";
 import { CustomError } from "../../../../domain";
 import { OwnerMapper } from "../mapper";
 import { logger } from "../../../../infrastructure";
@@ -31,11 +31,20 @@ export class OwnersDatasourceImpl implements OwnersDatasource {
         }
     }
 
-    async getAll(ownerDto: GetAllOwnersDto): Promise<OwnerEntity[] | null> {
+    async getAll(ownerDto: GetAllOwnersDto): Promise<AllOwnersDatasourceResponse | null> {
         const { id, name, email, phone_number, page, limit } = ownerDto;
         try {
-            const offset = (page! - 1) * limit!;
-            const owners = await this._prisma.owners.findMany({
+        const offset = (page! - 1) * limit!;
+        const [totalOwners, owners] = await this._prisma.$transaction([
+            this._prisma.owners.count({
+                where: {
+                    id: id!,
+                    name: name!,
+                    email: email!,
+                    phone_number: phone_number!
+                }
+            }),
+            this._prisma.owners.findMany({
                 where: {
                     id: id!,
                     name: name!,
@@ -44,8 +53,16 @@ export class OwnersDatasourceImpl implements OwnersDatasource {
                 },
                 skip: offset,
                 take: limit
-            });
-            return owners;
+            })
+        ]);
+
+        const totalPages = Math.ceil(totalOwners / limit!);
+
+        return {
+            owners,
+            currentPage: page!,
+            totalPages
+        };
         } catch(error) {
             logger.error(error);
             if (error instanceof CustomError) throw error;
