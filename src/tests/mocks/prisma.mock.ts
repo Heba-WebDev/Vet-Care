@@ -19,7 +19,10 @@ export const prismaMock = {
         update: vi.fn(),
         delete: vi.fn(),
     },
-    owners: {},
+    owners: {
+        findFirst: vi.fn(),
+        create: vi.fn(),
+    },
     pets: {},
     animals: {},
     permissions: {},
