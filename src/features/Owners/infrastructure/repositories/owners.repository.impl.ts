@@ -1,4 +1,10 @@
-import { OwnerEntity, OwnersDatasource, RegisterOwnerDto, GetAllOwnersDto } from "../../domain";
+import {
+    OwnerEntity,
+    OwnersDatasource,
+    RegisterOwnerDto,
+    GetAllOwnersDto,
+    AllOwnersDatasourceResponse
+} from "../../domain";
 import { OwnersRepository } from "../../domain/repositories"
 
 export class OwnersRepositoryImpl extends OwnersRepository {
@@ -12,7 +18,7 @@ export class OwnersRepositoryImpl extends OwnersRepository {
         return this.datasource.register(ownerDto);
     }
 
-    getAll(ownerDto: GetAllOwnersDto): Promise<OwnerEntity[] | null> {
+    getAll(ownerDto: GetAllOwnersDto): Promise<AllOwnersDatasourceResponse | null> {
         return this.datasource.getAll(ownerDto);
     }
 }
