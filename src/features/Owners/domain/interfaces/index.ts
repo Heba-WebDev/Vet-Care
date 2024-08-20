@@ -8,10 +8,16 @@ export type OwnersStandardResponse = {
     data: OwnerEntity | null;
 }
 
+export type AllOwnersDatasourceResponse = {
+    owners: OwnerEntity[] | null,
+    currentPage: number,
+    totalPages: number
+}
+
 export type AllOwnersResponse = {
     status: string;
     message: string | null;
-    data: OwnerEntity[] | null;
+    data: AllOwnersDatasourceResponse
 }
 
 // Interfaces

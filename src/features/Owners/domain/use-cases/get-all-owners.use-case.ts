@@ -11,7 +11,7 @@ export class GetAllOwners implements GetOwnersUseCase {
         return {
             status: 'success',
             message: 'Owners successfully fetched',
-            data: owners
+            data: owners!
         }
     }
 }
