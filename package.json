@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+  "prisma": {
+    "seed": "ts-node src/data/prisma/seed/seed.ts"
+  },
   "scripts": {
     "start": "npx prisma generate --schema=./src/prisma/schema.prisma && nodemon -e ts --watch 'src/**/*.ts' --exec 'tsc && node dist/bostrap.js '",
     "dev": "nodemon -e ts --watch 'src/**/*.ts' --exec 'tsc && node dist/app.js'",
