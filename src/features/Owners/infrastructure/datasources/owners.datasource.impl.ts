@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { prisma } from "../../../../data";
-import { AllOwnersDatasourceResponse, GetAllOwnersDto, OwnerEntity, OwnersDatasource, RegisterOwnerDto } from "../../domain";
+import { AllOwnersDatasourceResponse, GetAllOwnersDto, OwnerEntity, OwnersDatasource, RegisterOwnerDto, UpdateOwnerDto } from "../../domain";
 import { CustomError } from "../../../../domain";
 import { OwnerMapper } from "../mapper";
 import { logger } from "../../../../infrastructure";
@@ -63,6 +63,47 @@ export class OwnersDatasourceImpl implements OwnersDatasource {
             currentPage: page!,
             totalPages
         };
+        } catch(error) {
+            logger.error(error);
+            if (error instanceof CustomError) throw error;
+            throw CustomError.internalServerError();
+        }
+    }
+
+    async update(ownerDto: UpdateOwnerDto): Promise<OwnerEntity | null> {
+        const { id, name, email, phone_number } = ownerDto;
+        try {
+            const owner = await this._prisma.owners.findFirst({ where: { id }});
+            if (!owner) throw CustomError.notFound('No owner found');
+
+             const conflictingOwner = await this._prisma.owners.findFirst({
+                where: {
+                    OR: [
+                        { email: email || undefined }, // only if the email is defiend
+                        { phone_number: phone_number || undefined }, // only if the number is defiend
+                    ],
+                    NOT: { id }
+                }
+             });
+
+             if (conflictingOwner) {
+                if (conflictingOwner.email === email) {
+                    throw CustomError.badRequest('Email already exists');
+                }
+                if (conflictingOwner.phone_number === phone_number) {
+                    throw CustomError.badRequest('Phone number already exists');
+                }
+            }
+
+            const data: {[key: string]: string} = {};
+            if (name) data.name = name;
+            if (email) data.email = email;
+            if (phone_number) data.phone_number = phone_number;
+            const updatedOwner = await this._prisma.owners.update({
+                where: { id},
+                data
+            });
+            return OwnerMapper.ownerEntityFromObject(updatedOwner);
         } catch(error) {
             logger.error(error);
             if (error instanceof CustomError) throw error;
