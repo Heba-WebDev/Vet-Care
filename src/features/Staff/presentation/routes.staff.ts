@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { StaffController } from './controller.staff';
 import { StaffDatasourceImpl, StaffRepositoryImpl } from '../infrastructure';
-import { AuthMiddlewear } from '../../../presentation';
+import { AuthMiddleware } from '../../../presentation';
 
 export class StaffRoutes {
 
@@ -13,11 +13,11 @@ export class StaffRoutes {
 
         router.post('/register', controller.register)
         router.post('/login', controller.login)
-        router.patch('/verify', [AuthMiddlewear.authenticated, AuthMiddlewear.authorized], controller.verify)
-        router.delete('/delete', [AuthMiddlewear.authenticated, AuthMiddlewear.authorized], controller.delete)
-        router.get('/current', [AuthMiddlewear.authenticated], controller.getAll)
-        router.get('/former', [AuthMiddlewear.authenticated, AuthMiddlewear.authorized], controller.getAllFormer)
-        router.patch('/update', [AuthMiddlewear.authenticated, AuthMiddlewear.updateAuthorized], controller.update)
+        router.patch('/verify', [AuthMiddleware.authenticated, AuthMiddleware.authorized], controller.verify)
+        router.delete('/delete', [AuthMiddleware.authenticated, AuthMiddleware.authorized], controller.delete)
+        router.get('/current', [AuthMiddleware.authenticated], controller.getAll)
+        router.get('/former', [AuthMiddleware.authenticated, AuthMiddleware.authorized], controller.getAllFormer)
+        router.patch('/update', [AuthMiddleware.authenticated, AuthMiddleware.updateAuthorized], controller.update)
         return router;
     }
 }

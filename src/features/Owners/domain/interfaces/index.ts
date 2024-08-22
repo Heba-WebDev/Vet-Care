@@ -1,4 +1,4 @@
-import { RegisterOwnerDto, GetAllOwnersDto } from "../dtos";
+import { RegisterOwnerDto, GetAllOwnersDto, UpdateOwnerDto } from "../dtos";
 import { OwnerEntity } from "../entities";
 
 // Types (of return types)
@@ -27,4 +27,8 @@ export interface RegisterOwnerUseCase {
 
 export interface GetOwnersUseCase {
     execute( ownerDto: GetAllOwnersDto): Promise<AllOwnersResponse>
+}
+
+export interface UpdateOwnerUseCase {
+    execute( ownerDto: UpdateOwnerDto): Promise<OwnersStandardResponse>
 }

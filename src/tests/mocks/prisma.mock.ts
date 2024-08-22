@@ -23,7 +23,8 @@ export const prismaMock = {
         findFirst: vi.fn(),
         findMany: vi.fn(),
         create: vi.fn(),
-        count: vi.fn()
+        count: vi.fn(),
+        update: vi.fn(),
     },
     pets: {},
     animals: {},

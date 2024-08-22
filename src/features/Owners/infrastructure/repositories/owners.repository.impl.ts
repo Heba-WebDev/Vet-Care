@@ -3,7 +3,8 @@ import {
     OwnersDatasource,
     RegisterOwnerDto,
     GetAllOwnersDto,
-    AllOwnersDatasourceResponse
+    AllOwnersDatasourceResponse,
+    UpdateOwnerDto
 } from "../../domain";
 import { OwnersRepository } from "../../domain/repositories"
 
@@ -20,5 +21,9 @@ export class OwnersRepositoryImpl extends OwnersRepository {
 
     getAll(ownerDto: GetAllOwnersDto): Promise<AllOwnersDatasourceResponse | null> {
         return this.datasource.getAll(ownerDto);
+    }
+
+    update(ownerDto: UpdateOwnerDto): Promise<OwnerEntity | null> {
+        return this.datasource.update(ownerDto);
     }
 }
