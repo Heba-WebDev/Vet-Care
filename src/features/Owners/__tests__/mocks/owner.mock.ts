@@ -18,7 +18,14 @@ export const secondOwnerMock = {
     name: 'Jack',
     email: 'jack@example.com',
     phone_number: '0434527987'
-}
+};
+
+export const updatedOwnerMock = {
+    id: 'bd9f9bbc-b25a-4b90-a60a-ef7ba589a2b2',
+    name: registerOwnerDtoMock.name,
+    email: 'updated@example.com',
+    phone_number: registerOwnerDtoMock.phone_number
+};
 
 export const getAllOwnersDtoMock: GetAllOwnersDto = {
     id: ownerMock.id,
