@@ -3,7 +3,7 @@ import { JwtAdapter } from '../../config';
 import { payload } from '../../interfaces';
 import { logger } from '../../infrastructure';
 
-export class AuthMiddlewear {
+export class AuthMiddleware {
     static async authenticated(req: Request, res: Response, next: NextFunction) {
         const authorization = req.header('Authorization') || req.header('authorization');
         if (!authorization) return res.status(400).json({ error: 'No token provided'});

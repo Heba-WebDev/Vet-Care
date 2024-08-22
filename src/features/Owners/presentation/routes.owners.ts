@@ -1,6 +1,6 @@
 import { Router } from 'express';
 // import { OwnersDatasourceImpl, OwnersRepositoryImpl } from '../infrastructure';
-import { AuthMiddlewear } from '../../../presentation';
+import { AuthMiddleware } from '../../../presentation';
 import { OwnersController } from './controller.owners';
 import { OwnersDatasource, OwnersRepository } from '../domain';
 import { OwnersDatasourceImpl } from '../infrastructure/datasources';
@@ -15,9 +15,9 @@ export class OwnersRoutes {
         const repository = new OwnersRepositoryImpl(datasource);
         const controller = new OwnersController(repository);
 
-        router.post('/register', [AuthMiddlewear.authenticated], controller.register);
-        router.get('/', [AuthMiddlewear.authenticated], controller.getAll);
-        router.patch('/:id', [AuthMiddlewear.authenticated], [IdMiddleware.validate], controller.update);
+        router.post('/register', [AuthMiddleware.authenticated], controller.register);
+        router.get('/', [AuthMiddleware.authenticated], controller.getAll);
+        router.patch('/:id', [AuthMiddleware.authenticated], [IdMiddleware.validate], controller.update);
 
         return router;
     }
