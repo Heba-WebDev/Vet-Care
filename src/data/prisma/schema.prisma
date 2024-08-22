@@ -85,20 +85,22 @@ model Owners {
   transactions Transactions[]
 }
 
+model Animals {
+  id   Int    @id @default(autoincrement())
+  type Animal @unique
+  pets  Pets[]
+}
+
 model Pets {
   id           String         @id @default(uuid())
   name         String
-  type         Animal
+  animal       Animals        @relation(fields: [animal_id], references: [id])
+  animal_id    Int
   gender       Gender
   owner        Owners         @relation(fields: [owner_id], references: [id])
   owner_id     String
   appointments Appointments[]
   transactions Transactions[]
-}
-
-model Animals {
-  id   Int    @id @default(autoincrement())
-  type Animal @unique
 }
 
 model Jobs {
