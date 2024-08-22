@@ -5,6 +5,7 @@ import { OwnersController } from './controller.owners';
 import { OwnersDatasource, OwnersRepository } from '../domain';
 import { OwnersDatasourceImpl } from '../infrastructure/datasources';
 import { OwnersRepositoryImpl } from '../infrastructure/repositories/owners.repository.impl';
+import { IdMiddleware } from '../../../presentation/middlewares/uuid.middleware';
 
 export class OwnersRoutes {
 
@@ -16,7 +17,7 @@ export class OwnersRoutes {
 
         router.post('/register', [AuthMiddlewear.authenticated], controller.register);
         router.get('/', [AuthMiddlewear.authenticated], controller.getAll);
-        router.patch('/:id', [AuthMiddlewear.authenticated], controller.update);
+        router.patch('/:id', [AuthMiddlewear.authenticated], [IdMiddleware.validate], controller.update);
 
         return router;
     }
