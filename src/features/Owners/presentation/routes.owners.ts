@@ -16,6 +16,7 @@ export class OwnersRoutes {
 
         router.post('/register', [AuthMiddlewear.authenticated], controller.register);
         router.get('/', [AuthMiddlewear.authenticated], controller.getAll);
+        router.patch('/:id', [AuthMiddlewear.authenticated], controller.update);
 
         return router;
     }
