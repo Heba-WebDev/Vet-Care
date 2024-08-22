@@ -1,7 +1,7 @@
 import { PrismaClient, Animal } from "@prisma/client";
 import { logger } from "../../../infrastructure";
 
-class AnimalSeeder {
+class Seeder {
   private prisma: PrismaClient;
 
   constructor(prisma: PrismaClient) {
@@ -29,12 +29,12 @@ class AnimalSeeder {
       });
     }
 
-    logger.info('Animal types have been seeded.');
+    logger.info('Data has been seeded successfully.');
   }
 }
 
 const prisma = new PrismaClient();
-const seeder = new AnimalSeeder(prisma);
+const seeder = new Seeder(prisma);
 
 seeder.seed()
   .catch(e => {
