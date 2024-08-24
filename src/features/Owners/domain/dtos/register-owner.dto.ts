@@ -1,4 +1,4 @@
-import { OwnersInputValidation } from "../../infrastructure";
+import { OwnersInputValidation } from '../../infrastructure';
 
 export class RegisterOwnerDto {
     private constructor(
@@ -7,11 +7,13 @@ export class RegisterOwnerDto {
         public phone_number: string,
     ) {}
 
-    static register(object: {[key: string]: string}): [string?, RegisterOwnerDto?] {
+    static register(object: {
+        [key: string]: string;
+    }): [string?, RegisterOwnerDto?] {
         const { name, email, phone_number } = object;
         const ownerDto = new RegisterOwnerDto(name, email, phone_number);
         const error = new OwnersInputValidation().register(ownerDto);
-        if (error) return [error, undefined]
+        if (error) return [error, undefined];
         return [undefined, ownerDto];
     }
 }

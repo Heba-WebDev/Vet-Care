@@ -1,9 +1,9 @@
-import { LoginVetsDto } from "../dtos";
-import { LoginVetsUseCase, VetWithTokenResponse } from "../interfaces";
-import { VetsRepository } from "../repositories";
-import { JwtAdapter } from "../../../../config";
-import { CustomError } from "../../../../domain";
-import { SignToken } from "../../../../interfaces";
+import { LoginVetsDto } from '../dtos';
+import { LoginVetsUseCase, VetWithTokenResponse } from '../interfaces';
+import { VetsRepository } from '../repositories';
+import { JwtAdapter } from '../../../../config';
+import { CustomError } from '../../../../domain';
+import { SignToken } from '../../../../interfaces';
 
 export class LoginVets implements LoginVetsUseCase {
     constructor(
@@ -15,14 +15,15 @@ export class LoginVets implements LoginVetsUseCase {
         const access_token = await this.signToken({
             id: vet?.id!,
             job_title: vet?.job_title!,
-            permission_type: vet?.permission_type!
+            permission_type: vet?.permission_type!,
         });
-        if (!access_token) throw CustomError.internalServerError('Internal server error');
+        if (!access_token)
+            throw CustomError.internalServerError('Internal server error');
         return {
             status: 'success',
             message: 'Successfully logged in',
             access_token,
             data: vet,
-        }
+        };
     }
 }

@@ -1,13 +1,20 @@
-import { VetEntity } from "../../domain/entities";
-import { DeleteVetsDto, GetAllVetsDto, LoginVetsDto, RegisterVetsDto, UpdateVetsDto, VerifyVetDto } from "../../domain";
-import { VetsDatasource } from "../../domain/datasources/vets.datasource";
-import { Prisma, PrismaClient } from "@prisma/client";
-import { prisma } from "../../../../data";
-import { CustomError } from "../../../../domain";
-import { bcryptAdapter, JwtAdapter } from "../../../../config";
-import { VetMapper } from "../mappers/vet.mapper";
-import { FormerVetEntity } from "../../domain/entities/former-vet.entity";
-import { logger } from "../../../../infrastructure";
+import { VetEntity } from '../../domain/entities';
+import {
+    DeleteVetsDto,
+    GetAllVetsDto,
+    LoginVetsDto,
+    RegisterVetsDto,
+    UpdateVetsDto,
+    VerifyVetDto,
+} from '../../domain';
+import { VetsDatasource } from '../../domain/datasources/vets.datasource';
+import { Prisma, PrismaClient } from '@prisma/client';
+import { prisma } from '../../../../data';
+import { CustomError } from '../../../../domain';
+import { bcryptAdapter, JwtAdapter } from '../../../../config';
+import { VetMapper } from '../mappers/vet.mapper';
+import { FormerVetEntity } from '../../domain/entities/former-vet.entity';
+import { logger } from '../../../../infrastructure';
 
 export class VetsDatasourceImpl implements VetsDatasource {
     private readonly _prisma: PrismaClient;
@@ -18,20 +25,37 @@ export class VetsDatasourceImpl implements VetsDatasource {
     async register(vetsDto: RegisterVetsDto): Promise<VetEntity | null> {
         const { name, email, password, phone_number, job_title } = vetsDto;
         try {
-            const exists = await this._prisma.veterinarians.findFirst({ where: { email }});
-            if (exists) throw CustomError.badRequest('Provide a different email');
-            const phoneExists = await this._prisma.veterinarians.findFirst({where: {phone_number}});
-            if (phoneExists) throw CustomError.badRequest('Provide a different phone number');
-            const job = await this._prisma.jobs.findFirst({where: {title: job_title}});
-            if (!job) throw CustomError.badRequest('Provide a valid job title [Veterinarian, Asistant or Technician]');
+            const exists = await this._prisma.veterinarians.findFirst({
+                where: { email },
+            });
+            if (exists)
+                throw CustomError.badRequest('Provide a different email');
+            const phoneExists = await this._prisma.veterinarians.findFirst({
+                where: { phone_number },
+            });
+            if (phoneExists)
+                throw CustomError.badRequest(
+                    'Provide a different phone number',
+                );
+            const job = await this._prisma.jobs.findFirst({
+                where: { title: job_title },
+            });
+            if (!job)
+                throw CustomError.badRequest(
+                    'Provide a valid job title [Veterinarian, Asistant or Technician]',
+                );
             const hashedPassword = bcryptAdapter.hash(password);
             const vet = await this._prisma.veterinarians.create({
                 data: {
-                     name, email, password: hashedPassword, phone_number, job_title
-                }
+                    name,
+                    email,
+                    password: hashedPassword,
+                    phone_number,
+                    job_title,
+                },
             });
             return VetMapper.vetEntityFromObject(vet);
-        } catch(error) {
+        } catch (error) {
             logger.error(error);
             if (error instanceof CustomError) throw error;
             throw CustomError.internalServerError();
@@ -41,15 +65,18 @@ export class VetsDatasourceImpl implements VetsDatasource {
     async verify(vetsDto: VerifyVetDto): Promise<VetEntity | null> {
         const { email } = vetsDto;
         try {
-            const exists = await this._prisma.veterinarians.findFirst({ where: { email }});
+            const exists = await this._prisma.veterinarians.findFirst({
+                where: { email },
+            });
             if (!exists) throw CustomError.badRequest('No vet found');
-            if (exists.verified) throw CustomError.badRequest('Vet member already verified');
+            if (exists.verified)
+                throw CustomError.badRequest('Vet member already verified');
             const vet = await this._prisma.veterinarians.update({
                 where: { email },
-                data: { verified: true }
+                data: { verified: true },
             });
             return VetMapper.vetEntityFromObject(vet!);
-        }catch(error) {
+        } catch (error) {
             logger.error(error);
             if (error instanceof CustomError) throw error;
             throw CustomError.internalServerError();
@@ -59,13 +86,20 @@ export class VetsDatasourceImpl implements VetsDatasource {
     async login(vetsDto: LoginVetsDto): Promise<VetEntity | null> {
         const { email, password } = vetsDto;
         try {
-            const exists = await this._prisma.veterinarians.findFirst({ where: { email } });
+            const exists = await this._prisma.veterinarians.findFirst({
+                where: { email },
+            });
             if (!exists) throw CustomError.badRequest('Invalid credentials');
-            if (!exists.verified) throw CustomError.unauthorized('Account has to be verified');
-            const passwordMatch = await bcryptAdapter.compare(password, exists.password);
-            if (!passwordMatch) throw CustomError.badRequest('Invalid credentials');
+            if (!exists.verified)
+                throw CustomError.unauthorized('Account has to be verified');
+            const passwordMatch = await bcryptAdapter.compare(
+                password,
+                exists.password,
+            );
+            if (!passwordMatch)
+                throw CustomError.badRequest('Invalid credentials');
             return VetMapper.vetEntityFromObject(exists);
-        }catch(error) {
+        } catch (error) {
             logger.error(error);
             if (error instanceof CustomError) throw error;
             throw CustomError.internalServerError();
@@ -74,39 +108,46 @@ export class VetsDatasourceImpl implements VetsDatasource {
 
     async delete(vetsDto: DeleteVetsDto): Promise<VetEntity | null> {
         const { id, exit_reason } = vetsDto;
-        return this._prisma.$transaction(async (prisma) => {
-        const vet = await prisma.veterinarians.findFirst({ where: { id } });
-        if (!vet) throw CustomError.badRequest('Invalid credentials');
-        // Only verified vets are moved to the formerVets table
-        if (vet.verified) {
-            const formerVet = new FormerVetEntity(
-            vet.id,
-            vet.name,
-            vet.email,
-            vet.phone_number,
-            vet.job_title,
-            new Date(),
-            exit_reason
-        );
-        await prisma.formerVets.create({ data: formerVet });
-        }
-        // verified and unverified accounts can be safely deleted
-        await prisma.veterinarians.delete({ where: { id } });
+        return this._prisma
+            .$transaction(async (prisma) => {
+                const vet = await prisma.veterinarians.findFirst({
+                    where: { id },
+                });
+                if (!vet) throw CustomError.badRequest('Invalid credentials');
+                // Only verified vets are moved to the formerVets table
+                if (vet.verified) {
+                    const formerVet = new FormerVetEntity(
+                        vet.id,
+                        vet.name,
+                        vet.email,
+                        vet.phone_number,
+                        vet.job_title,
+                        new Date(),
+                        exit_reason,
+                    );
+                    await prisma.formerVets.create({ data: formerVet });
+                }
+                // verified and unverified accounts can be safely deleted
+                await prisma.veterinarians.delete({ where: { id } });
 
-        return VetMapper.vetEntityFromObject(vet);
-        }).catch(error => {
-        logger.error(error);
-        if (error instanceof CustomError) throw error;
-        throw CustomError.internalServerError();
-        });
+                return VetMapper.vetEntityFromObject(vet);
+            })
+            .catch((error) => {
+                logger.error(error);
+                if (error instanceof CustomError) throw error;
+                throw CustomError.internalServerError();
+            });
     }
 
     async update(vetsDto: UpdateVetsDto): Promise<VetEntity | null> {
         const { id, email, password, phone_number } = vetsDto;
         try {
-            const exists = await this._prisma.veterinarians.findFirst({ where: { id } });
+            const exists = await this._prisma.veterinarians.findFirst({
+                where: { id },
+            });
             if (!exists) throw CustomError.badRequest('Invalid credentials');
-            if (!exists.verified) throw CustomError.unauthorized('Account has to be verified');
+            if (!exists.verified)
+                throw CustomError.unauthorized('Account has to be verified');
 
             /*
             VetsUpdateInput ensures that you only update fields that exist in
@@ -129,53 +170,57 @@ export class VetsDatasourceImpl implements VetsDatasource {
                 });
             }
 
-            const vet = await this._prisma.veterinarians.findFirst({ where: { id } });
-                return VetMapper.vetEntityFromObject(vet!);
+            const vet = await this._prisma.veterinarians.findFirst({
+                where: { id },
+            });
+            return VetMapper.vetEntityFromObject(vet!);
         } catch (error) {
-                logger.error(error);
-                if (error instanceof CustomError) throw error;
-                    throw CustomError.internalServerError();
-            }
+            logger.error(error);
+            if (error instanceof CustomError) throw error;
+            throw CustomError.internalServerError();
+        }
     }
 
     async getAll(vetsDto: GetAllVetsDto): Promise<VetEntity[] | null> {
         const { page, limit } = vetsDto;
         try {
-           const offset = (page! - 1) * limit!;
+            const offset = (page! - 1) * limit!;
             const vets = await this._prisma.veterinarians.findMany({
-            skip: offset,
-            take: limit,
-            select: {
-                id: true,
-                name: true,
-                email: true,
-                job_title: true,
-                permission_type: true,
-                phone_number: true,
-                verified: true,
-            }
+                skip: offset,
+                take: limit,
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    job_title: true,
+                    permission_type: true,
+                    phone_number: true,
+                    verified: true,
+                },
             });
             return vets;
         } catch (error) {
-                logger.error(error);
-                if (error instanceof CustomError) throw error;
-                throw CustomError.internalServerError();
+            logger.error(error);
+            if (error instanceof CustomError) throw error;
+            throw CustomError.internalServerError();
         }
     }
 
-    async GetAllFormer(vetsDto: GetAllVetsDto): Promise<FormerVetEntity[] | null> {
+    async GetAllFormer(
+        vetsDto: GetAllVetsDto,
+    ): Promise<FormerVetEntity[] | null> {
         const { page, limit } = vetsDto;
         try {
-           const offset = (page! - 1) * limit!;
+            const offset = (page! - 1) * limit!;
             const formerVets = await this._prisma.formerVets.findMany({
-            skip: offset,
-            take: limit
-        });
+                skip: offset,
+                take: limit,
+            });
             return formerVets;
         } catch (error) {
-                logger.error(error);
-                if (error instanceof CustomError) throw error;
-                throw CustomError.internalServerError();
+            logger.error(error);
+            if (error instanceof CustomError) throw error;
+            throw CustomError.internalServerError();
         }
     }
 }

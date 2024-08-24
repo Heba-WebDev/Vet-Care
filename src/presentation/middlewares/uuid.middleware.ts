@@ -1,4 +1,4 @@
-import {Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { validate as isUuid } from 'uuid';
 
 export class IdMiddleware {

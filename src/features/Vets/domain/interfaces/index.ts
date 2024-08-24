@@ -4,55 +4,55 @@ import {
     LoginVetsDto,
     DeleteVetsDto,
     UpdateVetsDto,
-    GetAllVetsDto
-} from "../dtos";
-import { FormerVetEntity, VetEntity } from "../entities";
+    GetAllVetsDto,
+} from '../dtos';
+import { FormerVetEntity, VetEntity } from '../entities';
 
 // Response types
 export type VetStandardResponse = {
     status: string;
     message: string | null;
     data: VetEntity | null;
-}
+};
 
 export type VetWithTokenResponse = {
     status: string;
     message: string | null;
-    access_token :string,
+    access_token: string;
     data: VetEntity | null;
-}
+};
 
 export type AllVetResponse = {
     status: string;
     message: string | null;
     data: VetEntity[] | null;
-}
+};
 
 export type AllFormerVetsResponse = {
     status: string;
     message: string | null;
     data: FormerVetEntity[] | null;
-}
+};
 
 // Use cases
 export interface RegisterVetsUseCase {
-    execute( registerVets: RegisterVetsDto): Promise<VetStandardResponse>;
+    execute(registerVets: RegisterVetsDto): Promise<VetStandardResponse>;
 }
 
 export interface VerifyVetsUseCase {
-    execute( verifyVets: VerifyVetDto): Promise<VetStandardResponse>;
+    execute(verifyVets: VerifyVetDto): Promise<VetStandardResponse>;
 }
 
 export interface LoginVetsUseCase {
-    execute( verifyVets: LoginVetsDto): Promise<VetWithTokenResponse>;
+    execute(verifyVets: LoginVetsDto): Promise<VetWithTokenResponse>;
 }
 
 export interface DeleteVetsUseCase {
-    execute( deleteVets: DeleteVetsDto): Promise<VetStandardResponse>
+    execute(deleteVets: DeleteVetsDto): Promise<VetStandardResponse>;
 }
 
 export interface UpdateVetsUseCase {
-    execute( updateVets: UpdateVetsDto): Promise<VetStandardResponse>
+    execute(updateVets: UpdateVetsDto): Promise<VetStandardResponse>;
 }
 
 export interface GetAllVetsUseCase {

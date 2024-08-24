@@ -13,32 +13,42 @@ describe('Staff registration', () => {
         vi.clearAllMocks();
     });
 
-    it('should register a new staff member', async() => {
+    it('should register a new staff member', async () => {
         prismaMock.staff.findFirst
-        .mockResolvedValueOnce(null) // No existing email
-        .mockResolvedValueOnce(null); // No existing phone number
-        prismaMock.jobs.findFirst.mockResolvedValue({title: staffRegisterDtoMock.job_title })
+            .mockResolvedValueOnce(null) // No existing email
+            .mockResolvedValueOnce(null); // No existing phone number
+        prismaMock.jobs.findFirst.mockResolvedValue({
+            title: staffRegisterDtoMock.job_title,
+        });
         prismaMock.staff.create.mockResolvedValue(staffEntityMock);
         StaffMapper.staffEntityFromObject(staffEntityMock);
 
         const result = await staffDatasource.register(staffRegisterDtoMock);
         expect(typeof result).toEqual('object');
-        expect(prismaMock.staff.findFirst).toHaveBeenCalledWith({ where: { email: staffRegisterDtoMock.email } });
-        expect(prismaMock.jobs.findFirst).toHaveBeenCalledWith({ where: { title: staffRegisterDtoMock.job_title } });
+        expect(prismaMock.staff.findFirst).toHaveBeenCalledWith({
+            where: { email: staffRegisterDtoMock.email },
+        });
+        expect(prismaMock.jobs.findFirst).toHaveBeenCalledWith({
+            where: { title: staffRegisterDtoMock.job_title },
+        });
     });
 
-    it('should throw an error if email already exists', async() => {
+    it('should throw an error if email already exists', async () => {
         prismaMock.staff.findFirst.mockResolvedValueOnce(staffEntityMock);
-        await expect(staffDatasource.register(staffRegisterDtoMock)).rejects
-        .toThrow(CustomError.badRequest('Provide a different email'))
+        await expect(
+            staffDatasource.register(staffRegisterDtoMock),
+        ).rejects.toThrow(CustomError.badRequest('Provide a different email'));
     });
 
-    it('should throw an error if phone number already exists', async() => {
+    it('should throw an error if phone number already exists', async () => {
         prismaMock.staff.findFirst
-        .mockResolvedValueOnce(null)
-        .mockResolvedValueOnce(staffEntityMock);
-        await expect(staffDatasource.register(staffRegisterDtoMock)).rejects
-        .toThrow(CustomError.badRequest('Provide a different phone number'))
+            .mockResolvedValueOnce(null)
+            .mockResolvedValueOnce(staffEntityMock);
+        await expect(
+            staffDatasource.register(staffRegisterDtoMock),
+        ).rejects.toThrow(
+            CustomError.badRequest('Provide a different phone number'),
+        );
     });
 
     // it('should throw an error if job title does not exist', async() => {
@@ -54,5 +64,4 @@ describe('Staff registration', () => {
     //     await expect(staffDatasource.register(dtoMock)).rejects
     //     .toThrow(CustomError.badRequest('Provide a valid job title [Receptionist, HR, or Manager]'))
     // });
-
 });

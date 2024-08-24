@@ -4,16 +4,14 @@ import {
     LoginVetsDto,
     RegisterVetsDto,
     UpdateVetsDto,
-    VerifyVetDto
-} from "../../domain";
-import { VetsDatasource } from "../../domain/datasources/vets.datasource";
-import { FormerVetEntity, VetEntity } from "../../domain/entities";
-import { VetsRepository } from "../../domain/repositories";
+    VerifyVetDto,
+} from '../../domain';
+import { VetsDatasource } from '../../domain/datasources/vets.datasource';
+import { FormerVetEntity, VetEntity } from '../../domain/entities';
+import { VetsRepository } from '../../domain/repositories';
 
 export class VetsRepositoryImpl extends VetsRepository {
-    constructor(
-        private readonly datasource: VetsDatasource
-    ) {
+    constructor(private readonly datasource: VetsDatasource) {
         super();
     }
 

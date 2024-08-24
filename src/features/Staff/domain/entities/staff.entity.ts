@@ -6,6 +6,6 @@ export class StaffEntity {
         public permission_type: string,
         public email: string,
         public phone_number: string,
-        public verified: boolean
+        public verified: boolean,
     ) {}
 }

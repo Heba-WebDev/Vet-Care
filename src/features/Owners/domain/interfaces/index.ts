@@ -1,34 +1,34 @@
-import { RegisterOwnerDto, GetAllOwnersDto, UpdateOwnerDto } from "../dtos";
-import { OwnerEntity } from "../entities";
+import { RegisterOwnerDto, GetAllOwnersDto, UpdateOwnerDto } from '../dtos';
+import { OwnerEntity } from '../entities';
 
 // Types (of return types)
 export type OwnersStandardResponse = {
     status: string;
     message: string | null;
     data: OwnerEntity | null;
-}
+};
 
 export type AllOwnersDatasourceResponse = {
-    owners: OwnerEntity[] | null,
-    currentPage: number,
-    totalPages: number
-}
+    owners: OwnerEntity[] | null;
+    currentPage: number;
+    totalPages: number;
+};
 
 export type AllOwnersResponse = {
     status: string;
     message: string | null;
-    data: AllOwnersDatasourceResponse
-}
+    data: AllOwnersDatasourceResponse;
+};
 
 // Interfaces
 export interface RegisterOwnerUseCase {
-    execute( registerOwner: RegisterOwnerDto): Promise<OwnersStandardResponse>
+    execute(registerOwner: RegisterOwnerDto): Promise<OwnersStandardResponse>;
 }
 
 export interface GetOwnersUseCase {
-    execute( ownerDto: GetAllOwnersDto): Promise<AllOwnersResponse>
+    execute(ownerDto: GetAllOwnersDto): Promise<AllOwnersResponse>;
 }
 
 export interface UpdateOwnerUseCase {
-    execute( ownerDto: UpdateOwnerDto): Promise<OwnersStandardResponse>
+    execute(ownerDto: UpdateOwnerDto): Promise<OwnersStandardResponse>;
 }

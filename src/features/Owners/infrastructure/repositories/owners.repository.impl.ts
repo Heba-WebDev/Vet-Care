@@ -4,14 +4,12 @@ import {
     RegisterOwnerDto,
     GetAllOwnersDto,
     AllOwnersDatasourceResponse,
-    UpdateOwnerDto
-} from "../../domain";
-import { OwnersRepository } from "../../domain/repositories"
+    UpdateOwnerDto,
+} from '../../domain';
+import { OwnersRepository } from '../../domain/repositories';
 
 export class OwnersRepositoryImpl extends OwnersRepository {
-    constructor(
-        private readonly datasource: OwnersDatasource
-    ) {
+    constructor(private readonly datasource: OwnersDatasource) {
         super();
     }
 
@@ -19,7 +17,9 @@ export class OwnersRepositoryImpl extends OwnersRepository {
         return this.datasource.register(ownerDto);
     }
 
-    getAll(ownerDto: GetAllOwnersDto): Promise<AllOwnersDatasourceResponse | null> {
+    getAll(
+        ownerDto: GetAllOwnersDto,
+    ): Promise<AllOwnersDatasourceResponse | null> {
         return this.datasource.getAll(ownerDto);
     }
 

@@ -1,5 +1,4 @@
-import { vi } from "vitest";
-
+import { vi } from 'vitest';
 
 export const prismaMock = {
     staff: {
@@ -10,7 +9,7 @@ export const prismaMock = {
         delete: vi.fn(),
     },
     jobs: {
-        findFirst: vi.fn()
+        findFirst: vi.fn(),
     },
     veterinarians: {
         findFirst: vi.fn(),
@@ -52,4 +51,4 @@ export const prismaMock = {
     // $queryRawUnsafe: vi.fn(),
     $transaction: vi.fn(),
     // $extends: vi.fn(),
-}
+};

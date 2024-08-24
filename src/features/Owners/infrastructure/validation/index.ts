@@ -1,1 +1,1 @@
-export * from './owners.validation.impl'
+export * from './owners.validation.impl';

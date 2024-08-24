@@ -1,5 +1,5 @@
-import { Response } from "express";
-import { CustomError } from "../domain";
+import { Response } from 'express';
+import { CustomError } from '../domain';
 
 export abstract class BaseController {
     protected handleError(error: unknown, res: Response) {
@@ -7,6 +7,6 @@ export abstract class BaseController {
             return res.status(error.statusCode).json({ error: error.message });
         }
 
-        return res.status(500).json({ error: 'Internal Server Error '});
+        return res.status(500).json({ error: 'Internal Server Error ' });
     }
 }

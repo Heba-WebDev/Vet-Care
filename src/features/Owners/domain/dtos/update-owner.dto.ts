@@ -1,4 +1,4 @@
-import { OwnersInputValidation } from "../../infrastructure";
+import { OwnersInputValidation } from '../../infrastructure';
 
 export class UpdateOwnerDto {
     private constructor(
@@ -8,10 +8,14 @@ export class UpdateOwnerDto {
         public readonly phone_number?: string,
     ) {}
 
-    static update(id: string, object: {[key: string]: string}): [string?, UpdateOwnerDto?] {
-        const { name, email, phone_number} = object;
+    static update(
+        id: string,
+        object: { [key: string]: string },
+    ): [string?, UpdateOwnerDto?] {
+        const { name, email, phone_number } = object;
         if (!name && !email && !phone_number) {
-            const error = 'Please provide a name, an email or a phone number to update';
+            const error =
+                'Please provide a name, an email or a phone number to update';
             return [error, undefined];
         }
         const ownerDto = new UpdateOwnerDto(id, name, email, phone_number);

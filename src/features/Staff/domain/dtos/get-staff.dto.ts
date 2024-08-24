@@ -1,8 +1,7 @@
 import { ParsedQs } from 'qs';
-import { StaffInputValidation } from "../../infrastructure/validation";
+import { StaffInputValidation } from '../../infrastructure/validation';
 
 export class GetAllStaffDto {
-
     constructor(
         public readonly page?: number,
         public readonly limit?: number,
@@ -13,7 +12,7 @@ export class GetAllStaffDto {
         const limit = parseInt(object.limit as string) || 15;
         const staffDto = new GetAllStaffDto(page, limit);
         const err = new StaffInputValidation().getAll(staffDto);
-        if (err) return [err, undefined]
-        return [undefined, staffDto]
+        if (err) return [err, undefined];
+        return [undefined, staffDto];
     }
 }

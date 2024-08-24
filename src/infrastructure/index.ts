@@ -1,1 +1,1 @@
-export * from './logger/Logger'
+export * from './logger/Logger';

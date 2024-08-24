@@ -12,7 +12,7 @@ describe('Staff loggin in', () => {
         vi.clearAllMocks();
     });
 
-    it('should login a staff member', async() => {
+    it('should login a staff member', async () => {
         prismaMock.staff.findFirst.mockResolvedValueOnce(staffEntityMock); //email found
         prismaMock.staff.findFirst.mockResolvedValueOnce(staffEntityMock); // account verified
         bcryptAdapter.compare = vi.fn().mockResolvedValue(true); // password match with pass in db
@@ -20,13 +20,16 @@ describe('Staff loggin in', () => {
         StaffMapper.staffEntityFromObject(staffEntityMock);
         const result = await staffDatasource.login(staffLoginDtoMock);
         expect(typeof result).toEqual('object');
-        expect(prismaMock.staff.findFirst).toHaveBeenCalledWith({ where: { email: staffLoginDtoMock.email } });
+        expect(prismaMock.staff.findFirst).toHaveBeenCalledWith({
+            where: { email: staffLoginDtoMock.email },
+        });
         expect(bcryptAdapter.compare).toHaveBeenCalledOnce;
     });
 
     it('should throw an error if credentials are invalid', async () => {
-    prismaMock.staff.findFirst.mockResolvedValueOnce(null);
-    await expect(staffDatasource.login(staffLoginDtoMock)).rejects
-        .toThrow()
-  });
+        prismaMock.staff.findFirst.mockResolvedValueOnce(null);
+        await expect(
+            staffDatasource.login(staffLoginDtoMock),
+        ).rejects.toThrow();
+    });
 });

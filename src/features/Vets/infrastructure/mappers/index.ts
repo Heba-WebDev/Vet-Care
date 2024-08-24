@@ -1,1 +1,1 @@
-export * from './vet.mapper'
+export * from './vet.mapper';

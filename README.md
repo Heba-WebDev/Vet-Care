@@ -1,10 +1,10 @@
 # Vet-Care
+
 🚧 version 2 of the API is currently under development. Kindly check v1 branch to see the full features 🚧
 
 ## _Introduction_
 
 Vet-Care is a veterinary clinic management system designed to handle staff, clients, pets, appointments, appointment notifications, and payments. The system follows clean architecture principles, ensuring clear separation of concerns and maintainability.
-
 
 ## _Technologies_
 
@@ -16,47 +16,43 @@ The second version of the API adheres to clean architecture principles. The appl
 
 ### 1. Presentation Layer
 
- - The presentation layer handles external communication with various systems, including APIs, UI components, and HTTP/S requests.
+-   The presentation layer handles external communication with various systems, including APIs, UI components, and HTTP/S requests.
 
- - It acts as the entry point for external interactions and translates them into domain-specific use cases.
+-   It acts as the entry point for external interactions and translates them into domain-specific use cases.
 
- - Examples of components in this layer include controllers, routes, and user interfaces.
-
+-   Examples of components in this layer include controllers, routes, and user interfaces.
 
 ### 2. Domain Layer
 
- - The domain layer encapsulates the core business rules, entities, data transfer objects (DTOs), validation logic, and use cases.
+-   The domain layer encapsulates the core business rules, entities, data transfer objects (DTOs), validation logic, and use cases.
 
- - Entities represent the fundamental business concepts (e.g., staff, clients, pets) and contain the essential logic.
+-   Entities represent the fundamental business concepts (e.g., staff, clients, pets) and contain the essential logic.
 
- - Use cases define how these entities interact and enforce business rules.
+-   Use cases define how these entities interact and enforce business rules.
 
- - Validation rules are also part of this layer, ensuring data integrity.
+-   Validation rules are also part of this layer, ensuring data integrity.
 
- - DTOs facilitate data exchange between layers.
+-   DTOs facilitate data exchange between layers.
 
- - The domain layer remains independent of external concerns.
-
+-   The domain layer remains independent of external concerns.
 
 ### 3. Infrastructure Layer
 
- - Infrastructure deals with external services and technical details.
+-   Infrastructure deals with external services and technical details.
 
- - It includes components responsible for database access, authentication, external  APIs, and other integrations.
+-   It includes components responsible for database access, authentication, external APIs, and other integrations.
 
- - The infrastructure layer interacts with databases (e.g., Postgres), third-party libraries (e.g., Prisma), and validation tools (e.g., Joi).
+-   The infrastructure layer interacts with databases (e.g., Postgres), third-party libraries (e.g., Prisma), and validation tools (e.g., Joi).
 
- - Keeping infrastructure separate from the domain ensures flexibility and testability.
-
+-   Keeping infrastructure separate from the domain ensures flexibility and testability.
 
 #### Additionally:
 
- - The application follows the Vertical Slice technique, where each major feature or use case has its own dedicated folder structure.
+-   The application follows the Vertical Slice technique, where each major feature or use case has its own dedicated folder structure.
 
- - Within each feature folder, you’ll find subfolders corresponding to the three layers (presentation, domain, and infrastructure).
+-   Within each feature folder, you’ll find subfolders corresponding to the three layers (presentation, domain, and infrastructure).
 
- - Any shared code or utilities between different features reside at the root level within their respective layers.
-
+-   Any shared code or utilities between different features reside at the root level within their respective layers.
 
 This architecture promotes maintainability, scalability, and clear separation of concerns. 🏗️🚀
 

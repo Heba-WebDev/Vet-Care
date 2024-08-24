@@ -1,1 +1,1 @@
-export * from './staff.mapper'
+export * from './staff.mapper';

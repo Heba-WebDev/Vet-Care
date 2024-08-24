@@ -20,8 +20,8 @@ export class GetAllOwnersDto {
             email as string,
             phone_number as string,
             page,
-            limit
+            limit,
         );
-        return [undefined, getOwnerDto]
+        return [undefined, getOwnerDto];
     }
 }

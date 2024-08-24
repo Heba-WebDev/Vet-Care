@@ -24,6 +24,6 @@ export class Server {
         this.app.use(new GlobalErrorMiddleware().notFound);
         this.app.listen(this.port, () => {
             logger.info(`Server running on ${this.port} 🚀`);
-        })
+        });
     }
 }

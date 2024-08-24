@@ -4,22 +4,22 @@ import {
     GetAllStaffDto,
     LoginStaffDto,
     UpdateStaffDto,
-    VerifyStaffDto
-} from "../../domain";
+    VerifyStaffDto,
+} from '../../domain';
 import {
     registerSchema,
     loginSchema,
     deleteSchema,
     verifySchema,
     getAllSchema,
-    updateSchema } from "./joi-schemas";
+    updateSchema,
+} from './joi-schemas';
 
 export class StaffInputValidation {
-
     register(staffDto: RegisterStaffDto): string | null {
-    const { error } = registerSchema.validate(staffDto);
-    if (error) return error.message;
-    return null;
+        const { error } = registerSchema.validate(staffDto);
+        if (error) return error.message;
+        return null;
     }
 
     login(staffDto: LoginStaffDto): string | null {

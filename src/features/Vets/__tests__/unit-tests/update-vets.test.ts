@@ -6,7 +6,7 @@ import { prismaMock } from '../../../../tests/mocks';
 import {
     vetEntityUnveriviedMock,
     vetEntityVerifiedMock,
-    vetUpdateDtoMock 
+    vetUpdateDtoMock,
 } from '../mocks/vet.mock';
 
 describe('Vet update account', () => {
@@ -17,30 +17,44 @@ describe('Vet update account', () => {
         vi.clearAllMocks();
     });
 
-    it('should update a vet member account', async() => {
-        prismaMock.veterinarians.findFirst.mockResolvedValue(vetEntityVerifiedMock);
-        bcryptAdapter.hash = vi.fn().mockResolvedValue(vetUpdateDtoMock.password);
-        prismaMock.veterinarians.update.mockResolvedValueOnce(vetEntityVerifiedMock);
-        VetMapper.vetEntityFromObject = vi.fn().mockReturnValue(vetEntityVerifiedMock);
+    it('should update a vet member account', async () => {
+        prismaMock.veterinarians.findFirst.mockResolvedValue(
+            vetEntityVerifiedMock,
+        );
+        bcryptAdapter.hash = vi
+            .fn()
+            .mockResolvedValue(vetUpdateDtoMock.password);
+        prismaMock.veterinarians.update.mockResolvedValueOnce(
+            vetEntityVerifiedMock,
+        );
+        VetMapper.vetEntityFromObject = vi
+            .fn()
+            .mockReturnValue(vetEntityVerifiedMock);
 
         const result = await vetDatasource.update(vetUpdateDtoMock);
         expect(result).toEqual(vetEntityVerifiedMock);
-        expect(prismaMock.veterinarians.findFirst).toHaveBeenCalledWith({ where: { id: vetUpdateDtoMock.id } });
+        expect(prismaMock.veterinarians.findFirst).toHaveBeenCalledWith({
+            where: { id: vetUpdateDtoMock.id },
+        });
         expect(prismaMock.veterinarians.update).toHaveBeenCalledTimes(1);
-        expect(bcryptAdapter.hash).toHaveBeenCalledWith(vetUpdateDtoMock.password);
+        expect(bcryptAdapter.hash).toHaveBeenCalledWith(
+            vetUpdateDtoMock.password,
+        );
     });
 
-    it('should throw an error if the vet account does not exist', async() => {
+    it('should throw an error if the vet account does not exist', async () => {
         prismaMock.veterinarians.findFirst.mockResolvedValue(null);
         expect(vetDatasource.update(vetUpdateDtoMock)).rejects.toThrow(
-            CustomError.badRequest('Invalid credentials')
-        )
+            CustomError.badRequest('Invalid credentials'),
+        );
     });
 
-    it('should throw an error if the vet account does not exist', async() => {
-        prismaMock.veterinarians.findFirst.mockResolvedValue(vetEntityUnveriviedMock);
+    it('should throw an error if the vet account does not exist', async () => {
+        prismaMock.veterinarians.findFirst.mockResolvedValue(
+            vetEntityUnveriviedMock,
+        );
         expect(vetDatasource.update(vetUpdateDtoMock)).rejects.toThrow(
-            CustomError.badRequest('Account has to be verified')
-        )
+            CustomError.badRequest('Account has to be verified'),
+        );
     });
 });

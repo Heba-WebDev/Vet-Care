@@ -10,14 +10,11 @@ import {
     VerifyStaffDto,
     // Entities
     StaffEntity,
-    FormerStaffEntity
-} from "../../domain";
+    FormerStaffEntity,
+} from '../../domain';
 
 export class StaffRepositoryImpl extends StaffRepository {
-
-    constructor(
-        private readonly datasource: StaffDatasource,
-    ) {
+    constructor(private readonly datasource: StaffDatasource) {
         super();
     }
     /*
@@ -45,7 +42,9 @@ export class StaffRepositoryImpl extends StaffRepository {
         return this.datasource.getAll(staffDto);
     }
 
-    getAllFormer(staffDto: GetAllStaffDto): Promise<FormerStaffEntity[] | null> {
+    getAllFormer(
+        staffDto: GetAllStaffDto,
+    ): Promise<FormerStaffEntity[] | null> {
         return this.datasource.getAllFormer(staffDto);
     }
 

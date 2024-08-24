@@ -11,16 +11,19 @@ describe('Staff Get-All-Former', () => {
         vi.clearAllMocks();
     });
 
-    it('should return all former staff members'), async() => {
-        prismaMock.staff.findMany.mockResolvedValueOnce(formerStaffMock);
+    it('should return all former staff members'),
+        async () => {
+            prismaMock.staff.findMany.mockResolvedValueOnce(formerStaffMock);
 
-        const result = await staffDatasource.getAllFormer({ page: 1, limit: 5 });
+            const result = await staffDatasource.getAllFormer({
+                page: 1,
+                limit: 5,
+            });
 
-        expect(result).toEqual(formerStaffMock);
-        expect(prismaMock.staff.findMany).toHaveBeenCalledWith({
-            skip: (1 - 1) * 5,
-            take: 5
-        });
-    };
-
-})
+            expect(result).toEqual(formerStaffMock);
+            expect(prismaMock.staff.findMany).toHaveBeenCalledWith({
+                skip: (1 - 1) * 5,
+                take: 5,
+            });
+        };
+});
