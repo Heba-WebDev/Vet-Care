@@ -12,7 +12,7 @@ describe('Vets Get-All-Current', () => {
         vi.clearAllMocks();
     });
 
-    it('should return all current vets members'), async() => {
+    it('should return all current vets members', async() => {
         prismaMock.veterinarians.findMany.mockResolvedValueOnce(vetEntityVerifiedMock);
         const result = await vetsDatasource.getAll({ page: 1, limit: 5 });
         expect(result).toEqual(vetEntityVerifiedMock);
@@ -20,7 +20,7 @@ describe('Vets Get-All-Current', () => {
             skip: (1 - 1) * 5,
             take: 5
         });
-    };
+    });
 
     it('should return an empty array if no vet member was found', async() => {
         prismaMock.veterinarians.findMany.mockResolvedValueOnce([]);
