@@ -10,7 +10,8 @@
     "start": "npx prisma generate --schema=./src/prisma/schema.prisma && nodemon -e ts --watch 'src/**/*.ts' --exec 'tsc && node dist/bostrap.js '",
     "dev": "nodemon -e ts --watch 'src/**/*.ts' --exec 'tsc && node dist/app.js'",
     "swagger": "node ./src/docs/index.mjs",
-    "test": "vitest"
+    "test": "vitest",
+    "lint": "eslint"
   },
   "keywords": [],
   "author": "Heba",
@@ -35,6 +36,7 @@
     "winston": "^3.14.2"
   },
   "devDependencies": {
+    "@eslint/js": "^9.9.1",
     "@prisma/client": "^5.12.0",
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.7",
@@ -45,11 +47,16 @@
     "@types/nodemailer": "^6.4.14",
     "@types/swagger-ui-express": "^4.1.6",
     "@types/uuid": "^10.0.0",
+    "eslint": "^9.9.1",
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.9.0",
+    "prettier": "3.3.3",
     "prisma": "^5.11.0",
     "swagger-autogen": "^2.23.7",
     "ts-jest": "^29.1.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.3",
+    "typescript-eslint": "^8.2.0",
     "vitest": "^2.0.2"
   }
 }
