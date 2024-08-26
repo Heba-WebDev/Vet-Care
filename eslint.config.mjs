@@ -1,8 +1,8 @@
 import globals from "globals";
 import pluginJs from "@eslint/js";
 import tseslint from "typescript-eslint";
-import prettierConfig from 'eslint-config-prettier';
-import prettierPlugin from 'eslint-plugin-prettier';
+import prettier from 'eslint-config-prettier';
+import eslintPluginPrettier from 'eslint-plugin-prettier';
 
 export default [
   {
@@ -14,19 +14,17 @@ export default [
       parser: tseslint.parser,
       parserOptions: {
         project: './tsconfig.json',
-        prettier: prettierPlugin,
+        prettier: eslintPluginPrettier,
       },
       globals: {
         ...globals.node,
       },
     },
-    prettierConfig,
     plugins: {
       '@typescript-eslint': tseslint.plugin,
     },
 
     rules: {
-      'prettier/prettier': 'error',
       semi: ['error', 'always'],
       quotes: ['error', 'single'],
       'prefer-const': 'error',
@@ -42,4 +40,5 @@ export default [
   },
   ...tseslint.configs.recommended,
   pluginJs.configs.recommended,
+  prettier,
 ];
