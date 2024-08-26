@@ -1,6 +1,7 @@
+import { PrismaClient } from '@prisma/client';
 import { vi, it, describe, beforeEach, expect } from 'vitest';
 import { VetMapper, VetsDatasourceImpl } from '../../infrastructure';
-import { prismaMock } from '../../../../tests/mocks';
+import { prismaMock } from '../../../../__tests__/__mocks__';
 import { formerVetMock, vetEntityVerifiedMock } from '../mocks/vet.mock';
 import { CustomError } from '../../../../domain';
 
@@ -8,7 +9,7 @@ describe('Vets account deletion', () => {
     let VetsDatasource: VetsDatasourceImpl;
 
     beforeEach(() => {
-        VetsDatasource = new VetsDatasourceImpl(prismaMock);
+        VetsDatasource = new VetsDatasourceImpl(prismaMock as unknown as PrismaClient);
         vi.clearAllMocks();
     });
 
@@ -17,9 +18,9 @@ describe('Vets account deletion', () => {
         id: vetEntityVerifiedMock.id,
         exit_reason: 'Contract ended'
       }
-      prismaMock.veterinarians.findFirst.mockResolvedValue(vetEntityVerifiedMock);
-      prismaMock.formerVets.create.mockResolvedValue(formerVetMock);
-      prismaMock.veterinarians.delete.mockResolvedValue(vetEntityVerifiedMock);
+      prismaMock.veterinarians.findFirst?.mockResolvedValue(vetEntityVerifiedMock);
+      prismaMock.formerVets.create?.mockResolvedValue(formerVetMock);
+      prismaMock.veterinarians.delete?.mockResolvedValue(vetEntityVerifiedMock);
       prismaMock.$transaction.mockImplementation(async (callback) => {
             return callback(prismaMock);
         });
@@ -31,7 +32,7 @@ describe('Vets account deletion', () => {
     });
 
    it('should throw an error if vet id is invalid', async() => {
-    prismaMock.veterinarians.findFirst.mockResolvedValue(null);
+    prismaMock.veterinarians.findFirst?.mockResolvedValue(null);
     prismaMock.$transaction.mockImplementation(async (callback) => {
       return callback(prismaMock);
     });

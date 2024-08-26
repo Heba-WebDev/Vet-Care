@@ -1,17 +1,19 @@
+import { PrismaClient } from '@prisma/client';
 import { vi, it, describe, beforeEach, expect } from 'vitest';
 import { StaffDatasourceImpl, StaffMapper } from '../../infrastructure';
 import {
     prismaMock
-} from '../../../../tests/mocks';
+} from '../../../../__tests__/__mocks__';
 import { CustomError } from '../../../../domain';
 import { formerStaffMock, staffEntityMock } from '../mocks/staff.mock';
+
 
 
 describe('Staff account deletion', () => {
     let staffDatasource: StaffDatasourceImpl;
 
     beforeEach(() => {
-        staffDatasource = new StaffDatasourceImpl(prismaMock);
+        staffDatasource = new StaffDatasourceImpl(prismaMock as unknown as PrismaClient);
         vi.clearAllMocks();
     });
 
@@ -20,9 +22,9 @@ describe('Staff account deletion', () => {
         id: staffEntityMock.id,
         exit_reason: 'Contract ended'
       }
-      prismaMock.staff.findFirst.mockResolvedValue(staffEntityMock);
-      prismaMock.formerStaff.create.mockResolvedValue(formerStaffMock);
-      prismaMock.staff.delete.mockResolvedValue(formerStaffMock);
+      prismaMock.staff.findFirst?.mockResolvedValue(staffEntityMock);
+      prismaMock.formerStaff.create?.mockResolvedValue(formerStaffMock);
+      prismaMock.staff.delete?.mockResolvedValue(formerStaffMock);
       prismaMock.$transaction.mockImplementation(async (callback) => {
             return callback(prismaMock);
         });
@@ -34,7 +36,7 @@ describe('Staff account deletion', () => {
     });
 
    it('should throw an error if staff id is invalid', async() => {
-    prismaMock.staff.findFirst.mockResolvedValue(null);
+    prismaMock.staff.findFirst?.mockResolvedValue(null);
     prismaMock.$transaction.mockImplementation(async (callback) => {
       return callback(prismaMock);
     });
