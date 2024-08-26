@@ -1,2 +1,2 @@
-export * from './vet.entity'
-export * from './former-vet.entity'
+export * from './vet.entity';
+export * from './former-vet.entity';

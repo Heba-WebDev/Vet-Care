@@ -1,2 +1,2 @@
-export * from './controller.staff'
-export * from './routes.staff'
+export * from './controller.staff';
+export * from './routes.staff';

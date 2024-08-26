@@ -1,2 +1,2 @@
-export * from './staff.validation.impl'
-export * from './joi-schemas'
+export * from './staff.validation.impl';
+export * from './joi-schemas';

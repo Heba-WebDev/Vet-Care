@@ -1,1 +1,1 @@
-export * from './staff.repository.impl'
+export * from './staff.repository.impl';
