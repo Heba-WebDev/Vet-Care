@@ -7,7 +7,7 @@ import { logger } from "../../../../infrastructure";
 
 export class OwnersDatasourceImpl implements OwnersDatasource {
     private readonly _prisma: PrismaClient;
-    constructor(orm: any = prisma) {
+    constructor(orm: PrismaClient = prisma) {
         this._prisma = orm;
     }
 
