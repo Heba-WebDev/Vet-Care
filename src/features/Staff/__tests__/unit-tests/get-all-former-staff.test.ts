@@ -1,26 +1,33 @@
+import { PrismaClient } from '@prisma/client';
 import { vi, it, beforeEach, describe, expect } from 'vitest';
 import { StaffDatasourceImpl } from '../../infrastructure';
-import { prismaMock } from '../../../../tests/mocks';
+import { prismaMock } from '../../../../__tests__/__mocks__';
 import { formerStaffMock } from '../mocks/staff.mock';
 
+
 describe('Staff Get-All-Former', () => {
-    let staffDatasource: StaffDatasourceImpl;
+  let staffDatasource: StaffDatasourceImpl;
 
-    beforeEach(() => {
-        staffDatasource = new StaffDatasourceImpl(prismaMock);
-        vi.clearAllMocks();
+  beforeEach(() => {
+    staffDatasource = new StaffDatasourceImpl(prismaMock as unknown as PrismaClient);
+    vi.clearAllMocks();
+  });
+
+  it('should return all former staff members', async () => {
+    prismaMock.formerStaff.findMany?.mockResolvedValueOnce(formerStaffMock);
+
+    const result = await staffDatasource.getAllFormer({ page: 1, limit: 5 });
+
+    expect(result).toEqual(formerStaffMock);
+    expect(prismaMock.formerStaff.findMany).toHaveBeenCalledWith({
+      skip: 0,
+      take: 5
     });
+  });
 
-    it('should return all former staff members'), async() => {
-        prismaMock.staff.findMany.mockResolvedValueOnce(formerStaffMock);
+//   it('should handle errors properly', async () => {
+//     prismaMock.formerStaff.findMany?.mockRejectedValueOnce(new Error('Database error'));
 
-        const result = await staffDatasource.getAllFormer({ page: 1, limit: 5 });
-
-        expect(result).toEqual(formerStaffMock);
-        expect(prismaMock.staff.findMany).toHaveBeenCalledWith({
-            skip: (1 - 1) * 5,
-            take: 5
-        });
-    };
-
-})
+//     await expect(staffDatasource.getAllFormer({ page: 1, limit: 5 })).rejects.toThrow('Internal Server Error');
+//   });
+});

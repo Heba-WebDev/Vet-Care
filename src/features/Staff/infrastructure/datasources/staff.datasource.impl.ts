@@ -20,7 +20,7 @@ import { logger } from "../../../../infrastructure";
 
 export class StaffDatasourceImpl implements StaffDatasource {
     private readonly _prisma: PrismaClient;
-    constructor(orm: any = prisma) {
+    constructor(orm: PrismaClient = prisma) {
         this._prisma = orm;
     }
     async register(staffDto: RegisterStaffDto): Promise<StaffEntity | null> {
@@ -92,19 +92,19 @@ export class StaffDatasourceImpl implements StaffDatasource {
     async delete(staffDto: DeleteStaffDto): Promise<StaffEntity | null> {
         const { id, exit_reason } = staffDto;
         return this._prisma.$transaction(async (prisma) => {
-            const staff = await prisma.staff.findFirst({ where: { id }});
+            const staff = await this._prisma.staff.findFirst({ where: { id }});
             if (!staff) throw CustomError.badRequest('Invalid credentials');
             // Only verified staff are moved to the formerStaff table
             if (staff.verified) {
                 const formerStaff = new FormerStaffEntity (staff.id, staff.name, staff.email,
                 staff.phone_number, staff.job_title, new Date(), exit_reason);
 
-                await prisma.formerStaff.create({
+                await this._prisma.formerStaff.create({
                 data: formerStaff
             });
             }
             // verified and unverified accounts can be safely deleted
-            await prisma.staff.delete({where: { id }});
+            await this._prisma.staff.delete({where: { id }});
 
             return StaffMapper.staffEntityFromObject(staff!);
         }).catch((error) => {
@@ -130,11 +130,12 @@ export class StaffDatasourceImpl implements StaffDatasource {
     }
 
     async getAllFormer(staffDto: GetAllStaffDto): Promise<FormerStaffEntity[] | null> {
+        const offset = (staffDto.page! - 1) * staffDto.limit!;
+        const { limit } = staffDto;
         try {
-            const offset = (staffDto.page! - 1) * staffDto.limit!;
-            const staff = await prisma.formerStaff.findMany({
+            const staff = await this._prisma.formerStaff.findMany({
             skip: offset,
-            take: staffDto.limit,
+            take: limit,
             });
             return staff;
         } catch(error) {

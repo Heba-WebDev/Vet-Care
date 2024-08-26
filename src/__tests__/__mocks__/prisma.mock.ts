@@ -1,7 +1,16 @@
+import { PrismaClient } from "@prisma/client";
 import { vi } from "vitest";
+import { MockInstance } from "vitest";
 
+type MockPrismaClient = {
+  [K in keyof PrismaClient]: {
+    [M in keyof PrismaClient[K]]?: MockInstance;
+  };
+} & {
+  $transaction: MockInstance;
+};
 
-export const prismaMock = {
+export const prismaMock: MockPrismaClient = {
     staff: {
         findFirst: vi.fn(),
         findMany: vi.fn(),
@@ -42,14 +51,15 @@ export const prismaMock = {
         create: vi.fn(),
         findMany: vi.fn(),
     },
-    // $on: vi.fn(),
-    // $connect: vi.fn(),
-    // $disconnect: vi.fn(),
-    // $use: vi.fn(),
-    // $executeRaw: vi.fn(),
-    // $executeRawUnsafe: vi.fn(),
-    // $queryRaw: vi.fn(),
-    // $queryRawUnsafe: vi.fn(),
+    $on: vi.fn(),
+    $connect: vi.fn(),
+    $disconnect: vi.fn(),
+    $use: vi.fn(),
+    $executeRaw: vi.fn(),
+    $executeRawUnsafe: vi.fn(),
+    $queryRaw: vi.fn(),
+    $queryRawUnsafe: vi.fn(),
     $transaction: vi.fn(),
-    // $extends: vi.fn(),
-}
+    $extends: {},
+};
+

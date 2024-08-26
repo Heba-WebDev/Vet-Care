@@ -1,6 +1,7 @@
+import { PrismaClient } from '@prisma/client';
 import { vi, it, describe, beforeEach, expect } from 'vitest';
 import { StaffDatasourceImpl, StaffMapper } from '../../infrastructure';
-import { prismaMock } from '../../../../tests/mocks';
+import { prismaMock } from '../../../../__tests__/__mocks__';
 import { StaffEntity } from '../../domain/entities';
 import { CustomError } from '../../../../domain';
 import { staffEntityMock, staffLoginDtoMock } from '../mocks/staff.mock';
@@ -9,7 +10,7 @@ describe('Staff verification', () => {
     let staffDatasource: StaffDatasourceImpl;
 
     beforeEach(() => {
-        staffDatasource = new StaffDatasourceImpl(prismaMock);
+        staffDatasource = new StaffDatasourceImpl(prismaMock as unknown as PrismaClient);
         vi.clearAllMocks();
     });
 
@@ -23,8 +24,8 @@ describe('Staff verification', () => {
         staffEntityMock.phone_number,
         false
         );
-        prismaMock.staff.findFirst.mockResolvedValueOnce(staffMock); //email found
-        prismaMock.staff.update.mockResolvedValueOnce(staffEntityMock); // account verified
+        prismaMock.staff.findFirst?.mockResolvedValueOnce(staffMock); //email found
+        prismaMock.staff.update?.mockResolvedValueOnce(staffEntityMock); // account verified
         StaffMapper.staffEntityFromObject(staffEntityMock);
         const result = await staffDatasource.verify({ email: staffLoginDtoMock.email });
         expect(typeof result).toEqual('object');
@@ -33,7 +34,7 @@ describe('Staff verification', () => {
     });
 
     it('should throw an error if the staff member is already verified', async() => {
-        prismaMock.staff.findFirst.mockResolvedValueOnce(staffEntityMock); // account not verified
+        prismaMock.staff.findFirst?.mockResolvedValueOnce(staffEntityMock); // account not verified
         await expect(staffDatasource.verify({ email: staffEntityMock.email })).rejects
         .toThrow(CustomError.badRequest('Staff member already verified'));
     })

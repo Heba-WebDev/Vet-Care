@@ -1,5 +1,6 @@
+import { PrismaClient } from '@prisma/client';
 import { vi, it, describe, beforeEach, expect } from 'vitest';
-import { prismaMock } from '../../../../tests/mocks';
+import { prismaMock } from '../../../../__tests__/__mocks__';
 import { OwnersDatasourceImpl } from '../../infrastructure/datasources';
 import { AllOwnersMock, ownerMock, secondOwnerMock } from '../mocks/owner.mock';
 import { GetAllOwnersDto } from '../../domain';
@@ -8,7 +9,7 @@ describe('Get all pets owners', () => {
     let ownersDatasource: OwnersDatasourceImpl;
 
     beforeEach(() => {
-        ownersDatasource = new OwnersDatasourceImpl(prismaMock);
+        ownersDatasource = new OwnersDatasourceImpl(prismaMock as unknown as PrismaClient);
         vi.clearAllMocks();
     });
 

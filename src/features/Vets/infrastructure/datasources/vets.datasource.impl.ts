@@ -4,14 +4,14 @@ import { VetsDatasource } from "../../domain/datasources/vets.datasource";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { prisma } from "../../../../data";
 import { CustomError } from "../../../../domain";
-import { bcryptAdapter, JwtAdapter } from "../../../../config";
+import { bcryptAdapter } from "../../../../config";
 import { VetMapper } from "../mappers/vet.mapper";
 import { FormerVetEntity } from "../../domain/entities/former-vet.entity";
 import { logger } from "../../../../infrastructure";
 
 export class VetsDatasourceImpl implements VetsDatasource {
     private readonly _prisma: PrismaClient;
-    constructor(orm: any = prisma) {
+    constructor(orm: PrismaClient = prisma) {
         this._prisma = orm;
     }
 
