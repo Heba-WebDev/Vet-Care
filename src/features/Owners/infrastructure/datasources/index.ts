@@ -1,1 +1,1 @@
-export * from './owners.datasource.impl'
+export * from './owners.datasource.impl';

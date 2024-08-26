@@ -1,2 +1,2 @@
-export * from './routes.vets'
-export * from './controller.vets'
+export * from './routes.vets';
+export * from './controller.vets';

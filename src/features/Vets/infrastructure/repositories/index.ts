@@ -1,1 +1,1 @@
-export * from './vets.repository'
+export * from './vets.repository';

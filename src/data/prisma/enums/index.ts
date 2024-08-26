@@ -26,15 +26,15 @@ export enum Title {
 
 export enum Status {
   Paid,
-  Unpaid
+  Unpaid,
 }
 
 export enum Method {
   Cash,
-  Online
+  Online,
 }
 
 export enum Gender {
   Male,
-  Female
+  Female,
 }

@@ -1,2 +1,1 @@
-export * from './owners.repository.impl'
-
+export * from './owners.repository.impl';

@@ -1,1 +1,1 @@
-export * from './owners.repository'
+export * from './owners.repository';

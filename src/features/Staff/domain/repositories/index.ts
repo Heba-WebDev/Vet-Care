@@ -1,1 +1,1 @@
-export * from './staff.repository'
+export * from './staff.repository';

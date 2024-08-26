@@ -1,1 +1,1 @@
-export * from './vets.datasource.impl'
+export * from './vets.datasource.impl';

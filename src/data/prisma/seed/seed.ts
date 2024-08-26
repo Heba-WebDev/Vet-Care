@@ -1,5 +1,5 @@
-import { PrismaClient, Animal } from "@prisma/client";
-import { logger } from "../../../infrastructure";
+import { PrismaClient, Animal } from '@prisma/client';
+import { logger } from '../../../infrastructure';
 
 class Seeder {
   private prisma: PrismaClient;
@@ -36,8 +36,9 @@ class Seeder {
 const prisma = new PrismaClient();
 const seeder = new Seeder(prisma);
 
-seeder.seed()
-  .catch(e => {
+seeder
+  .seed()
+  .catch((e) => {
     logger.error(e);
     process.exit(1);
   })
