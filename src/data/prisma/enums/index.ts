@@ -16,12 +16,12 @@ export enum Permission {
 }
 
 export enum Title {
-  Receptionist,
-  HR,
-  Manager,
-  Veterinarian,
-  Asistant,
-  Technician,
+  Receptionist = 'Receptionist',
+  HR = 'HR',
+  Manager = 'Manager',
+  Veterinarian = 'Veterinarian',
+  Asistant = 'Asistant',
+  Technician = 'Technician',
 }
 
 export enum Status {
