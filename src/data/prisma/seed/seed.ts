@@ -1,5 +1,7 @@
-import { PrismaClient, Animal } from '@prisma/client';
+import { PrismaClient, Animal, Permission } from '@prisma/client';
+import { Title } from '../enums';
 import { logger } from '../../../infrastructure';
+import { bcryptAdapter } from '../../../config';
 
 class Seeder {
   private prisma: PrismaClient;
@@ -9,24 +11,137 @@ class Seeder {
   }
 
   async seed() {
-    const animalTypes: { type: Animal }[] = [
-      { type: Animal.Cat },
-      { type: Animal.Dog },
-      { type: Animal.Horse },
-      { type: Animal.Bird },
-      { type: Animal.Snake },
-      { type: Animal.Lizard },
-      { type: Animal.Hamster },
-      { type: Animal.Rat },
-      { type: Animal.Rabbit },
-    ];
+    // Animal
+    const animalCount = await this.prisma.animals.count();
+    if (animalCount === 0) {
+      const animalTypes: { type: Animal }[] = [
+        { type: Animal.Cat },
+        { type: Animal.Dog },
+        { type: Animal.Horse },
+        { type: Animal.Bird },
+        { type: Animal.Snake },
+        { type: Animal.Lizard },
+        { type: Animal.Hamster },
+        { type: Animal.Rat },
+        { type: Animal.Rabbit },
+      ];
 
-    for (const animal of animalTypes) {
-      await this.prisma.animals.upsert({
-        where: { type: animal.type as Animal },
-        update: {},
-        create: animal,
-      });
+      for (const animal of animalTypes) {
+        await this.prisma.animals.create({
+          data: animal,
+        });
+      }
+      logger.info('Animals table has been seeded successfully.');
+    } else {
+      logger.info('Animals table already contains data.');
+    }
+
+    // Permissions
+    const permissionCount = await this.prisma.permissions.count();
+    if (permissionCount === 0) {
+      const permissionTypes = [{ type: Permission.Staff }, { type: Permission.Admin }];
+
+      for (const permission of permissionTypes) {
+        await this.prisma.permissions.create({
+          data: permission,
+        });
+      }
+      logger.info('Permissions table has been seeded successfully.');
+    } else {
+      logger.info('Permissions table already contains data.');
+    }
+
+    // Jobs
+    const jobsCount = await this.prisma.jobs.count();
+    if (jobsCount === 0) {
+      const jobTitles = [
+        { title: Title.Receptionist },
+        { title: Title.HR },
+        { title: Title.Manager },
+        { title: Title.Veterinarian },
+        { title: Title.Asistant },
+        { title: Title.Technician },
+      ];
+
+      for (const job of jobTitles) {
+        await this.prisma.jobs.create({
+          data: job,
+        });
+      }
+      logger.info('Jobs table has been seeded successfully.');
+    } else {
+      logger.info('Jobs table already contains data.');
+    }
+
+    // Staff
+    const staffCount = await this.prisma.staff.count();
+    if (staffCount === 0) {
+      const staffMembers = [
+        {
+          name: 'Heba',
+          job_title: Title.HR,
+          permission_type: Permission.Admin,
+          email: 'heba@gmail.com',
+          password: await bcryptAdapter.hash(process.env.SEEDING_PASSWORD as string),
+          phone_number: '1234567890',
+          verified: true,
+        },
+      ];
+
+      for (const staff of staffMembers) {
+        await this.prisma.staff.create({
+          data: staff,
+        });
+      }
+      logger.info('Staff table has been seeded successfully.');
+    } else {
+      logger.info('Staff table already contains data.');
+    }
+
+    // Vets
+    const vetsCount = await this.prisma.veterinarians.count();
+    if (vetsCount === 0) {
+      const vetsMembers = [
+        {
+          name: 'Jane',
+          job_title: Title.Veterinarian,
+          permission_type: Permission.Staff,
+          email: 'jane.smith@example.com',
+          password: await bcryptAdapter.hash(process.env.SEEDING_PASSWORD as string),
+          phone_number: '0987654321',
+          verified: true,
+        },
+      ];
+
+      for (const vet of vetsMembers) {
+        await this.prisma.veterinarians.create({
+          data: vet,
+        });
+      }
+      logger.info('Veterinarians table has been seeded successfully.');
+    } else {
+      logger.info('Veterinarians table already contains data.');
+    }
+
+    // Owners
+    const ownersCount = await this.prisma.owners.count();
+    if (ownersCount === 0) {
+      const owners = [
+        {
+          name: 'Charles',
+          email: 'charles@example.com',
+          phone_number: '37899426',
+        },
+      ];
+
+      for (const owner of owners) {
+        await this.prisma.owners.create({
+          data: owner,
+        });
+      }
+      logger.info('Veterinarians table has been seeded successfully.');
+    } else {
+      logger.info('Veterinarians table already contains data.');
     }
 
     logger.info('Data has been seeded successfully.');
