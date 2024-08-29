@@ -78,8 +78,8 @@ model Veterinarians {
 model Owners {
   id           String         @id @default(uuid())
   name         String
-  email        String
-  phone_number String
+  email        String         @unique
+  phone_number String         @unique
   pets         Pets[]
   appointments Appointments[]
   transactions Transactions[]
