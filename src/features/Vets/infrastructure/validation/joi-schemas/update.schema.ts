@@ -6,11 +6,6 @@ export const updateSchema = joi.object({
     'string.uuid': 'A valid id is required.',
   }),
 
-  name: joi.string().optional().messages({
-    'string.empty': 'Full name is required.',
-    'string.required': 'Full name is required.',
-  }),
-
   email: joi.string().email().optional().messages({
     'string.empty': 'A valid email is required.',
     'string.email': 'A valid email is required.',
@@ -29,10 +24,5 @@ export const updateSchema = joi.object({
     'string.required': 'A valid phone number is required.',
     'string.pattern': 'A phone number can only contain digits, - or white space.',
     'string.optional': 'A valid phone number is required.',
-  }),
-
-  job_title: joi.string().optional().messages({
-    'string.empty': 'A valid job title is required.',
-    'string.optional': 'A valid job title is required.',
   }),
 });
