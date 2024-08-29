@@ -8,8 +8,8 @@ export class UpdateStaffDto {
     public phone_number: string,
   ) {}
 
-  static upate(object: { [key: string]: string }): [string?, UpdateStaffDto?] {
-    const { id, email, password, phone_number } = object;
+  static update(id: string, object: { [key: string]: string }): [string?, UpdateStaffDto?] {
+    const { email, password, phone_number } = object;
     if (!email && !password && !phone_number)
       return ['Provide an email, a password or a phone number to update', undefined];
     const staffDto = new UpdateStaffDto(id, email, password, phone_number);

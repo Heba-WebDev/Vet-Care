@@ -29,7 +29,7 @@ export class StaffRoutes {
       controller.getAllFormer,
     );
     router.patch(
-      '/update',
+      '/:id',
       [AuthMiddleware.authenticated, AuthMiddleware.updateAuthorized],
       controller.update,
     );

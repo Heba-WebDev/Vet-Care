@@ -52,7 +52,7 @@ export class VetsController extends BaseController {
   };
 
   update = (req: Request, res: Response) => {
-    const [error, updateDto] = UpdateVetsDto.upate(req.body);
+    const [error, updateDto] = UpdateVetsDto.upate(req.params.id, req.body);
     if (error) return res.status(400).send({ error });
     new UpdateVets(this.vetsRepo)
       .execute(updateDto!)

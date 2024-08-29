@@ -81,7 +81,7 @@ export class StaffController extends BaseController {
   };
 
   update = (req: Request, res: Response) => {
-    const [error, staffDto] = UpdateStaffDto.upate(req.body);
+    const [error, staffDto] = UpdateStaffDto.update(req.params.id, req.body);
     if (error) return res.status(400).send({ error });
     new UpdateStaff(this.staffRepo)
       .execute(staffDto!)

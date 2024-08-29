@@ -18,7 +18,7 @@ export class VetsRoutes {
     );
     router.post('/login', controller.login);
     router.patch(
-      '/update',
+      '/:id',
       [AuthMiddleware.authenticated, AuthMiddleware.updateAuthorized],
       controller.update,
     );
