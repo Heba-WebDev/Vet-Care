@@ -88,6 +88,8 @@ model Owners {
 model Animals {
   id   Int    @id @default(autoincrement())
   type Animal @unique
+  isSupported Boolean @default(true)
+  isDeleted   Boolean @default(false)
   pets  Pets[]
 }
 
