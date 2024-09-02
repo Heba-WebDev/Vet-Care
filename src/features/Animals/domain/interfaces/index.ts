@@ -6,9 +6,9 @@ export type AnimalsStandardResponse = {
   status: string;
   message: string | null;
   data: AnimalEntity | null;
-}
+};
 
 // interfaces
 export interface AddAnimalUseCase {
-    execute(animalDto: AddAnimalsDto): Promise<AnimalsStandardResponse>;
+  execute(animalDto: AddAnimalsDto): Promise<AnimalsStandardResponse>;
 }

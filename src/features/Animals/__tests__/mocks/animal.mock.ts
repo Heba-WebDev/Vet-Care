@@ -1,13 +1,13 @@
-import { AddAnimalsDto, AnimalEntity } from "../../domain";
-import { Animal } from "@prisma/client";
+import { AddAnimalsDto, AnimalEntity } from '../../domain';
+import { Animal } from '@prisma/client';
 
 export const addAnimalDtoMock: AddAnimalsDto = {
   type: Animal.Bird,
-  isSupported: true
+  isSupported: true,
 };
 
 export const animalMock: AnimalEntity = {
-    type: Animal.Bird,
-    isSupported: true,
-    isDeleted: false,
+  type: Animal.Bird,
+  isSupported: true,
+  isDeleted: false,
 };
