@@ -20,8 +20,8 @@ export class Server {
   async start(): Promise<void> {
     this.app.use(express.json());
     this.app.use(this.routes);
-    this.app.use(new GlobalErrorMiddleware().error);
     this.app.use(new GlobalErrorMiddleware().notFound);
+    this.app.use(new GlobalErrorMiddleware().error);
     this.app.listen(this.port, () => {
       logger.info(`Server running on ${this.port} 🚀`);
     });
