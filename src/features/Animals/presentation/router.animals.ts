@@ -12,6 +12,7 @@ export class AnimalsRoutes {
     const controller = new AnimalsController(repository);
 
     router.post('/', [AuthMiddleware.authenticated, AuthMiddleware.authorized], controller.add);
+    router.delete('/:id', [AuthMiddleware.authenticated, AuthMiddleware.authorized], controller.delete);
 
     return router;
   }
