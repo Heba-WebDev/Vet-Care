@@ -39,6 +39,7 @@ export const prismaMock: MockPrismaClient = {
   animals: {
     findFirst: vi.fn(),
     create: vi.fn(),
+    update: vi.fn(),
   },
   permissions: {},
   appointments: {},
