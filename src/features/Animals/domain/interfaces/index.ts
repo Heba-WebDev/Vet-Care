@@ -1,4 +1,4 @@
-import { AddAnimalsDto } from '../dtos';
+import { AddAnimalsDto, DeleteAnimalDto } from '../dtos';
 import { AnimalEntity } from '../entities';
 
 // types
@@ -11,4 +11,8 @@ export type AnimalsStandardResponse = {
 // interfaces
 export interface AddAnimalUseCase {
   execute(animalDto: AddAnimalsDto): Promise<AnimalsStandardResponse>;
+}
+
+export interface DeleteAnimalUseCase {
+  execute(animalDto: DeleteAnimalDto): Promise<AnimalsStandardResponse>;
 }
