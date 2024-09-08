@@ -17,3 +17,9 @@ export const animalMockDeleted: AnimalEntity = {
   isSupported: true,
   isDeleted: true,
 };
+
+export const animalMockUpdated: AnimalEntity = {
+  type: Animal.Bird,
+  isSupported: false,
+  isDeleted: false,
+};
