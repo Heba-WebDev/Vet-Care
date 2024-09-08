@@ -12,7 +12,16 @@ export class AnimalsRoutes {
     const controller = new AnimalsController(repository);
 
     router.post('/', [AuthMiddleware.authenticated, AuthMiddleware.authorized], controller.add);
-    router.delete('/:id', [AuthMiddleware.authenticated, AuthMiddleware.authorized], controller.delete);
+    router.delete(
+      '/:id',
+      [AuthMiddleware.authenticated, AuthMiddleware.authorized],
+      controller.delete,
+    );
+    router.patch(
+      '/:id',
+      [AuthMiddleware.authenticated, AuthMiddleware.authorized],
+      controller.update,
+    );
 
     return router;
   }

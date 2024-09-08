@@ -1,4 +1,11 @@
-import { AddAnimalsDto, AnimalEntity, AnimalsDatasource, AnimalsRepository, DeleteAnimalDto } from '../../domain';
+import {
+  AddAnimalsDto,
+  AnimalEntity,
+  AnimalsDatasource,
+  AnimalsRepository,
+  DeleteAnimalDto,
+  UpdateAnimalDto,
+} from '../../domain';
 
 export class AnimalsRepositoryImpl extends AnimalsRepository {
   constructor(private readonly datasource: AnimalsDatasource) {
@@ -11,5 +18,9 @@ export class AnimalsRepositoryImpl extends AnimalsRepository {
 
   delete(dto: DeleteAnimalDto): Promise<AnimalEntity | null> {
     return this.datasource.delete(dto);
+  }
+
+  update(dto: UpdateAnimalDto): Promise<AnimalEntity | null> {
+    return this.datasource.update(dto);
   }
 }

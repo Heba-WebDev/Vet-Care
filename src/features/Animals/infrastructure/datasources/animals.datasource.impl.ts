@@ -1,5 +1,11 @@
 import { PrismaClient, Animal } from '@prisma/client';
-import { AddAnimalsDto, AnimalEntity, AnimalsDatasource, DeleteAnimalDto } from '../../domain';
+import {
+  AddAnimalsDto,
+  AnimalEntity,
+  AnimalsDatasource,
+  DeleteAnimalDto,
+  UpdateAnimalDto,
+} from '../../domain';
 import { prisma } from '../../../../data';
 import { logger } from '../../../../infrastructure';
 import { CustomError } from '../../../../domain';
@@ -37,18 +43,38 @@ export class AnimalsDatasourceImpl implements AnimalsDatasource {
 
   async delete(dto: DeleteAnimalDto): Promise<AnimalEntity | null> {
     const { id } = dto;
-    try{
-      const exists = await this._prisma.animals.findFirst({ where: { id }});
+    try {
+      const exists = await this._prisma.animals.findFirst({ where: { id } });
       if (!exists) throw CustomError.badRequest('No animal found');
       if (exists.isDeleted) throw CustomError.badRequest('Animal already deleted');
       const animal = await this._prisma.animals.update({
         where: { id },
         data: {
           isDeleted: true,
-        }
+        },
       });
       return AnimalMapper.animalEntityFromObject(animal);
-    } catch(error) {
+    } catch (error) {
+      logger.error(error);
+      if (error instanceof CustomError) throw error;
+      throw CustomError.internalServerError();
+    }
+  }
+
+  async update(dto: UpdateAnimalDto): Promise<AnimalEntity | null> {
+    const { id, isSupported, isDeleted } = dto;
+    try {
+      const exists = await this._prisma.animals.findFirst({ where: { id } });
+      if (!exists) throw CustomError.badRequest('No animal found');
+      const data: { [key: string]: boolean } = {};
+      if (isSupported) data.isSupported = isSupported === 'true' ? true : false;
+      if (isDeleted) data.isDeleted = isDeleted === 'true' ? true : false;
+      const animal = await this._prisma.animals.update({
+        where: { id },
+        data: data,
+      });
+      return AnimalMapper.animalEntityFromObject(animal);
+    } catch (error) {
       logger.error(error);
       if (error instanceof CustomError) throw error;
       throw CustomError.internalServerError();
