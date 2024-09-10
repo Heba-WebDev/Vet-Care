@@ -1,4 +1,10 @@
-import { PetsDatasource, PetsRepository, PetEntity, RegisterPetDto, GetAllPetsDto } from '../../domain';
+import {
+  PetsDatasource,
+  PetsRepository,
+  PetEntity,
+  RegisterPetDto,
+  GetAllPetsDto,
+} from '../../domain';
 
 export class PetsRepositoryImpl extends PetsRepository {
   constructor(private readonly datasource: PetsDatasource) {

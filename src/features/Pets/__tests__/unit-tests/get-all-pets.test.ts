@@ -13,7 +13,7 @@ describe('Get all pets of an owner', () => {
     vi.clearAllMocks();
   });
 
-  it('should successfully returns all pet\'s of an owner', async () => {
+  it("should successfully returns all pet's of an owner", async () => {
     prismaMock.$transaction.mockImplementation(async (callback) => {
       return callback(prismaMock);
     });
@@ -33,6 +33,4 @@ describe('Get all pets of an owner', () => {
       CustomError.badRequest('No owner found'),
     );
   });
-
-
 });

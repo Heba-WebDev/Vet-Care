@@ -42,13 +42,13 @@ export class PetsDatasourceImpl implements PetsDatasource {
     const { owner_id } = dto;
     try {
       const pets = await this._prisma.$transaction(async (prisma) => {
-        const owner = await prisma.owners.findFirst({ where: { id: owner_id }});
+        const owner = await prisma.owners.findFirst({ where: { id: owner_id } });
         if (!owner) throw CustomError.badRequest('No owner found');
-        return prisma.pets.findMany({ where: { owner_id }});
+        return prisma.pets.findMany({ where: { owner_id } });
       });
       if (pets.length !== 0) return pets;
       return null;
-    } catch(error) {
+    } catch (error) {
       logger.error(error);
       if (error instanceof CustomError) throw error;
       throw CustomError.internalServerError();

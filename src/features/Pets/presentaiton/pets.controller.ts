@@ -20,8 +20,8 @@ export class PetsController extends BaseController {
     const [error, dto] = GetAllPetsDto.getAll(req.params.owner_id);
     if (error) return res.status(400).send({ error });
     new GetAllPet(this.repo)
-    .execute(dto!)
-    .then((data) => res.json(data))
-    .catch((error) => this.handleError(error, res));
+      .execute(dto!)
+      .then((data) => res.json(data))
+      .catch((error) => this.handleError(error, res));
   };
 }
