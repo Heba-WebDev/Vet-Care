@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { prisma } from '../../../../data';
 import { logger } from '../../../../infrastructure';
 import { CustomError } from '../../../../domain';
-import { PetsDatasource, PetEntity, RegisterPetDto } from '../../domain';
+import { PetsDatasource, PetEntity, RegisterPetDto, GetAllPetsDto } from '../../domain';
 import { PetMapper } from '../mapper';
 
 export class PetsDatasourceImpl implements PetsDatasource {
@@ -32,6 +32,23 @@ export class PetsDatasourceImpl implements PetsDatasource {
       });
       return PetMapper.petEntityFromObject(pet);
     } catch (error) {
+      logger.error(error);
+      if (error instanceof CustomError) throw error;
+      throw CustomError.internalServerError();
+    }
+  }
+
+  async getAll(dto: GetAllPetsDto): Promise<PetEntity[] | null> {
+    const { owner_id } = dto;
+    try {
+      const pets = await this._prisma.$transaction(async (prisma) => {
+        const owner = await prisma.owners.findFirst({ where: { id: owner_id }});
+        if (!owner) throw CustomError.badRequest('No owner found');
+        return prisma.pets.findMany({ where: { owner_id }});
+      });
+      if (pets.length !== 0) return pets;
+      return null;
+    } catch(error) {
       logger.error(error);
       if (error instanceof CustomError) throw error;
       throw CustomError.internalServerError();
