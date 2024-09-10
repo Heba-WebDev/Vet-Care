@@ -10,11 +10,8 @@ export class PetsRoutes {
     const repository = new PetsRepositoryImpl(datasource);
     const controller = new PetsController(repository);
 
-    router.post(
-      '/owners/:owner_id/pets',
-      [AuthMiddleware.authenticated],
-      controller.register,
-    );
+    router.post('/owners/:owner_id/pets', [AuthMiddleware.authenticated], controller.register);
+    router.get('/owners/:owner_id/pets', [AuthMiddleware.authenticated], controller.getAll);
     return router;
   }
 }
