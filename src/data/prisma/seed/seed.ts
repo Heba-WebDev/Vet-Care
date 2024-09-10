@@ -1,4 +1,4 @@
-import { PrismaClient, Animal, Permission } from '@prisma/client';
+import { PrismaClient, Animal, Permission, Gender } from '@prisma/client';
 import { Title } from '../enums';
 import { logger } from '../../../infrastructure';
 import { bcryptAdapter } from '../../../config';
@@ -103,6 +103,7 @@ class Seeder {
     if (vetsCount === 0) {
       const vetsMembers = [
         {
+          id: 'c010abec-9334-46fd-a345-7b93b0b59f1f',
           name: 'Jane',
           job_title: Title.Veterinarian,
           permission_type: Permission.Staff,
@@ -128,6 +129,7 @@ class Seeder {
     if (ownersCount === 0) {
       const owners = [
         {
+          id: '80ba2423-baed-42d8-bf6d-ad4b98b2e5c0',
           name: 'Charles',
           email: 'charles@example.com',
           phone_number: '37899426',
@@ -139,9 +141,41 @@ class Seeder {
           data: owner,
         });
       }
-      logger.info('Veterinarians table has been seeded successfully.');
+      logger.info('Owners table has been seeded successfully.');
     } else {
-      logger.info('Veterinarians table already contains data.');
+      logger.info('Owners table already contains data.');
+    }
+
+    // Pets
+    const petsCount = await this.prisma.pets.count();
+    if (petsCount === 0) {
+      const owner = await this.prisma.owners.findFirst();
+      if (!owner) {
+        logger.error('No owners found. Cannot seed Pets.');
+        return;
+      }
+
+      const pets = [
+        {
+          name: 'Negrito',
+          gender: Gender.Male,
+          animal_id: 1,
+          owner_id: owner.id,
+        },
+      ];
+
+      try {
+        for (const pet of pets) {
+          await this.prisma.pets.create({
+            data: pet,
+          });
+        }
+        logger.info('Pets table has been seeded successfully.');
+      } catch (error) {
+        logger.error('Error seeding Pets table:', error);
+      }
+    } else {
+      logger.info('Pets table already contains data.');
     }
 
     logger.info('Data has been seeded successfully.');
