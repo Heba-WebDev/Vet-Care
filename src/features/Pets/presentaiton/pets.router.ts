@@ -12,7 +12,7 @@ export class PetsRoutes {
 
     router.post(
       '/owners/:owner_id/pets',
-      [AuthMiddleware.authenticated, AuthMiddleware.authorized],
+      [AuthMiddleware.authenticated],
       controller.register,
     );
     return router;
