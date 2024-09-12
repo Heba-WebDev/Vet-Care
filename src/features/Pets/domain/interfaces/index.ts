@@ -1,4 +1,4 @@
-import { RegisterPetDto, GetAllPetsDto } from '../dtos';
+import { RegisterPetDto, GetAllPetsDto, UpdatePetDto } from '../dtos';
 import { PetEntity } from '../entities/pet.entity';
 
 // types
@@ -21,4 +21,8 @@ export interface RegisterPetUseCase {
 
 export interface GetAllPetsUseCase {
   execute(petDto: GetAllPetsDto): Promise<AllPetsStandardResponse>;
+}
+
+export interface UpdatePetUseCase {
+  execute(petDto: UpdatePetDto): Promise<PetsStandardResponse>;
 }
