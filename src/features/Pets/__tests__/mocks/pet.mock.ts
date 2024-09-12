@@ -15,3 +15,10 @@ export const petMock: PetEntity = {
   animal_id: 1,
   owner_id: ownerMock.id,
 };
+
+export const petUpdateMock: PetEntity = {
+  name: 'Loui',
+  gender: Gender.Male,
+  animal_id: 1,
+  owner_id: ownerMock.id,
+};
