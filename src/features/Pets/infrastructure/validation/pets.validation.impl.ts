@@ -1,5 +1,5 @@
-import { RegisterPetDto, GetAllPetsDto } from '../../domain';
-import { petGetAllSchema, petRegisterSchema } from './joi-schemas';
+import { RegisterPetDto, GetAllPetsDto, UpdatePetDto } from '../../domain';
+import { petGetAllSchema, petRegisterSchema, petUpdateSchema } from './joi-schemas';
 
 export class PetsInputValidation {
   register(petDto: RegisterPetDto): string | null {
@@ -10,6 +10,12 @@ export class PetsInputValidation {
 
   getAll(petDto: GetAllPetsDto): string | null {
     const { error } = petGetAllSchema.validate(petDto);
+    if (error) return error.message;
+    return null;
+  }
+
+  update(petDto: UpdatePetDto): string | null {
+    const { error } = petUpdateSchema.validate(petDto);
     if (error) return error.message;
     return null;
   }
