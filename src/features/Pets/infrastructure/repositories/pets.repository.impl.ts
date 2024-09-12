@@ -4,6 +4,7 @@ import {
   PetEntity,
   RegisterPetDto,
   GetAllPetsDto,
+  UpdatePetDto,
 } from '../../domain';
 
 export class PetsRepositoryImpl extends PetsRepository {
@@ -17,5 +18,9 @@ export class PetsRepositoryImpl extends PetsRepository {
 
   getAll(dto: GetAllPetsDto): Promise<PetEntity[] | null> {
     return this.datasource.getAll(dto);
+  }
+
+  update(dto: UpdatePetDto): Promise<PetEntity | null> {
+    return this.datasource.update(dto);
   }
 }
