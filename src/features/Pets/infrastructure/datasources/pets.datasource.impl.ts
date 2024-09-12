@@ -68,7 +68,7 @@ export class PetsDatasourceImpl implements PetsDatasource {
       if (name) data.name = name;
       if (gender) data.gender = gender;
       const pet = await this._prisma.$transaction(async (prisma) => {
-        if (animal_id){
+        if (animal_id) {
           const animal = await prisma.animals.findFirst({ where: { id: animal_id } });
           if (!animal) throw CustomError.badRequest('Invalid animal id');
         }

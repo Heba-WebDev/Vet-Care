@@ -6,7 +6,6 @@ import { ownerMock } from '../../../Owners/__tests__/mocks/owner.mock';
 import { petUpdateMock } from '../mocks/pet.mock';
 import { CustomError } from '../../../../domain';
 
-
 describe('Update a pet', () => {
   let datasource: PetsDatasourceImpl;
   beforeEach(() => {
@@ -14,7 +13,7 @@ describe('Update a pet', () => {
     vi.clearAllMocks();
   });
 
-  it("should successfully update a pet", async () => {
+  it('should successfully update a pet', async () => {
     prismaMock.$transaction.mockImplementation(async (callback) => {
       return callback(prismaMock);
     });
@@ -24,13 +23,13 @@ describe('Update a pet', () => {
     expect(result?.name).toBe('Loui');
   });
 
-  it("should throw an error if the animal_id is not found", async () => {
-     prismaMock.$transaction.mockImplementation(async (callback) => {
+  it('should throw an error if the animal_id is not found', async () => {
+    prismaMock.$transaction.mockImplementation(async (callback) => {
       return callback(prismaMock);
     });
     prismaMock.animals.findFirst?.mockResolvedValueOnce(null);
-    await expect(datasource.update({ owner_id: ownerMock.id, pet_id: '1', animal_id: 1 })).rejects.toThrow(
-      CustomError.badRequest('Invalid animal id'),
-    );
+    await expect(
+      datasource.update({ owner_id: ownerMock.id, pet_id: '1', animal_id: 1 }),
+    ).rejects.toThrow(CustomError.badRequest('Invalid animal id'));
   });
 });
