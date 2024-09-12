@@ -12,6 +12,11 @@ export class PetsRoutes {
 
     router.post('/owners/:owner_id/pets', [AuthMiddleware.authenticated], controller.register);
     router.get('/owners/:owner_id/pets', [AuthMiddleware.authenticated], controller.getAll);
+    router.patch(
+      '/owners/:owner_id/pets/:pet_id',
+      [AuthMiddleware.authenticated],
+      controller.update,
+    );
     return router;
   }
 }
