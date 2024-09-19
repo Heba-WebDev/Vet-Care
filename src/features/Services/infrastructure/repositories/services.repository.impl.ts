@@ -1,6 +1,7 @@
 import {
   ActivateServiceDto,
   AddServiceDto,
+  DeactivateServiceDto,
   ServiceEntity,
   ServicesDatasource,
   ServicesRepository,
@@ -17,5 +18,9 @@ export class ServicesRepositoryImpl extends ServicesRepository {
 
   activate(serviceDto: ActivateServiceDto): Promise<ServiceEntity | null> {
     return this.datasource.activate(serviceDto);
+  }
+
+  deactivate(serviceDto: DeactivateServiceDto): Promise<ServiceEntity | null> {
+    return this.datasource.deactivate(serviceDto);
   }
 }
