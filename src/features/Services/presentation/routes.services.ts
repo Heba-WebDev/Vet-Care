@@ -15,6 +15,11 @@ export class ServicesRoutes {
       controller.addAService,
     );
     router.patch(
+      '/:id',
+      [AuthMiddleware.authenticated, AuthMiddleware.authorized],
+      controller.update,
+    );
+    router.patch(
       '/activate/:id',
       [AuthMiddleware.authenticated, AuthMiddleware.authorized],
       controller.activate,
