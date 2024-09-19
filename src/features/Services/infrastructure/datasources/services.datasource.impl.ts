@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { AddServiceDto, ServiceEntity, ServicesDatasource } from '../../domain';
+import { ActivateServiceDto, AddServiceDto, ServiceEntity, ServicesDatasource } from '../../domain';
 import { prisma } from '../../../../data';
 import { logger } from '../../../../infrastructure';
 import { CustomError } from '../../../../domain';
@@ -21,6 +21,30 @@ export class ServicesDatasourceImpl implements ServicesDatasource {
           data: {
             type,
             price,
+          },
+        });
+      });
+      return ServiceMapper.serviceEntityFromObject(service);
+    } catch (error) {
+      logger.error(error);
+      if (error instanceof CustomError) throw error;
+      throw CustomError.internalServerError();
+    }
+  }
+
+  async activate(serviceDto: ActivateServiceDto): Promise<ServiceEntity | null> {
+    const { id } = serviceDto;
+    try {
+      const service = await this._prisma.$transaction(async (prisma) => {
+        const serviceExists = await prisma.services.findFirst({ where: { id } });
+        if (!serviceExists) throw CustomError.badRequest('No serivce found');
+        if (serviceExists.active) throw CustomError.badRequest('Service already activated');
+        return prisma.services.update({
+          where: {
+            id,
+          },
+          data: {
+            active: true,
           },
         });
       });

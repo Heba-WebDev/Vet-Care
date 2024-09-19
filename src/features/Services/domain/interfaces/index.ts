@@ -1,4 +1,4 @@
-import { AddServiceDto } from '../dtos';
+import { AddServiceDto, ActivateServiceDto } from '../dtos';
 import { ServiceEntity } from '../entities';
 
 // types
@@ -11,4 +11,8 @@ export type ServicesStandardResponse = {
 // Use cases
 export interface AddServiceUseCase {
   execute(serviceDto: AddServiceDto): Promise<ServicesStandardResponse>;
+}
+
+export interface ActivateServiceUseCase {
+  execute(serviceDto: ActivateServiceDto): Promise<ServicesStandardResponse>;
 }

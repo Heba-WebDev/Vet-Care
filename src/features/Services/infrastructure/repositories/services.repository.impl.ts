@@ -1,4 +1,10 @@
-import { AddServiceDto, ServiceEntity, ServicesDatasource, ServicesRepository } from '../../domain';
+import {
+  ActivateServiceDto,
+  AddServiceDto,
+  ServiceEntity,
+  ServicesDatasource,
+  ServicesRepository,
+} from '../../domain';
 
 export class ServicesRepositoryImpl extends ServicesRepository {
   constructor(private readonly datasource: ServicesDatasource) {
@@ -7,5 +13,9 @@ export class ServicesRepositoryImpl extends ServicesRepository {
 
   add(serviceDto: AddServiceDto): Promise<ServiceEntity | null> {
     return this.datasource.add(serviceDto);
+  }
+
+  activate(serviceDto: ActivateServiceDto): Promise<ServiceEntity | null> {
+    return this.datasource.activate(serviceDto);
   }
 }
