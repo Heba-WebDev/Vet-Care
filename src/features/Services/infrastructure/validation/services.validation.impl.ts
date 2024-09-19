@@ -1,5 +1,10 @@
-import { AddServiceDto, ActivateServiceDto, DeactivateServiceDto } from '../../domain';
-import { addServiceSchema, activateServiceSchema } from './joi-schemas';
+import {
+  AddServiceDto,
+  ActivateServiceDto,
+  DeactivateServiceDto,
+  UpdateServiceDto,
+} from '../../domain';
+import { addServiceSchema, activateServiceSchema, updateServiceSchema } from './joi-schemas';
 
 export class ServicesInputValidation {
   add(serviceDto: AddServiceDto): string | null {
@@ -16,6 +21,12 @@ export class ServicesInputValidation {
 
   dectivate(serviceDto: DeactivateServiceDto): string | null {
     const { error } = activateServiceSchema.validate(serviceDto);
+    if (error) return error.message;
+    return null;
+  }
+
+  update(serviceDto: UpdateServiceDto): string | null {
+    const { error } = updateServiceSchema.validate(serviceDto);
     if (error) return error.message;
     return null;
   }
