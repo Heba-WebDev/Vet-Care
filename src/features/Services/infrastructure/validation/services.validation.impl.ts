@@ -1,4 +1,4 @@
-import { AddServiceDto, ActivateServiceDto } from '../../domain';
+import { AddServiceDto, ActivateServiceDto, DeactivateServiceDto } from '../../domain';
 import { addServiceSchema, activateServiceSchema } from './joi-schemas';
 
 export class ServicesInputValidation {
@@ -9,6 +9,12 @@ export class ServicesInputValidation {
   }
 
   activate(serviceDto: ActivateServiceDto): string | null {
+    const { error } = activateServiceSchema.validate(serviceDto);
+    if (error) return error.message;
+    return null;
+  }
+
+  dectivate(serviceDto: DeactivateServiceDto): string | null {
     const { error } = activateServiceSchema.validate(serviceDto);
     if (error) return error.message;
     return null;
