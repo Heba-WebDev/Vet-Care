@@ -178,6 +178,30 @@ class Seeder {
       logger.info('Pets table already contains data.');
     }
 
+    // Services
+    const servicesCount = await this.prisma.services.count();
+    if (servicesCount === 0) {
+      const services = [
+        { type: 'Boarding', price: 35 },
+        { type: 'Dental Care', price: 125 },
+        { type: 'Emergency and Critical Care', price: 160 },
+        { type: 'Nutritional Counseling', price: 25 },
+        { type: 'Surgery', price: 380 },
+        { type: 'Vaccinations', price: 70 },
+      ];
+      for (const service of services) {
+        await this.prisma.services.create({
+          data: {
+            type: service.type,
+            price: service.price,
+          },
+        });
+      }
+      logger.info('Jobs table has been seeded successfully.');
+    } else {
+      logger.info('Services table already contains data.');
+    }
+
     logger.info('Data has been seeded successfully.');
   }
 }
