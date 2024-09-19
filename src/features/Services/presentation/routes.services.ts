@@ -9,7 +9,16 @@ export class ServicesRoutes {
     const datasource = new ServicesDatasourceImpl();
     const repository = new ServicesRepositoryImpl(datasource);
     const controller = new ServicesController(repository);
-    router.post('/', [AuthMiddleware.authenticated, AuthMiddleware.authorized], controller.addAService);
+    router.post(
+      '/',
+      [AuthMiddleware.authenticated, AuthMiddleware.authorized],
+      controller.addAService,
+    );
+    router.patch(
+      '/activate/:id',
+      [AuthMiddleware.authenticated, AuthMiddleware.authorized],
+      controller.activate,
+    );
     return router;
   }
 }
