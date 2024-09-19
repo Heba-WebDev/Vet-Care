@@ -8,6 +8,8 @@ import {
   ActivateServiceDto,
   ServicesRepository,
   DeactivateServiceDto,
+  UpdateServiceDto,
+  UpdateService,
 } from '../domain';
 
 export class ServicesController extends BaseController {
@@ -41,6 +43,17 @@ export class ServicesController extends BaseController {
     const [error, dto] = DeactivateServiceDto.deactivate(req.params.id);
     if (error) return res.status(400).send({ error });
     new DeactivateService(this.repo)
+      .execute(dto!)
+      .then((data) => res.json(data))
+      .catch((err) => {
+        this.handleError(err, res);
+      });
+  };
+
+  update = (req: Request, res: Response) => {
+    const [error, dto] = UpdateServiceDto.update(req.params.id, req.body);
+    if (error) return res.status(400).send({ error });
+    new UpdateService(this.repo)
       .execute(dto!)
       .then((data) => res.json(data))
       .catch((err) => {
