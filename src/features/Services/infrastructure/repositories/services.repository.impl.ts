@@ -5,6 +5,7 @@ import {
   ServiceEntity,
   ServicesDatasource,
   ServicesRepository,
+  UpdateServiceDto,
 } from '../../domain';
 
 export class ServicesRepositoryImpl extends ServicesRepository {
@@ -22,5 +23,9 @@ export class ServicesRepositoryImpl extends ServicesRepository {
 
   deactivate(serviceDto: DeactivateServiceDto): Promise<ServiceEntity | null> {
     return this.datasource.deactivate(serviceDto);
+  }
+
+  update(serviceDto: UpdateServiceDto): Promise<ServiceEntity | null> {
+    return this.datasource.update(serviceDto);
   }
 }
