@@ -19,6 +19,11 @@ export class ServicesRoutes {
       [AuthMiddleware.authenticated, AuthMiddleware.authorized],
       controller.activate,
     );
+    router.patch(
+      '/deactivate/:id',
+      [AuthMiddleware.authenticated, AuthMiddleware.authorized],
+      controller.deactivate,
+    );
     return router;
   }
 }

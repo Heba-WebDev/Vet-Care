@@ -16,3 +16,7 @@ export interface AddServiceUseCase {
 export interface ActivateServiceUseCase {
   execute(serviceDto: ActivateServiceDto): Promise<ServicesStandardResponse>;
 }
+
+export interface DeactivateServiceUseCase {
+  execute(serviceDto: ActivateServiceDto): Promise<ServicesStandardResponse>;
+}

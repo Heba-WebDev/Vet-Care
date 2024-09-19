@@ -3,9 +3,11 @@ import { BaseController } from '../../../presentation/base.controller';
 import {
   AddService,
   ActivateService,
+  DeactivateService,
   AddServiceDto,
   ActivateServiceDto,
   ServicesRepository,
+  DeactivateServiceDto,
 } from '../domain';
 
 export class ServicesController extends BaseController {
@@ -28,6 +30,17 @@ export class ServicesController extends BaseController {
     const [error, dto] = ActivateServiceDto.activate(req.params.id);
     if (error) return res.status(400).send({ error });
     new ActivateService(this.repo)
+      .execute(dto!)
+      .then((data) => res.json(data))
+      .catch((err) => {
+        this.handleError(err, res);
+      });
+  };
+
+  deactivate = (req: Request, res: Response) => {
+    const [error, dto] = DeactivateServiceDto.deactivate(req.params.id);
+    if (error) return res.status(400).send({ error });
+    new DeactivateService(this.repo)
       .execute(dto!)
       .then((data) => res.json(data))
       .catch((err) => {
