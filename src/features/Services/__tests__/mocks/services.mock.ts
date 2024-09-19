@@ -19,3 +19,10 @@ export const serviceInactiveMock: ServiceEntity = {
   price: new Decimal(75),
   active: false,
 };
+
+export const serviceUpdateMock: ServiceEntity = {
+  id: 1,
+  type: 'Dental Care',
+  price: new Decimal(75),
+  active: false,
+};
