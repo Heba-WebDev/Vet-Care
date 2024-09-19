@@ -5,6 +5,7 @@ import {
   DeactivateServiceDto,
   ServiceEntity,
   ServicesDatasource,
+  UpdateServiceDto,
 } from '../../domain';
 import { prisma } from '../../../../data';
 import { logger } from '../../../../infrastructure';
@@ -75,6 +76,30 @@ export class ServicesDatasourceImpl implements ServicesDatasource {
           },
           data: {
             active: false,
+          },
+        });
+      });
+      return ServiceMapper.serviceEntityFromObject(service);
+    } catch (error) {
+      logger.error(error);
+      if (error instanceof CustomError) throw error;
+      throw CustomError.internalServerError();
+    }
+  }
+
+  async update(serviceDto: UpdateServiceDto): Promise<ServiceEntity | null> {
+    const { id, type, price } = serviceDto;
+    try {
+      const service = await this._prisma.$transaction(async (prisma) => {
+        const serviceExists = await prisma.services.findFirst({ where: { id } });
+        if (!serviceExists) throw CustomError.badRequest('No serivce found');
+        return prisma.services.update({
+          where: {
+            id,
+          },
+          data: {
+            type,
+            price,
           },
         });
       });
