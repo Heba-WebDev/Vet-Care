@@ -48,6 +48,16 @@ enum Gender {
   Female
 }
 
+enum Day {
+  Monday
+  Tuesday
+  Wednesday
+  Thursday
+  Friday
+  Saturday
+  Sunday
+}
+
 model Staff {
   id              String      @id @default(uuid())
   name            String
@@ -117,6 +127,12 @@ model Permissions {
   type          Permission      @unique
   staff         Staff[]
   veterinarians Veterinarians[]
+}
+
+model WorkingDays {
+  id Int @id @default(autoincrement())
+  day Day @unique
+  active Boolean @default(true)
 }
 
 model Appointments {
