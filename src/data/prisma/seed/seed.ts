@@ -1,4 +1,4 @@
-import { PrismaClient, Animal, Permission, Gender } from '@prisma/client';
+import { PrismaClient, Animal, Permission, Gender, Day } from '@prisma/client';
 import { Title } from '../enums';
 import { logger } from '../../../infrastructure';
 import { bcryptAdapter } from '../../../config';
@@ -200,6 +200,29 @@ class Seeder {
       logger.info('Jobs table has been seeded successfully.');
     } else {
       logger.info('Services table already contains data.');
+    }
+
+    // Working Days
+    const workingDaysCount = await this.prisma.workingDays.count();
+    if (workingDaysCount === 0) {
+      const days = [
+        { name: Day.Monday },
+        { name: Day.Tuesday },
+        { name: Day.Wednesday },
+        { name: Day.Thursday },
+        { name: Day.Friday },
+        { name: Day.Saturday },
+        { name: Day.Sunday },
+      ];
+      for (const day of days) {
+        await this.prisma.workingDays.create({
+          data: {
+            day: day.name,
+          },
+        });
+      }
+    } else {
+      logger.info('Working Days table already contains data.');
     }
 
     logger.info('Data has been seeded successfully.');
