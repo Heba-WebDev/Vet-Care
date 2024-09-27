@@ -70,11 +70,39 @@ This architecture promotes maintainability, scalability, and clear separation of
 
 ## _How to Use_
 
-1. Clone the repository.
-2. Install the dependencies using `npm install`.
-3. Create a `.env` file and add your database and Cloudinary credentials.
-4. Run the server using `npm run dev`.
-5. Use Postman or any other API client to interact with the API endpoints.
+### Installation
+
+1. Clone this repository.
+2. Install dependencies using `npm install`.
+3. Set up your environment variables (e.g., database connection, Elasticemail credentials, etc.).
+4. Run the application using `npm run start`.
+   
+
+### Installation with Docker
+
+1. **Prerequisites**
+   - Ensure that you have Docker installed on your system. If not, follow the official Docker installation guide for your operating system:
+     - Install Docker on Linux
+     - Install Docker on macOS
+     - Install Docker on Windows
+
+2. **Building and Running the Docker Container**
+   - Open a terminal and navigate to the root directory of your project.
+   - Start the container using Docker Compose:
+     ```bash
+     docker-compose up -d
+     ```
+   - Your Kryptonite App should now be have access to the postgres database running in the container.
+
+3. **Stopping and Cleaning Up**
+   - To stop the containers, run:
+     ```bash
+     docker-compose down
+     ```
+   - To remove the containers and associated volumes, use:
+     ```bash
+     docker-compose down -v
+     ```
 
 ## Contributing
 
