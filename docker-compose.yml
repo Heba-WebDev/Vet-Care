@@ -1,0 +1,37 @@
+services:
+  api:
+    build: .
+    ports:
+      - "5002:5002"
+    volumes:
+      - type: volume
+        source: vetcare-vol
+        target: /usr/src/app
+    env_file:
+      - .env
+    depends_on:
+      - vetcare-db
+    networks:
+      - vetcare-network
+
+  vetcare-db:
+    image: postgres:15.3
+    container_name: vetcare-db
+    restart: always
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - vetcare-db:/var/lib/postgresql/data
+    networks:
+      - vetcare-network
+
+volumes:
+  vetcare-db:
+  vetcare-vol:
+
+networks:
+  vetcare-network:
