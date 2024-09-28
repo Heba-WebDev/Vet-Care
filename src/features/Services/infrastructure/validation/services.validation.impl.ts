@@ -3,8 +3,14 @@ import {
   ActivateServiceDto,
   DeactivateServiceDto,
   UpdateServiceDto,
+  GetAllServicesDto,
 } from '../../domain';
-import { addServiceSchema, activateServiceSchema, updateServiceSchema } from './joi-schemas';
+import {
+  addServiceSchema,
+  activateServiceSchema,
+  updateServiceSchema,
+  getAllServicesSchema,
+} from './joi-schemas';
 
 export class ServicesInputValidation {
   add(serviceDto: AddServiceDto): string | null {
@@ -27,6 +33,12 @@ export class ServicesInputValidation {
 
   update(serviceDto: UpdateServiceDto): string | null {
     const { error } = updateServiceSchema.validate(serviceDto);
+    if (error) return error.message;
+    return null;
+  }
+
+  getAll(serviceDto: GetAllServicesDto): string | null {
+    const { error } = getAllServicesSchema.validate(serviceDto);
     if (error) return error.message;
     return null;
   }
