@@ -10,6 +10,8 @@ import {
   DeactivateServiceDto,
   UpdateServiceDto,
   UpdateService,
+  GetAllServicesDto,
+  GetAllServices,
 } from '../domain';
 
 export class ServicesController extends BaseController {
@@ -54,6 +56,17 @@ export class ServicesController extends BaseController {
     const [error, dto] = UpdateServiceDto.update(req.params.id, req.body);
     if (error) return res.status(400).send({ error });
     new UpdateService(this.repo)
+      .execute(dto!)
+      .then((data) => res.json(data))
+      .catch((err) => {
+        this.handleError(err, res);
+      });
+  };
+
+  getAll = (req: Request, res: Response) => {
+    const [error, dto] = GetAllServicesDto.get(req.query);
+    if (error) return res.status(400).send({ error });
+    new GetAllServices(this.repo)
       .execute(dto!)
       .then((data) => res.json(data))
       .catch((err) => {
