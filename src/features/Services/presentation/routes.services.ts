@@ -29,6 +29,7 @@ export class ServicesRoutes {
       [AuthMiddleware.authenticated, AuthMiddleware.authorized],
       controller.deactivate,
     );
+    router.get('/', [AuthMiddleware.authenticated, AuthMiddleware.authorized], controller.getAll);
     return router;
   }
 }

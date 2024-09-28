@@ -3,6 +3,7 @@ import {
   ActivateServiceDto,
   AddServiceDto,
   DeactivateServiceDto,
+  GetAllServicesDto,
   ServiceEntity,
   ServicesDatasource,
   UpdateServiceDto,
@@ -11,6 +12,7 @@ import { prisma } from '../../../../data';
 import { logger } from '../../../../infrastructure';
 import { CustomError } from '../../../../domain';
 import { ServiceMapper } from '../mapper';
+import { AllServicesType } from '../../domain/interfaces';
 
 export class ServicesDatasourceImpl implements ServicesDatasource {
   private readonly _prisma: PrismaClient;
@@ -104,6 +106,37 @@ export class ServicesDatasourceImpl implements ServicesDatasource {
         });
       });
       return ServiceMapper.serviceEntityFromObject(service);
+    } catch (error) {
+      logger.error(error);
+      if (error instanceof CustomError) throw error;
+      throw CustomError.internalServerError();
+    }
+  }
+
+  async getAll(serviceDto: GetAllServicesDto): Promise<AllServicesType> {
+    const { active, page, limit } = serviceDto;
+    const offset = (page - 1) * limit;
+    try {
+      const where = active !== null ? { active } : undefined;
+      const [services, totalCount] = await this._prisma.$transaction([
+        this._prisma.services.findMany({
+          where,
+          skip: offset,
+          take: limit,
+          orderBy: { type: 'asc' },
+        }),
+        this._prisma.services.count({ where }),
+      ]);
+      const totalPages = Math.ceil(totalCount / limit);
+      return {
+        services,
+        pagination: {
+          currentPage: page,
+          totalPages,
+          totalItems: totalCount,
+          itemsPerPage: limit,
+        },
+      };
     } catch (error) {
       logger.error(error);
       if (error instanceof CustomError) throw error;
