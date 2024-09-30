@@ -17,3 +17,31 @@ export const updatedWorkDayMock: WorkingDayEntity = {
   day: Day.Friday,
   active: true,
 };
+
+export const workingDaysMock: WorkingDayEntity[] = [
+  {
+    id: 1,
+    day: 'Monday',
+    active: true,
+  },
+  {
+    id: 2,
+    day: 'Tuesday',
+    active: true,
+  },
+  {
+    id: 3,
+    day: 'Wednesday',
+    active: true,
+  },
+  {
+    id: 4,
+    day: 'Thursday',
+    active: true,
+  },
+  {
+    id: 5,
+    day: 'Friday',
+    active: true,
+  },
+];
