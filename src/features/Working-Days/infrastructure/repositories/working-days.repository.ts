@@ -8,4 +8,8 @@ export class WorkingDaysRepositoryImpl extends WorkingDaysRepository {
   update(dto: UpdateWorkingDayDto): Promise<WorkingDayEntity | null> {
     return this.repo.update(dto);
   }
+
+  get(): Promise<WorkingDayEntity[]> {
+    return this.repo.get();
+  }
 }
