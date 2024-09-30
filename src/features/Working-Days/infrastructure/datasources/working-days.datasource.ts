@@ -33,4 +33,19 @@ export class WorkingDaysDatasourceImpl implements WorkingDaysDatasource {
       throw CustomError.internalServerError();
     }
   }
+
+  async get(): Promise<WorkingDayEntity[]> {
+    try {
+      const workingDays = await this._prisma.workingDays.findMany({
+        where: {
+          active: true,
+        },
+      });
+      return workingDays;
+    } catch (error) {
+      logger.error(error);
+      if (error instanceof CustomError) throw error;
+      throw CustomError.internalServerError();
+    }
+  }
 }
