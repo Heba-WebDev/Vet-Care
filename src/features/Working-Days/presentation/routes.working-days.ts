@@ -11,6 +11,7 @@ export class WorkingDaysRoutes {
     const controller = new WorkingDaysController(repository);
 
     router.patch('/', [AuthMiddleware.authenticated, AuthMiddleware.authorized], controller.update);
+    router.get('/', [AuthMiddleware.authenticated], controller.get);
 
     return router;
   }

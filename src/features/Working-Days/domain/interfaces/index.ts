@@ -8,7 +8,17 @@ export type WorkingDaysStandardResponse = {
   data: WorkingDayEntity | null;
 };
 
+export type AllWorkingDaysResponse = {
+  status: string;
+  message: string | null;
+  data: WorkingDayEntity[];
+};
+
 // interfaces
 export interface UpdateWorkingDayUseCase {
   execute(dto: UpdateWorkingDayDto): Promise<WorkingDaysStandardResponse>;
+}
+
+export interface GetWorkingDaysUseCase {
+  execute(): Promise<AllWorkingDaysResponse>;
 }
