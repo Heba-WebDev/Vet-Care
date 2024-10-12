@@ -225,6 +225,27 @@ class Seeder {
       logger.info('Working Days table already contains data.');
     }
 
+    // Public Holidays
+    const publicHolidaysCount = await this.prisma.publicHolidays.count();
+    if (publicHolidaysCount === 0) {
+      const days = [
+        { name: 'New Year', date: '01/01/2025' },
+        { name: 'Easter', date: '20/04/2025' },
+        { name: 'Labor Day', date: '01/09/2025' },
+        { name: 'Christmas Day', date: '25/12/2025' },
+      ];
+      for (const day of days) {
+        await this.prisma.publicHolidays.create({
+          data: {
+            name: day.name,
+            date: day.date
+          },
+        });
+      }
+    } else {
+      logger.info('Working Days table already contains data.');
+    }
+
     logger.info('Data has been seeded successfully.');
   }
 }
