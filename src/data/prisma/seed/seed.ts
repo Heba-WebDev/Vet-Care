@@ -238,7 +238,7 @@ class Seeder {
         await this.prisma.publicHolidays.create({
           data: {
             name: day.name,
-            date: day.date
+            date: day.date,
           },
         });
       }

@@ -11,6 +11,7 @@ export class HolidaysRoutes {
     const controller = new HolidaysController(repository);
 
     router.post('/', [AuthMiddleware.authenticated, AuthMiddleware.authorized], controller.add);
+    router.get('/', [AuthMiddleware.authenticated], controller.get);
     return router;
   }
 }
