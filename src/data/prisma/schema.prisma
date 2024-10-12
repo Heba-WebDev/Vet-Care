@@ -183,7 +183,7 @@ model Notifications {
 }
 
 model PublicHolidays {
-  id   Int    @id @default(autoincrement())
+  id   String    @id @default(uuid())
   name String
   date String
 }
