@@ -1,0 +1,27 @@
+name: Build, test and linting succeed on PRs
+on:
+  pull_request:
+    branches:
+      - v2/develop
+jobs:
+  build:
+    name: Build, test, and format the project
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - name: Install Dependencies
+        run: npm install
+      - name: Prisma migrate
+        run: npm run migrate
+      - name: Run Build
+        run: npm run dev
+      - name: Run Tests
+        run: npm run test
+      - name: Run fomart
+        run: npm run lint
+      - name: Run format
+        run: npm run format

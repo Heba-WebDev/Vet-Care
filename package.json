@@ -13,7 +13,8 @@
     "swagger": "node ./src/docs/index.mjs",
     "test": "vitest",
     "lint": "eslint",
-    "format": "prettier --write \"src/**/*.ts\""
+    "format": "prettier --write \"src/**/*.ts\"",
+    "migrate": "cd src/data/prisma && npx prisma migrate && cd ../../.."
   },
   "keywords": [],
   "author": "Heba",
