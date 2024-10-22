@@ -14,14 +14,16 @@ jobs:
         with:
           node-version: '20'
       - name: Install Dependencies
-        run: npm install
-      - name: Prisma migrate
-        run: npm run migrate
+        run: npm ci
+
       - name: Run Build
-        run: npm run dev
+        run: npm run build
+
       - name: Run Tests
         run: npm run test
+
       - name: Run fomart
         run: npm run lint
+
       - name: Run format
         run: npm run format
