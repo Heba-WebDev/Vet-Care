@@ -11,7 +11,7 @@
     "dev": "nodemon -e ts --watch 'src/**/*.ts' --exec 'tsc && node dist/app.js'",
     "clean": "rm -rf dist",
     "build": "npm run clean && tsc && npm run prisma:generate",
-    "prisma:generate": "prisma generate --schema=./src/data/prisma/schema.prisma",
+    "prisma:generate": "cd src/data/prisma && npx prisma generate && cd ../../..",
     "swagger": "node ./src/docs/index.mjs",
     "test": "vitest",
     "lint": "eslint",
