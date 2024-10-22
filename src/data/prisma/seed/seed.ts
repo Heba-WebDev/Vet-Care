@@ -1,5 +1,5 @@
-import { PrismaClient, Animal, Permission, Gender, Day } from '@prisma/client';
-import { Title } from '../enums';
+import { PrismaClient, Animal as PrismaAnimal, Permission as PrismaPermission, Gender as PrismaGender, Day as PrismaDay } from '@prisma/client';
+import { Title as CustomTitle } from '../enums';
 import { logger } from '../../../infrastructure';
 import { bcryptAdapter } from '../../../config';
 
@@ -10,20 +10,33 @@ class Seeder {
     this.prisma = prisma;
   }
 
+  // Mapping custom enums to Prisma enums
+  private mapCustomTitleToPrismaTitle(customTitle: CustomTitle): string {
+    switch (customTitle) {
+      case CustomTitle.Receptionist: return 'Receptionist';
+      case CustomTitle.HR: return 'HR';
+      case CustomTitle.Manager: return 'Manager';
+      case CustomTitle.Veterinarian: return 'Veterinarian';
+      case CustomTitle.Asistant: return 'Asistant';
+      case CustomTitle.Technician: return 'Technician';
+      default: throw new Error(`Unknown title: ${customTitle}`);
+    }
+  }
+
   async seed() {
     // Animal
     const animalCount = await this.prisma.animals.count();
     if (animalCount === 0) {
-      const animalTypes: { type: Animal }[] = [
-        { type: Animal.Cat },
-        { type: Animal.Dog },
-        { type: Animal.Horse },
-        { type: Animal.Bird },
-        { type: Animal.Snake },
-        { type: Animal.Lizard },
-        { type: Animal.Hamster },
-        { type: Animal.Rat },
-        { type: Animal.Rabbit },
+      const animalTypes: { type: PrismaAnimal }[] = [
+        { type: PrismaAnimal.Cat },
+        { type: PrismaAnimal.Dog },
+        { type: PrismaAnimal.Horse },
+        { type: PrismaAnimal.Bird },
+        { type: PrismaAnimal.Snake },
+        { type: PrismaAnimal.Lizard },
+        { type: PrismaAnimal.Hamster },
+        { type: PrismaAnimal.Rat },
+        { type: PrismaAnimal.Rabbit },
       ];
 
       for (const animal of animalTypes) {
@@ -39,7 +52,7 @@ class Seeder {
     // Permissions
     const permissionCount = await this.prisma.permissions.count();
     if (permissionCount === 0) {
-      const permissionTypes = [{ type: Permission.Staff }, { type: Permission.Admin }];
+      const permissionTypes = [{ type: PrismaPermission.Staff }, { type: PrismaPermission.Admin }];
 
       for (const permission of permissionTypes) {
         await this.prisma.permissions.create({
@@ -55,12 +68,12 @@ class Seeder {
     const jobsCount = await this.prisma.jobs.count();
     if (jobsCount === 0) {
       const jobTitles = [
-        { title: Title.Receptionist },
-        { title: Title.HR },
-        { title: Title.Manager },
-        { title: Title.Veterinarian },
-        { title: Title.Asistant },
-        { title: Title.Technician },
+        { title: this.mapCustomTitleToPrismaTitle(CustomTitle.Receptionist) },
+        { title: this.mapCustomTitleToPrismaTitle(CustomTitle.HR) },
+        { title: this.mapCustomTitleToPrismaTitle(CustomTitle.Manager) },
+        { title: this.mapCustomTitleToPrismaTitle(CustomTitle.Veterinarian) },
+        { title: this.mapCustomTitleToPrismaTitle(CustomTitle.Asistant) },
+        { title: this.mapCustomTitleToPrismaTitle(CustomTitle.Technician) },
       ];
 
       for (const job of jobTitles) {
@@ -79,8 +92,8 @@ class Seeder {
       const staffMembers = [
         {
           name: 'Heba',
-          job_title: Title.HR,
-          permission_type: Permission.Admin,
+          job_title: this.mapCustomTitleToPrismaTitle(CustomTitle.HR),
+          permission_type: PrismaPermission.Admin,
           email: 'heba@gmail.com',
           password: await bcryptAdapter.hash(process.env.SEEDING_PASSWORD as string),
           phone_number: '1234567890',
@@ -105,8 +118,8 @@ class Seeder {
         {
           id: 'c010abec-9334-46fd-a345-7b93b0b59f1f',
           name: 'Jane',
-          job_title: Title.Veterinarian,
-          permission_type: Permission.Staff,
+          job_title: this.mapCustomTitleToPrismaTitle(CustomTitle.Veterinarian),
+          permission_type: PrismaPermission.Staff,
           email: 'jane.smith@example.com',
           password: await bcryptAdapter.hash(process.env.SEEDING_PASSWORD as string),
           phone_number: '0987654321',
@@ -158,7 +171,7 @@ class Seeder {
       const pets = [
         {
           name: 'Negrito',
-          gender: Gender.Male,
+          gender: PrismaGender.Male,
           animal_id: 1,
           owner_id: owner.id,
         },
@@ -197,7 +210,7 @@ class Seeder {
           },
         });
       }
-      logger.info('Jobs table has been seeded successfully.');
+      logger.info('Services table has been seeded successfully.');
     } else {
       logger.info('Services table already contains data.');
     }
@@ -206,13 +219,13 @@ class Seeder {
     const workingDaysCount = await this.prisma.workingDays.count();
     if (workingDaysCount === 0) {
       const days = [
-        { name: Day.Monday },
-        { name: Day.Tuesday },
-        { name: Day.Wednesday },
-        { name: Day.Thursday },
-        { name: Day.Friday },
-        { name: Day.Saturday },
-        { name: Day.Sunday },
+        { name: PrismaDay.Monday },
+        { name: PrismaDay.Tuesday },
+        { name: PrismaDay.Wednesday },
+        { name: PrismaDay.Thursday },
+        { name: PrismaDay.Friday },
+        { name: PrismaDay.Saturday },
+        { name: PrismaDay.Sunday },
       ];
       for (const day of days) {
         await this.prisma.workingDays.create({
@@ -243,7 +256,7 @@ class Seeder {
         });
       }
     } else {
-      logger.info('Working Days table already contains data.');
+      logger.info('Public Holidays table already contains data.');
     }
 
     logger.info('Data has been seeded successfully.');
