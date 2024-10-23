@@ -9,7 +9,9 @@
   "scripts": {
     "start": "npx prisma generate --schema=./src/prisma/schema.prisma && nodemon -e ts --watch 'src/**/*.ts' --exec 'tsc && node dist/bostrap.js '",
     "dev": "nodemon -e ts --watch 'src/**/*.ts' --exec 'tsc && node dist/app.js'",
-    "build": "tsc",
+    "build": "npm run clean && npm run prisma:generate && tsc",
+    "clean": "rm -rf dist",
+    "prisma:generate": "cd src/data/prisma && npx prisma generate && cd ../../..",
     "swagger": "node ./src/docs/index.mjs",
     "test": "vitest",
     "lint": "eslint",
