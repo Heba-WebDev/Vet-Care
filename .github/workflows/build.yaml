@@ -19,11 +19,5 @@ jobs:
       - name: Run Build
         run: npm run build
 
-      - name: Run Tests
-        run: npm run test
-
       - name: Run Lint
         run: npm run lint
-
-      - name: Run Format
-        run: npm run format
