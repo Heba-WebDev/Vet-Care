@@ -12,7 +12,7 @@ describe('Add a public holiday', () => {
     vi.clearAllMocks();
   });
 
-  it('should add a new public holida', async () => {
+  it('should add a new public holiday', async () => {
     prismaMock.publicHolidays.create?.mockResolvedValueOnce(addHolidayDtoMock);
     const result = await holidaysDatasource.add(addHolidayDtoMock);
     expect(typeof result).toBe('object');
