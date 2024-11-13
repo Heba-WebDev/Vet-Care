@@ -1,5 +1,11 @@
 import { PrismaClient } from '@prisma/client';
-import { AddHolidayDto, GetHolidaysDto, HolidayEntity, HolidaysDatasource } from '../../domain';
+import {
+  AddHolidayDto,
+  GetHolidaysDto,
+  HolidayEntity,
+  HolidaysDatasource,
+  UpdateHolidayDto,
+} from '../../domain';
 import { prisma } from '../../../../data';
 import { logger } from '../../../../infrastructure';
 import { CustomError } from '../../../../domain';
@@ -34,6 +40,7 @@ export class HolidaysDatasourceImpl implements HolidaysDatasource {
       const offset = (page! - 1) * limit!;
       const holidays = await this._prisma.publicHolidays.findMany({
         select: {
+          id: true,
           name: true,
           date: true,
         },
@@ -41,6 +48,26 @@ export class HolidaysDatasourceImpl implements HolidaysDatasource {
         take: limit,
       });
       return holidays;
+    } catch (error) {
+      logger.error(error);
+      if (error instanceof CustomError) throw error;
+      throw CustomError.internalServerError();
+    }
+  }
+
+  async update(holidaysDto: UpdateHolidayDto): Promise<HolidayEntity | null> {
+    const { id, name, date } = holidaysDto;
+    try {
+      const holiday = await this._prisma.publicHolidays.update({
+        where: {
+          id,
+        },
+        data: {
+          name,
+          date,
+        },
+      });
+      return HolidayMapper.holidayEntityFromObject(holiday);
     } catch (error) {
       logger.error(error);
       if (error instanceof CustomError) throw error;

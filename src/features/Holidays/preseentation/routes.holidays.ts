@@ -12,6 +12,11 @@ export class HolidaysRoutes {
 
     router.post('/', [AuthMiddleware.authenticated, AuthMiddleware.authorized], controller.add);
     router.get('/', [AuthMiddleware.authenticated], controller.get);
+    router.patch(
+      '/:id',
+      [AuthMiddleware.authenticated, AuthMiddleware.authorized],
+      controller.update,
+    );
     return router;
   }
 }

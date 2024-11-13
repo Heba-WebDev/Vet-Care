@@ -4,6 +4,7 @@ import {
   HolidayEntity,
   HolidaysDatasource,
   HolidaysRepository,
+  UpdateHolidayDto,
 } from '../../domain';
 
 export class HolidaysRepositoryIml extends HolidaysRepository {
@@ -17,5 +18,9 @@ export class HolidaysRepositoryIml extends HolidaysRepository {
 
   get(holidaysDto: GetHolidaysDto): Promise<HolidayEntity[]> {
     return this.datasource.get(holidaysDto);
+  }
+
+  update(holidaysDto: UpdateHolidayDto): Promise<HolidayEntity | null> {
+    return this.datasource.update(holidaysDto);
   }
 }
