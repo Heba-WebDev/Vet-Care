@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import {
   AddHolidayDto,
   GetHolidaysDto,
+  GetPreviousHolidaysDto,
   HolidayEntity,
   HolidaysDatasource,
   UpdateHolidayDto,
@@ -23,7 +24,7 @@ export class HolidaysDatasourceImpl implements HolidaysDatasource {
       const holiday = await this._prisma.publicHolidays.create({
         data: {
           name,
-          date: date,
+          date,
         },
       });
       return HolidayMapper.holidayEntityFromObject(holiday);
@@ -38,11 +39,50 @@ export class HolidaysDatasourceImpl implements HolidaysDatasource {
     const { page, limit } = holidaysDto;
     try {
       const offset = (page! - 1) * limit!;
+      const now = new Date();
       const holidays = await this._prisma.publicHolidays.findMany({
         select: {
           id: true,
           name: true,
           date: true,
+        },
+        orderBy: {
+          date: 'asc'
+        },
+        where: {
+          date: {
+            gte: now
+          }
+        },
+        skip: offset,
+        take: limit,
+      });
+      return holidays;
+    } catch (error) {
+      logger.error(error);
+      if (error instanceof CustomError) throw error;
+      throw CustomError.internalServerError();
+    }
+  }
+
+  async getPrevious(holidaysDto: GetPreviousHolidaysDto): Promise<HolidayEntity[]> {
+    const { page, limit } = holidaysDto;
+    try {
+      const offset = (page! - 1) * limit!;
+      const now = new Date();
+      const holidays = await this._prisma.publicHolidays.findMany({
+        select: {
+          id: true,
+          name: true,
+          date: true,
+        },
+        orderBy: {
+          date: 'desc'
+        },
+        where: {
+          date: {
+            lt: now,
+          },
         },
         skip: offset,
         take: limit,
