@@ -2,6 +2,6 @@ export class HolidayEntity {
   constructor(
     public id: string,
     public name: string,
-    public date: string,
+    public date: Date,
   ) {}
 }

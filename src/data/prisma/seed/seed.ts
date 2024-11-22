@@ -229,10 +229,18 @@ class Seeder {
     const publicHolidaysCount = await this.prisma.publicHolidays.count();
     if (publicHolidaysCount === 0) {
       const days = [
-        { name: 'New Year', date: '01/01/2025' },
-        { name: 'Easter', date: '20/04/2025' },
-        { name: 'Labor Day', date: '01/09/2025' },
-        { name: 'Christmas Day', date: '25/12/2025' },
+        { name: 'New Year', date: new Date(2023, 0, 1) },
+        { name: 'Easter', date: new Date(2023, 3, 20) },
+        { name: 'Labor Day', date: new Date(2023, 8, 1) },
+        { name: 'Christmas Day', date: new Date(2023, 11, 25) },
+        { name: 'New Year', date: new Date(2024, 0, 1) },
+        { name: 'Easter', date: new Date(2024, 3, 20) },
+        { name: 'Labor Day', date: new Date(2024, 8, 1) },
+        { name: 'Christmas Day', date: new Date(2024, 11, 25) },
+        { name: 'New Year', date: new Date(2025, 0, 1) },
+        { name: 'Easter', date: new Date(2025, 3, 20) },
+        { name: 'Labor Day', date: new Date(2025, 8, 1) },
+        { name: 'Christmas Day', date: new Date(2025, 11, 25) },
       ];
       for (const day of days) {
         await this.prisma.publicHolidays.create({

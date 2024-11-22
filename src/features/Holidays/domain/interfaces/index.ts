@@ -1,4 +1,4 @@
-import { AddHolidayDto, GetHolidaysDto, UpdateHolidayDto } from '../dtos';
+import { AddHolidayDto, GetHolidaysDto, GetPreviousHolidaysDto, UpdateHolidayDto } from '../dtos';
 import { HolidayEntity } from '../entities';
 
 // types
@@ -21,6 +21,10 @@ export interface AddHolidayUseCase {
 
 export interface GetAllHolidaysUseCase {
   execute(holidaysDto: GetHolidaysDto): Promise<allHolidaysResponse>;
+}
+
+export interface GetPreviousHolidaysUseCase {
+  execute(holidaysDto: GetPreviousHolidaysDto): Promise<allHolidaysResponse>;
 }
 
 export interface UpdateHolidayUseCase {

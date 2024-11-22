@@ -1,5 +1,15 @@
-import { AddHolidayDto, GetHolidaysDto, UpdateHolidayDto } from '../../domain';
-import { addHolidaySchema, getAllHolidaysSchema, updateHolidaySchema } from './joi-schemas';
+import {
+  AddHolidayDto,
+  GetHolidaysDto,
+  GetPreviousHolidaysDto,
+  UpdateHolidayDto,
+} from '../../domain';
+import {
+  addHolidaySchema,
+  getAllHolidaysSchema,
+  getPreviousHolidaysSchema,
+  updateHolidaySchema,
+} from './joi-schemas';
 
 export class HolidaysInputValidation {
   add(holidaysDto: AddHolidayDto): string | null {
@@ -10,6 +20,12 @@ export class HolidaysInputValidation {
 
   get(holidaysDto: GetHolidaysDto): string | null {
     const { error } = getAllHolidaysSchema.validate(holidaysDto);
+    if (error) return error.message;
+    return null;
+  }
+
+  getPrevious(holidaysDto: GetPreviousHolidaysDto): string | null {
+    const { error } = getPreviousHolidaysSchema.validate(holidaysDto);
     if (error) return error.message;
     return null;
   }

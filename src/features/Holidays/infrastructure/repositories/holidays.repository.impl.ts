@@ -1,6 +1,7 @@
 import {
   AddHolidayDto,
   GetHolidaysDto,
+  GetPreviousHolidaysDto,
   HolidayEntity,
   HolidaysDatasource,
   HolidaysRepository,
@@ -18,6 +19,10 @@ export class HolidaysRepositoryIml extends HolidaysRepository {
 
   get(holidaysDto: GetHolidaysDto): Promise<HolidayEntity[]> {
     return this.datasource.get(holidaysDto);
+  }
+
+  getPrevious(holidaysDto: GetPreviousHolidaysDto): Promise<HolidayEntity[]> {
+    return this.datasource.getPrevious(holidaysDto);
   }
 
   update(holidaysDto: UpdateHolidayDto): Promise<HolidayEntity | null> {

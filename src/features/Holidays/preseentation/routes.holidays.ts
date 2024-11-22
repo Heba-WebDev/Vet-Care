@@ -12,6 +12,7 @@ export class HolidaysRoutes {
 
     router.post('/', [AuthMiddleware.authenticated, AuthMiddleware.authorized], controller.add);
     router.get('/', [AuthMiddleware.authenticated], controller.get);
+    router.get('/previous', [AuthMiddleware.authenticated], controller.getPrevious);
     router.patch(
       '/:id',
       [AuthMiddleware.authenticated, AuthMiddleware.authorized],
