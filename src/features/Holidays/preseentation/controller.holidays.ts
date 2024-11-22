@@ -5,6 +5,8 @@ import {
   GetAllHolidays,
   AddHolidayDto,
   GetHolidaysDto,
+  GetPreviousHolidaysDto,
+  GetPreviousHolidays,
   UpdateHolidayDto,
   UpdateHoliday,
   HolidaysRepository,
@@ -28,6 +30,15 @@ export class HolidaysController extends BaseController {
     const [error, dto] = GetHolidaysDto.get(req.query);
     if (error) return res.status(400).send({ error });
     new GetAllHolidays(this.repo)
+      .execute(dto!)
+      .then((data) => res.json(data))
+      .catch((error) => this.handleError(error, res));
+  };
+
+  getPrevious = (req: Request, res: Response) => {
+    const [error, dto] = GetPreviousHolidaysDto.getPrevious(req.query);
+    if (error) return res.status(400).send({ error });
+    new GetPreviousHolidays(this.repo)
       .execute(dto!)
       .then((data) => res.json(data))
       .catch((error) => this.handleError(error, res));
