@@ -2,11 +2,7 @@ import { CustomError } from '../../../../domain';
 import { HolidayEntity } from '../../domain';
 
 export class HolidayMapper {
-  static holidayEntityFromObject(object: {
-    id: string;
-    name: string;
-    date: string;
-  }): HolidayEntity {
+  static holidayEntityFromObject(object: { id: string; name: string; date: Date }): HolidayEntity {
     const { id, name, date } = object;
 
     if (!name) throw CustomError.badRequest('Missing name');
