@@ -185,7 +185,7 @@ model Notifications {
 model PublicHolidays {
   id   String    @id @default(uuid())
   name String
-  date String
+  date DateTime
 }
 
 // Archieve tables
