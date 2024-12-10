@@ -9,14 +9,38 @@ export const addWorkingHoursSchema = joi.object({
   day_id: joi.number().integer().required().messages({
     'number.empty': 'A valid day id is required',
     'number.required': 'A valid day id is required',
-    'number.integer': 'A valid day id is required'
+    'number.integer': 'A valid day id is required',
   }),
-  start_time: joi.string().pattern(new RegExp('^([01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d$')).required().messages({
-    'string.required': 'A valid start_time is required',
-    'string.pattern': 'A valid start_time in hh:mm:ss format is required',
-  }),
-  end_time: joi.string().pattern(new RegExp('^([01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d$')).required().messages({
-    'string.required': 'A valid end_time is required',
-    'string.pattern': 'A valid end_time in hh:mm:ss format is required',
-  }),
+  start_time: joi
+    .string()
+    .pattern(new RegExp('^([01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d$'))
+    .required()
+    .messages({
+      'string.required': 'A valid start_time is required',
+      'string.pattern': 'A valid start_time in hh:mm:ss format is required',
+    }),
+  end_time: joi
+    .string()
+    .pattern(new RegExp('^([01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d$'))
+    .required()
+    .messages({
+      'string.required': 'A valid end_time is required',
+      'string.pattern': 'A valid end_time in hh:mm:ss format is required',
+    }),
+  breat_start_time: joi
+    .string()
+    .pattern(new RegExp('^([01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d$'))
+    .required()
+    .messages({
+      'string.required': 'A valid breat_start_time is required',
+      'string.pattern': 'A valid breat_start_time in hh:mm:ss format is required',
+    }),
+  break_end_time: joi
+    .string()
+    .pattern(new RegExp('^([01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d$'))
+    .required()
+    .messages({
+      'string.required': 'A valid break_end_time is required',
+      'string.pattern': 'A valid breat_end_time in hh:mm:ss format is required',
+    }),
 });
