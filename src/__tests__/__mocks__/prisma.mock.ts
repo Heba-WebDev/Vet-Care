@@ -54,6 +54,13 @@ export const prismaMock: MockPrismaClient = {
     update: vi.fn(),
     delete: vi.fn(),
   },
+  workingHours: {
+    findFirst: vi.fn(),
+    findMany: vi.fn(),
+    create: vi.fn(),
+    update: vi.fn(),
+    delete: vi.fn(),
+  },
   appointments: {},
   services: {
     findFirst: vi.fn(),
