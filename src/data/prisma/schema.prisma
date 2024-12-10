@@ -198,6 +198,8 @@ model WorkingHours {
   day          WorkingDays   @relation(fields: [day_id], references: [id])
   start_time   DateTime      @db.Time()
   end_time     DateTime      @db.Time()
+  break_start_time DateTime  @db.Time()
+  break_end_time DateTime  @db.Time()
 }
 
 // Archieve tables
