@@ -47,12 +47,12 @@ export class HolidaysDatasourceImpl implements HolidaysDatasource {
           date: true,
         },
         orderBy: {
-          date: 'asc'
+          date: 'asc',
         },
         where: {
           date: {
-            gte: now
-          }
+            gte: now,
+          },
         },
         skip: offset,
         take: limit,
@@ -77,7 +77,7 @@ export class HolidaysDatasourceImpl implements HolidaysDatasource {
           date: true,
         },
         orderBy: {
-          date: 'desc'
+          date: 'desc',
         },
         where: {
           date: {

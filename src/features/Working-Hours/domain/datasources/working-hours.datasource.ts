@@ -1,0 +1,6 @@
+import { AddWorkingHoursDto } from '../dtos';
+import { WorkingHoursEntity } from '../entities';
+
+export abstract class WorkingHoursDatasource {
+  abstract add(dto: AddWorkingHoursDto): Promise<WorkingHoursEntity | null>;
+}

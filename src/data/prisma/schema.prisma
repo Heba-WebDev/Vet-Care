@@ -79,6 +79,7 @@ model Veterinarians {
   permission_type Permission     @default(Staff)
   permission      Permissions    @relation(fields: [permission_type], references: [type])
   appointments    Appointments[]
+  working_hours   WorkingHours[]
   email           String         @unique
   password        String
   phone_number    String
@@ -133,6 +134,7 @@ model WorkingDays {
   id Int @id @default(autoincrement())
   day Day @unique
   active Boolean @default(true)
+  WorkingHours WorkingHours[]
 }
 
 model Appointments {
@@ -186,6 +188,18 @@ model PublicHolidays {
   id   String    @id @default(uuid())
   name String
   date DateTime
+}
+
+model WorkingHours {
+  id String @id @default(uuid())
+  vet          Veterinarians @relation(fields: [vet_id], references: [id])
+  vet_id       String
+  day_id       Int
+  day          WorkingDays   @relation(fields: [day_id], references: [id])
+  start_time   DateTime      @db.Time()
+  end_time     DateTime      @db.Time()
+  break_start_time DateTime  @db.Time()
+  break_end_time DateTime  @db.Time()
 }
 
 // Archieve tables

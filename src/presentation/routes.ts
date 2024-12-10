@@ -7,6 +7,7 @@ import { PetsRoutes } from '../features/Pets/presentaiton';
 import { ServicesRoutes } from '../features/Services/presentation';
 import { WorkingDaysRoutes } from '../features/Working-Days';
 import { HolidaysRoutes } from '../features/Holidays';
+import { WorkingHoursRoutes } from '../features/Working-Hours/presentation';
 
 export class AppRoutes {
   static get routes(): Router {
@@ -19,6 +20,7 @@ export class AppRoutes {
     router.use('/api/v2/services', ServicesRoutes.routes);
     router.use('/api/v2/working-days', WorkingDaysRoutes.routes);
     router.use('/api/v2/holidays', HolidaysRoutes.routes);
+    router.use('/api/v2/working-hours', WorkingHoursRoutes.routes);
     return router;
   }
 }
