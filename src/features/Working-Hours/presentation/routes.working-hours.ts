@@ -10,7 +10,11 @@ export class WorkingHoursRoutes {
     const repository = new WorkingHoursRepositoryImpl(datasouce);
     const controller = new WorkingHoursController(repository);
 
-    router.post('/', [AuthMiddleware.authenticated, AuthMiddleware.authorized], controller.add);
+    router.post(
+      '/vets/:vet_id/working-hours',
+      [AuthMiddleware.authenticated, AuthMiddleware.authorized],
+      controller.add,
+    );
 
     return router;
   }

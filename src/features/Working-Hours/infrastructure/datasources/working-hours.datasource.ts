@@ -15,26 +15,37 @@ export class WorkingHoursDatasourceImpl implements WorkingHoursDatasource {
     const { vet_id, day_id, start_time, end_time, break_start_time, break_end_time } = dto;
     try {
       const workingHours = await this._prisma.$transaction(async (prisma) => {
-        const day_exists = prisma.workingDays.findFirst({
+        const day_exists = await prisma.workingDays.findFirst({
           where: {
             id: day_id,
+            active: true,
           },
         });
         if (!day_exists) throw CustomError.badRequest('No day was found');
-        const vet_exists = prisma.veterinarians.findFirst({
+        const vet_exists = await prisma.veterinarians.findFirst({
           where: {
             id: vet_id,
           },
         });
         if (!vet_exists) throw CustomError.badRequest('No veterinarian was found');
-        return prisma.workingHours.create({
+        const vet_working_hours_exists = await prisma.workingHours.findFirst({
+          where: {
+            vet_id,
+            day_id,
+          },
+        });
+        if (vet_working_hours_exists)
+          throw CustomError.badRequest('Working hours for this day already exists');
+
+        this.validateTimes(start_time, end_time, break_start_time, break_end_time);
+        return await prisma.workingHours.create({
           data: {
             vet_id,
             day_id,
-            start_time: start_time,
-            end_time: end_time,
-            break_start_time: break_start_time,
-            break_end_time: break_end_time,
+            start_time: this.convertStringToDate(start_time),
+            end_time: this.convertStringToDate(end_time),
+            break_start_time: this.convertStringToDate(break_start_time),
+            break_end_time: this.convertStringToDate(break_end_time),
           },
         });
       });
@@ -43,6 +54,32 @@ export class WorkingHoursDatasourceImpl implements WorkingHoursDatasource {
       logger.error(error);
       if (error instanceof CustomError) throw error;
       throw CustomError.internalServerError();
+    }
+  }
+
+  private convertStringToDate(time: string): Date {
+    const [hours, minutes, seconds] = time.split(':').map(Number);
+    const date = new Date();
+    date.setHours(hours, minutes, seconds, 0);
+    return date;
+  }
+  private validateTimes(
+    start_time: string,
+    end_time: string,
+    break_start_time: string,
+    break_end_time: string,
+  ): void {
+    if (this.convertStringToDate(start_time) === this.convertStringToDate(end_time)) {
+      throw CustomError.badRequest('Start time and end time cannot be equal');
+    }
+    if (
+      this.convertStringToDate(break_start_time) < this.convertStringToDate(start_time) ||
+      this.convertStringToDate(break_end_time) > this.convertStringToDate(end_time)
+    ) {
+      throw CustomError.badRequest('Break times must fall between the start time and end time');
+    }
+    if (this.convertStringToDate(break_end_time) <= this.convertStringToDate(break_start_time)) {
+      throw CustomError.badRequest('Break start time must be before break end time');
     }
   }
 }

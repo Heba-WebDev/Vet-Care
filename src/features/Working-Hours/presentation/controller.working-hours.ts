@@ -7,7 +7,7 @@ export class WorkingHoursController extends BaseController {
     super();
   }
   add = (req: Request, res: Response) => {
-    const [error, dto] = AddWorkingHoursDto.add(req.params.id, req.body);
+    const [error, dto] = AddWorkingHoursDto.add(req.params.vet_id, req.body);
     if (error) return res.status(400).send({ error });
     new AddWorkingHours(this.repo)
       .execute(dto!)

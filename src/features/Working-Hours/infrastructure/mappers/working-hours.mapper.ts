@@ -2,6 +2,12 @@ import { CustomError } from '../../../../domain';
 import { WorkingHoursEntity } from '../../domain';
 
 export class WorkinghoursMapper {
+  private static convertToLocalTime(date: Date, hoursToAdd: number): Date {
+    const newDate = new Date(date);
+    newDate.setHours(newDate.getHours() + hoursToAdd);
+    return newDate;
+  }
+
   static workingHoursEntityFromObject(workingHoursEntity: {
     id: string;
     vet_id: string;
@@ -22,14 +28,18 @@ export class WorkinghoursMapper {
     if (!break_start_time) throw CustomError.badRequest('Missing break_start_time');
     if (!break_end_time) throw CustomError.badRequest('Missing break_end_time');
 
+    const formatTime = (date: Date): string => {
+      // split date from time, then gets rid of miliseconds and Z letterr at the end
+      return date.toISOString().split('T')[1].split('.')[0];
+    };
     return new WorkingHoursEntity(
       id,
       vet_id,
       day_id,
-      start_time.toString(),
-      end_time.toString(),
-      break_start_time.toString(),
-      break_end_time.toString(),
+      formatTime(this.convertToLocalTime(start_time, 3)),
+      formatTime(this.convertToLocalTime(end_time, 3)),
+      formatTime(this.convertToLocalTime(break_start_time, 3)),
+      formatTime(this.convertToLocalTime(break_end_time, 3)),
     );
   }
 }
