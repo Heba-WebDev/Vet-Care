@@ -16,6 +16,8 @@ export class WorkingHoursRoutes {
       controller.add,
     );
 
+    router.get('/vets/:vet_id/working-hours', [AuthMiddleware.authenticated], controller.get);
+
     return router;
   }
 }
