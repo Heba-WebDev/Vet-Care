@@ -1,4 +1,9 @@
-import { AddWorkingHoursDto, WorkingHoursEntity, WorkingHoursRepository } from '../../domain';
+import {
+  AddWorkingHoursDto,
+  GetWorkingHoursDto,
+  WorkingHoursEntity,
+  WorkingHoursRepository,
+} from '../../domain';
 
 export class WorkingHoursRepositoryImpl extends WorkingHoursRepository {
   constructor(private readonly repo: WorkingHoursRepository) {
@@ -7,5 +12,9 @@ export class WorkingHoursRepositoryImpl extends WorkingHoursRepository {
 
   add(dto: AddWorkingHoursDto): Promise<WorkingHoursEntity | null> {
     return this.repo.add(dto);
+  }
+
+  get(dto: GetWorkingHoursDto): Promise<WorkingHoursEntity[] | null> {
+    return this.repo.get(dto);
   }
 }
