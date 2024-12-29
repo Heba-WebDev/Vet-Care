@@ -27,7 +27,7 @@ export const addWorkingHoursSchema = joi.object({
       'string.required': 'A valid end_time is required',
       'string.pattern': 'A valid end_time in hh:mm:ss format is required',
     }),
-  breat_start_time: joi
+  break_start_time: joi
     .string()
     .pattern(new RegExp('^([01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d$'))
     .required()
