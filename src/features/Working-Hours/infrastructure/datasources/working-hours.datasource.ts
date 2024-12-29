@@ -1,5 +1,10 @@
 import { PrismaClient } from '@prisma/client';
-import { AddWorkingHoursDto, WorkingHoursDatasource, WorkingHoursEntity } from '../../domain';
+import {
+  AddWorkingHoursDto,
+  GetWorkingHoursDto,
+  WorkingHoursDatasource,
+  WorkingHoursEntity,
+} from '../../domain';
 import { prisma } from '../../../../data';
 import { logger } from '../../../../infrastructure';
 import { CustomError } from '../../../../domain';
@@ -50,6 +55,34 @@ export class WorkingHoursDatasourceImpl implements WorkingHoursDatasource {
         });
       });
       return WorkinghoursMapper.workingHoursEntityFromObject(workingHours);
+    } catch (error) {
+      logger.error(error);
+      if (error instanceof CustomError) throw error;
+      throw CustomError.internalServerError();
+    }
+  }
+
+  async get(dto: GetWorkingHoursDto): Promise<WorkingHoursEntity[] | null> {
+    const { vet_id, page, limit } = dto;
+    const offset = (page! - 1) * limit!;
+    try {
+      const workingHours = await this._prisma.$transaction(async (prisma) => {
+        const vet_exists = await prisma.veterinarians.findFirst({
+          where: {
+            id: vet_id,
+          },
+        });
+        if (!vet_exists) throw CustomError.badRequest('No veterinarian was found');
+        const hours = await prisma.workingHours.findMany({
+          where: {
+            vet_id,
+          },
+          skip: offset,
+          take: limit,
+        });
+        return hours;
+      });
+      return workingHours.map((hour) => WorkinghoursMapper.workingHoursEntityFromObject(hour));
     } catch (error) {
       logger.error(error);
       if (error instanceof CustomError) throw error;
