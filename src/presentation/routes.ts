@@ -20,7 +20,7 @@ export class AppRoutes {
     router.use('/api/v2/services', ServicesRoutes.routes);
     router.use('/api/v2/working-days', WorkingDaysRoutes.routes);
     router.use('/api/v2/holidays', HolidaysRoutes.routes);
-    router.use('/api/v2/working-hours', WorkingHoursRoutes.routes);
+    router.use('/api/v2', WorkingHoursRoutes.routes);
     return router;
   }
 }
