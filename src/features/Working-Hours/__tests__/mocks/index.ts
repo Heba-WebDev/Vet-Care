@@ -1,5 +1,5 @@
 import { VetEntity } from '../../../Vets/domain';
-import { AddWorkingHoursDto, WorkingHoursEntity } from '../../domain';
+import { AddWorkingHoursDto, GetWorkingHoursDto, WorkingHoursEntity } from '../../domain';
 
 export const addWorkingHoursDtoMock: AddWorkingHoursDto = {
   vet_id: 'e727557e-d167-4f46-b7b4-44a46ead6b9d',
@@ -38,3 +38,19 @@ export const workingHoursEntityMock: Partial<WorkingHoursEntity> = {
   break_start_time: addWorkingHoursDtoMock.break_start_time,
   break_end_time: addWorkingHoursDtoMock.break_end_time,
 };
+
+export const getWorkingHoursDtoMock: GetWorkingHoursDto = {
+  vet_id: vetExists.id,
+};
+
+export const GetWorkinghoursMock: WorkingHoursEntity[] = [
+  {
+    id: '1',
+    vet_id: vetExists.id,
+    day_id: addWorkingHoursDtoMock.day_id,
+    start_time: addWorkingHoursDtoMock.start_time,
+    end_time: addWorkingHoursDtoMock.end_time,
+    break_start_time: addWorkingHoursDtoMock.break_start_time,
+    break_end_time: addWorkingHoursDtoMock.break_end_time,
+  },
+];
