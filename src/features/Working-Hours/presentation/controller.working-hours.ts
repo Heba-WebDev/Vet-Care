@@ -4,9 +4,11 @@ import {
   AddWorkingHours,
   AddWorkingHoursDto,
   GetWorkingHoursDto,
+  UpdateWorkingHoursDto,
   WorkingHoursRepository,
 } from '../domain';
 import { GetWorkingHours } from '../domain/use-cases/get-working-hours.use-case';
+import { UpdateWorkingHours } from '../domain/use-cases/update-working-hours.use-case';
 
 export class WorkingHoursController extends BaseController {
   constructor(private readonly repo: WorkingHoursRepository) {
@@ -25,6 +27,19 @@ export class WorkingHoursController extends BaseController {
     const [error, dto] = GetWorkingHoursDto.getWorkingHours(req.params.vet_id, req.query);
     if (error) return res.status(400).send({ error });
     new GetWorkingHours(this.repo)
+      .execute(dto!)
+      .then((data) => res.send(data))
+      .catch((error) => this.handleError(error, res));
+  };
+
+  update = (req: Request, res: Response) => {
+    const [error, dto] = UpdateWorkingHoursDto.update(
+      req.params.vet_id,
+      req.params.workday_id,
+      req.body,
+    );
+    if (error) return res.status(400).send({ error });
+    new UpdateWorkingHours(this.repo)
       .execute(dto!)
       .then((data) => res.send(data))
       .catch((error) => this.handleError(error, res));

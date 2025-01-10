@@ -18,6 +18,11 @@ export class WorkingHoursRoutes {
 
     router.get('/vets/:vet_id/working-hours', [AuthMiddleware.authenticated], controller.get);
 
+    router.patch(
+      '/vets/:vet_id/working-hours/:workday_id',
+      [AuthMiddleware.authenticated, AuthMiddleware.authorized],
+      controller.update,
+    );
     return router;
   }
 }
