@@ -1,6 +1,7 @@
 import {
   AddWorkingHoursDto,
   GetWorkingHoursDto,
+  UpdateWorkingHoursDto,
   WorkingHoursEntity,
   WorkingHoursRepository,
 } from '../../domain';
@@ -16,5 +17,9 @@ export class WorkingHoursRepositoryImpl extends WorkingHoursRepository {
 
   get(dto: GetWorkingHoursDto): Promise<WorkingHoursEntity[] | null> {
     return this.repo.get(dto);
+  }
+
+  update(dto: UpdateWorkingHoursDto): Promise<WorkingHoursEntity | null> {
+    return this.repo.update(dto);
   }
 }
