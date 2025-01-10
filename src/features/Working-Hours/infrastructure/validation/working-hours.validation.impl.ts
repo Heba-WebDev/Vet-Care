@@ -1,5 +1,9 @@
-import { GetWorkingHoursDto, AddWorkingHoursDto } from '../../domain';
-import { addWorkingHoursSchema, getWorkingHoursSchema } from './joi-schemas';
+import { GetWorkingHoursDto, AddWorkingHoursDto, UpdateWorkingHoursDto } from '../../domain';
+import {
+  addWorkingHoursSchema,
+  getWorkingHoursSchema,
+  updateWorkingHoursSchema,
+} from './joi-schemas';
 
 export class WorkingHoursInputValidation {
   add(addWorkingHoursDto: AddWorkingHoursDto): string | null {
@@ -10,6 +14,12 @@ export class WorkingHoursInputValidation {
 
   get(getWorkingHoursDto: GetWorkingHoursDto): string | null {
     const { error } = getWorkingHoursSchema.validate(getWorkingHoursDto);
+    if (error) return error.message;
+    return null;
+  }
+
+  update(updateWorkinghoursDto: UpdateWorkingHoursDto): string | null {
+    const { error } = updateWorkingHoursSchema.validate(updateWorkinghoursDto);
     if (error) return error.message;
     return null;
   }
