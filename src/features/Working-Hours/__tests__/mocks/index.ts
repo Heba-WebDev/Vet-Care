@@ -43,14 +43,22 @@ export const getWorkingHoursDtoMock: GetWorkingHoursDto = {
   vet_id: vetExists.id,
 };
 
-export const GetWorkinghoursMock: WorkingHoursEntity[] = [
+const mockDate = new Date();
+const createMockDate = (timeStr: string) => {
+  const [hours, minutes, seconds] = timeStr.split(':').map(Number);
+  const date = new Date(mockDate);
+  date.setHours(hours, minutes, seconds, 0);
+  return date;
+};
+
+export const GetWorkinghoursMock = [
   {
     id: '1',
     vet_id: vetExists.id,
     day_id: addWorkingHoursDtoMock.day_id,
-    start_time: addWorkingHoursDtoMock.start_time,
-    end_time: addWorkingHoursDtoMock.end_time,
-    break_start_time: addWorkingHoursDtoMock.break_start_time,
-    break_end_time: addWorkingHoursDtoMock.break_end_time,
+    start_time: createMockDate(addWorkingHoursDtoMock.start_time),
+    end_time: createMockDate(addWorkingHoursDtoMock.end_time),
+    break_start_time: createMockDate(addWorkingHoursDtoMock.break_start_time),
+    break_end_time: createMockDate(addWorkingHoursDtoMock.break_end_time),
   },
 ];
