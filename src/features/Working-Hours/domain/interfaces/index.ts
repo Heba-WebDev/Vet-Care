@@ -1,4 +1,4 @@
-import { AddWorkingHoursDto, GetWorkingHoursDto } from '../dtos';
+import { AddWorkingHoursDto, GetWorkingHoursDto, UpdateWorkingHoursDto } from '../dtos';
 import { WorkingHoursEntity } from '../entities';
 
 // types
@@ -15,4 +15,8 @@ export interface AddWorkingHoursUseCase {
 
 export interface GetWorkingHoursUseCase {
   execute(dto: GetWorkingHoursDto): Promise<WorkingHoursStandardRespons>;
+}
+
+export interface UpdateWorkingHoursUseCase {
+  execute(dto: UpdateWorkingHoursDto): Promise<WorkingHoursStandardRespons>;
 }
