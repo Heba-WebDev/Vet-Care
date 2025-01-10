@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import {
   AddWorkingHoursDto,
   GetWorkingHoursDto,
+  UpdateWorkingHoursDto,
   WorkingHoursDatasource,
   WorkingHoursEntity,
 } from '../../domain';
@@ -83,6 +84,44 @@ export class WorkingHoursDatasourceImpl implements WorkingHoursDatasource {
         return hours;
       });
       return workingHours.map((hour) => WorkinghoursMapper.workingHoursEntityFromObject(hour));
+    } catch (error) {
+      logger.error(error);
+      if (error instanceof CustomError) throw error;
+      throw CustomError.internalServerError();
+    }
+  }
+
+  async update(dto: UpdateWorkingHoursDto): Promise<WorkingHoursEntity | null> {
+    const { vet_id, workday_id, start_time, end_time, break_start_time, break_end_time } = dto;
+    try {
+      const workingHours = await this._prisma.$transaction(async (prisma) => {
+        const vet_exists = await prisma.veterinarians.findFirst({
+          where: {
+            id: vet_id,
+          },
+        });
+        if (!vet_exists) throw CustomError.badRequest('No veterinarian was found');
+        const day_exists = await prisma.workingHours.findFirst({
+          where: {
+            id: workday_id,
+          },
+        });
+        if (!day_exists) throw CustomError.badRequest('No work day was found');
+        this.validateTimes(start_time, end_time, break_start_time, break_end_time);
+        return await prisma.workingHours.update({
+          where: {
+            id: workday_id,
+            vet_id,
+          },
+          data: {
+            start_time: this.convertStringToDate(start_time),
+            end_time: this.convertStringToDate(end_time),
+            break_start_time: this.convertStringToDate(break_start_time),
+            break_end_time: this.convertStringToDate(break_end_time),
+          },
+        });
+      });
+      return WorkinghoursMapper.workingHoursEntityFromObject(workingHours);
     } catch (error) {
       logger.error(error);
       if (error instanceof CustomError) throw error;
